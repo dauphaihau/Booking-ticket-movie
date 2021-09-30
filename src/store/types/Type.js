@@ -1,0 +1,7 @@
+
+
+
+export const GET_CAROUSEL = 'GET_CAROUSEL'
+export const GET_FILMS = 'GET_FILMS'
+export const SET_FILM_DANG_CHIEU = 'SET_FILM_DANG_CHIEU'
+export const SET_FILM_SAP_CHIEU = 'SET_FILM_SAP_CHIEU'

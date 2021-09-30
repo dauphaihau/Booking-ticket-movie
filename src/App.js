@@ -18,8 +18,6 @@ function App() {
                 <HomeTemplate exact path='/news' Component={News}/>
                 <Route exact path='/login' Component={Login}/>
                 <Route exact path='/register' Component={Register}/>
-                {/*<Footer/>*/}
-
 
                 <HomeTemplate exact path='/' Component={Home}/>
             </Switch>

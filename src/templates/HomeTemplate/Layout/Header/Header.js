@@ -3,7 +3,7 @@ import {NavLink} from "react-router-dom";
 
 function Header(props) {
     return (
-        <header className="p-4 bg-coolGray-100 text-coolGray-800  bg-black text-white fixed w-full z-10">
+        <header className="p-4 bg-coolGray-100 text-coolGray-800 opacity-70 bg-black text-white fixed w-full z-10">
             <div className="container flex justify-between h-16 mx-auto">
                 <a href="#" aria-label="Back to homepage" className="flex items-center p-2">
                     <img height={125} width={125} src='./img/image-removebg-preview.png' alt="..."/>
