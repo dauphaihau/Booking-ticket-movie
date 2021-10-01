@@ -1,4 +1,5 @@
 import React from 'react';
+import {history} from "../../util/settings";
 
 function Film(props) {
 
@@ -18,9 +19,13 @@ function Film(props) {
 
             <h1 className="title-font sm:text-2xl text-xl font-medium text-gray-900 mb-3 h-16">{film.tenPhim}</h1>
 
-            <p className="leading-relaxed mb-3 h-16">{film.moTa.length > 100 ? <span>{film.moTa.slice(0,100)}...</span>: <span>{film.moTa}</span>}</p>
+    <p className="leading-relaxed mb-3 h-16">{film.moTa.length > 100 ? <span>{film.moTa.slice(0,100)}...</span>: <span>{film.moTa}</span>}</p>
 
-            <a className="text-indigo-500 inline-flex items-center">Đặt vé
+            <a className="text-indigo-500 inline-flex items-center"
+            onClick={() => {
+              history.push(`detail/${film.maPhim}`)
+            }}
+            >Đặt vé
                 <svg className="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" strokeWidth="2"
                      fill="none" strokeLinecap="round" strokeLinejoin="round">
                     <path d="M5 12h14"/>

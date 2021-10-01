@@ -27,7 +27,8 @@ function HomeCarousel(props) {
         return arrCarousel.map((banner, index) => {
             return <div key={index}>
                 <div style={{...contentStyle, backgroundImage: `url(${banner.hinhAnh}`}}>
-                    <img src={banner.hinhAnh} className='w-full h-full opacity-0' alt="..."/>
+                    <img src={banner.hinhAnh} width='100%'
+                         className='w-full h-full opacity-0' alt="..."/>
                 </div>
             </div>
         })

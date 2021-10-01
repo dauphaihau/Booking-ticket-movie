@@ -7,3 +7,11 @@
 .width-item {
     width: 100% !important;
 }
+
+.active-film {
+    @apply bg-gray-800 text-white
+}
+
+.non-active-film {
+    @apply bg-white text-gray-800
+}

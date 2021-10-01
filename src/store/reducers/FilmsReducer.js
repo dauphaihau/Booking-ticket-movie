@@ -1,4 +1,4 @@
-import {GET_FILMS, SET_FILM_DANG_CHIEU, SET_FILM_SAP_CHIEU} from "../types/Type";
+import {GET_FILMS, SET_DETAIL_FILM, SET_FILM_DANG_CHIEU, SET_FILM_SAP_CHIEU} from "../types/Type";
 
 const initialState = {
     arrFilms: [
@@ -19,7 +19,9 @@ const initialState = {
     ],
     dangChieu: true,
     sapChieu: true,
-    arrFilmDefault: []
+    arrFilmDefault: [],
+    detailFilm: {}
+
 }
 
 export const FilmsReducer = (state = initialState, action) => {
@@ -40,6 +42,10 @@ export const FilmsReducer = (state = initialState, action) => {
             state.sapChieu = !state.sapChieu;
             state.arrFilms = state.arrFilmDefault.filter(film => film.sapChieu === film.sapChieu)
             return {...state}
+        }
+
+        case SET_DETAIL_FILM: {
+            return {...state, detailFilm: action.detailFilm}
         }
         default:
             return state

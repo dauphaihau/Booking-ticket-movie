@@ -3,7 +3,7 @@ import Slider from "react-slick";
 import Film from "../Film/Film";
 import styleSlick from './MultipleRowSlick.module.css'
 import FilmFlip from "../Film/Film_Flip";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {SET_FILM_DANG_CHIEU, SET_FILM_SAP_CHIEU} from "../../store/types/Type";
 
 function SampleNextArrow(props) {
@@ -28,7 +28,13 @@ function SamplePrevArrow(props) {
     );
 }
 
+
+
 function MultipleRowSlick(props) {
+
+    const {dangChieu, sapChieu} = useSelector(state => state.FilmsReducer)
+    let activeClassDC = dangChieu === true ? 'active-film' : 'non-active-film'
+    let activeClassSC = sapChieu === true ? 'active-film' : 'non-active-film'
 
     const dispatch = useDispatch();
 
@@ -59,7 +65,7 @@ function MultipleRowSlick(props) {
     return (
         <div>
             <button type="button"
-                    className="px-8 py-3 font-semibold rounded bg-gray-800 text-white mr-5"
+                    className={`${activeClassDC} px-8 py-3 font-semibold rounded bg-gray-800 text-white mr-5` }
                     onClick={() => {
                         dispatch({type: SET_FILM_DANG_CHIEU})
                     }}
@@ -67,7 +73,7 @@ function MultipleRowSlick(props) {
             >Phim Dang Chieu
             </button>
             <button type="button"
-                    className="px-8 py-3 font-semibold rounded bg-white text-gray-800 border-gray-800 border"
+                    className={`${activeClassSC} px-8 py-3 font-semibold text-gray-800 border-gray-800 border` }
                     onClick={() => {
                         dispatch({type: SET_FILM_SAP_CHIEU})
                     }}
