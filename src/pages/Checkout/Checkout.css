@@ -1,0 +1,25 @@
+
+.chair {
+    font-size: 10px;
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    background-color: #a5a7ab;
+    color: white;
+}
+
+.bookedChair {
+    background-color: #D6364A;
+    cursor: no-drop;
+}
+
+.bookingChair {
+    background-color: #6acb6a;
+}
+
+.vipChair {
+    background-color: #d5a443;
+}

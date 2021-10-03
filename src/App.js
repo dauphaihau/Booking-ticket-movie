@@ -8,6 +8,12 @@ import News from "./pages/News/News";
 import Login from "./pages/Login/Login";
 import Register from "./pages/Register/Register";
 import Detail from "./pages/Detail/Detail";
+import CheckoutTemplate from "./templates/CheckoutTemplate/CheckoutTemplate";
+import Checkout from "./pages/Checkout/Checkout";
+import {lazy, Suspense} from 'react'
+import {UserTemplate} from "./templates/UserTemplate/UserTemplate";
+
+const CheckoutTemplateLazy = lazy(() => import ('./templates/CheckoutTemplate/CheckoutTemplate'))
 
 function App() {
     return (
@@ -17,10 +23,13 @@ function App() {
                 <HomeTemplate exact path='/contact' Component={Contact}/>
                 <HomeTemplate exact path='/news' Component={News}/>
                 <HomeTemplate exact path='/detail/:id' Component={Detail}/>
-                <Route exact path='/login' Component={Login}/>
+                <UserTemplate exact path='/login' Component={Login}/>
+                <Suspense fallback={<h1>Loading....</h1>}>
+                    <CheckoutTemplateLazy exact path='/checkout/:id' Component={Checkout}/>
+                </Suspense>
                 <Route exact path='/register' Component={Register}/>
 
-                <HomeTemplate exact path='/' Component={Home}/>
+                <Route exact path='/' Component={Home}/>
             </Switch>
         </Router>
     );

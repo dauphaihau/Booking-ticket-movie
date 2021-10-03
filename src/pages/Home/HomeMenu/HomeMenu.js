@@ -8,7 +8,6 @@ const {TabPane} = Tabs;
 function HomeMenu(props) {
 
     const {arrCinema} = props;
-    console.log('arr-cinema', arrCinema)
 
     const [state, setState] = useState({
         tabPosition: 'left',

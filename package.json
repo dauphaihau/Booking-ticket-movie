@@ -12,6 +12,7 @@
     "@tsamantanis/react-glassmorphism": "^1.1.2",
     "antd": "^4.16.13",
     "axios": "^0.21.4",
+    "formik": "^2.2.9",
     "heroicons": "^1.0.4",
     "history": "4.10.0",
     "init": "^0.1.2",
@@ -27,7 +28,8 @@
     "redux-thunk": "^2.3.0",
     "slick-carousel": "^1.8.1",
     "tailwindcss-cli": "^0.1.2",
-    "web-vitals": "^1.0.1"
+    "web-vitals": "^1.0.1",
+    "yup": "^0.32.9"
   },
   "scripts": {
     "start": "craco start",

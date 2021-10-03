@@ -5,6 +5,7 @@ import {Tabs, Radio, Space, Rate} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import {getDetailFilmsAction} from "../../store/actions/FilmsAction";
 import moment from "moment";
+import {NavLink} from "react-router-dom";
 
 const {TabPane} = Tabs;
 
@@ -13,7 +14,7 @@ function Detail(props) {
     const dispatch = useDispatch();
     const {detailFilm} = useSelector(state => state.FilmsReducer)
 
-    console.log({detailFilm})
+    console.log('detail-film', detailFilm)
 
     useEffect(() => {
         let {id} = props.match.params;
@@ -32,11 +33,13 @@ function Detail(props) {
                         effectColor="#fff" // required
                         color="#000000" // default color is white
                         blur={10} // default blur value is 10px
+                        borderRadius={1}
             >
                 <div className="grid grid-cols-12">
                     <div className="col-span-4 col-start-4">
                         <div className='grid grid-cols-3'>
-                            <img className='col-span-1' src={detailFilm.hinhAnh} style={{width: 300, height: 300}} alt={detailFilm.tenPhim}/>
+                            <img className='col-span-1' src={detailFilm.hinhAnh} style={{width: 300, height: 300}}
+                                 alt={detailFilm.tenPhim}/>
                             <div className='ml-4 col-span-2'>
                                 <p className='text-sm'>{moment(detailFilm.ngayKhoiChieu).format('DD.MM.YY')}</p>
                                 <p className='leading-3 text-4xl'>{detailFilm.tenPhim}</p>
@@ -45,10 +48,10 @@ function Detail(props) {
                         </div>
                     </div>
                     <div className="col-span-4 ml-24">
-                        <h1 style={{marginLeft:'15%', color:'yellow', fontWeight:'bold', fontSize: 15}}>Đánh giá</h1>
-                        <h1 style={{marginLeft:'5%'}} className='text-gray-400 text-2xl'>
-                            <Rate style={{color:'#78ed87', fontSize:38}}
-                                allowHalf value={detailFilm.danhGia/2}/>
+                        <h1 style={{marginLeft: '15%', color: 'yellow', fontWeight: 'bold', fontSize: 15}}>Đánh giá</h1>
+                        <h1 style={{marginLeft: '5%'}} className='text-gray-400 text-2xl'>
+                            <Rate style={{color: '#78ed87', fontSize: 38}}
+                                  allowHalf value={detailFilm.danhGia / 2}/>
                         </h1>
                         <div className={`c100 p${detailFilm.danhGia * 10} big green`}>
                             <span>{detailFilm.danhGia * 10}%</span>
@@ -60,19 +63,56 @@ function Detail(props) {
                     </div>
                 </div>
 
-                <div className='mt-20 mx-auto container'>
-                    <Tabs tabPosition={'left'}>
-                        <TabPane tab="Tab 1" key="1">
-                            Content of Tab 1
+                <div className='mt-20 w-2/3 ml-72 mx-auto container bg-white px-5 py-5 rounded-lg'>
+                    <Tabs defaultActiveKey='1' centered>
+                        <TabPane tab="Lịch chiếu" key="1">
+                            <div>
+                                <Tabs tabPosition={'left'}>
+                                    {detailFilm.heThongRapChieu?.map((cinema, index) => {
+                                        return <TabPane key={index}
+                                                        tab={
+                                                            <div className='flex flex-row justify-center items-center'>
+                                                                <img src={cinema.logo} width={50} height={50}
+                                                                     alt={cinema.logo}/>
+                                                                <div className='text-center ml-2'>
+                                                                    {cinema.tenHeThongRap}
+                                                                </div>
+                                                            </div>
+                                                        }>
+                                            {cinema.cumRapChieu.map((cumRap, index) => {
+                                                return <div className='mt-5' key={index}>
+                                                    <div className='flex flex-row  mt-2'>
+                                                        <img width={50} height={50} src={cumRap.hinhAnh}
+                                                             alt={cumRap.tenCumRap}/>
+                                                        <div className='ml-5'>
+                                                            <p className='text-xl font-bold leading-3'>{cumRap.tenCumRap}</p>
+                                                            <p>{cumRap.diaChi}</p>
+                                                        </div>
+                                                    </div>
+                                                    <div className='grid grid-cols-4'>
+                                                        {cumRap.lichChieuPhim.slice(0, 4).map((showtime, index) => {
+                                                            return <div key={index} className='col-span-1 text-green-800'>
+                                                                <NavLink to={`/checkout/${showtime.maLichChieu}`} className='mt-2'>
+                                                                    {moment(showtime.ngayKhoiChieu).format('hh:mm A')}
+                                                                </NavLink>
+                                                            </div>
+                                                        })}
+                                                    </div>
+                                                </div>
+                                            })}
+                                        </TabPane>
+                                    })}
+
+                                </Tabs>
+                            </div>
                         </TabPane>
-                        <TabPane tab="Tab 2" key="2">
-                            Content of Tab 2
+                        <TabPane tab="Tab 2" key="2" style={{minHeight: 300}}>
+                            Content of Tab Pane 2
                         </TabPane>
-                        <TabPane tab="Tab 3" key="3">
-                            Content of Tab 3
+                        <TabPane tab="Tab 3" key="3" style={{minHeight: 300}}>
+                            Content of Tab Pane 3
                         </TabPane>
-                    </Tabs>
-                </div>
+                    </Tabs></div>
 
             </CustomCard>
         </div>);

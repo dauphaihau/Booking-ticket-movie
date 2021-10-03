@@ -1,13 +1,14 @@
 import React from 'react';
 import {NavLink} from "react-router-dom";
+import {history} from "../../../../util/settings";
 
 function Header(props) {
     return (
         <header className=" bg-gray-100  opacity-70 bg-black text-white fixed w-full z-10">
             <div className="container flex justify-between h-16 mx-auto">
-                <a href="#" aria-label="Back to homepage" className="flex items-center p-2">
-                    <img height={60} width={60} src='./img/abc.png' alt="..."/>
-                </a>
+                <NavLink to='/home' aria-label="Back to homepage" className="flex items-center p-2">
+                    <img height={60} width={60} src='./img/logo.png' alt="..."/>
+                </NavLink>
                 <ul className="items-stretch hidden space-x-3 lg:flex">
                     <li className="flex">
                         <NavLink exact to={'/home' } activeClassName='borderBottom'
@@ -23,7 +24,11 @@ function Header(props) {
                     </li>
                 </ul>
                 <div className="items-center flex-shrink-0 hidden lg:flex">
-                    <button className="self-center px-8 py-3 rounded">Sign in</button>
+                    <button className="self-center px-8 py-3 rounded"
+                            onClick={() => {
+                                history.push('/login')
+                            }}
+                    >Sign in</button>
                     <button className="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-gray-50">Sign
                         up
                     </button>

@@ -20,7 +20,7 @@ export const FilmsAction = () => {
 export const getDetailFilmsAction = (id) => {
     return async (dispatch) => {
         try {
-            const result = await http.get(`/api/QuanLyPhim/LayThongTinPhim?MaPhim=${id}`)
+            const result = await http.get(`/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${id}`)
             dispatch({
                 type: SET_DETAIL_FILM,
                 detailFilm: result.data.content

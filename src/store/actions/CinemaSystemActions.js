@@ -10,8 +10,6 @@ export const CinemaSystemActions = () => {
         try {
             const result = await http.get(`/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=${GROUP_ID}`)
 
-            console.log('result', result.data.content)
-
             if (result.status === 200) {
                 dispatch({
                     type: SET_CINEMA,
