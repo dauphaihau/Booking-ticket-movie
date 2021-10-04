@@ -3,7 +3,7 @@ import {history} from "../../util/settings";
 import {useFormik} from "formik";
 import {NavLink} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
-import {UserAction} from "../../store/actions/UserAction";
+import {LoginAction, UserAction} from "../../store/actions/UserAction";
 
 function Login(props) {
 
@@ -16,7 +16,7 @@ function Login(props) {
             matKhau: '',
         },
         onSubmit: values => {
-            dispatch(UserAction(values))
+            dispatch(LoginAction(values))
         }
     })
 

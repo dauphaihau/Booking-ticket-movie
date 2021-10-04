@@ -8,6 +8,8 @@ export const SET_FILM_SAP_CHIEU = 'SET_FILM_SAP_CHIEU'
 export const SET_CINEMA = 'SET_CINEMA'
 export const SET_DETAIL_FILM = 'SET_DETAIL_FILM'
 export const SET_DATA_LOGIN = 'SET_DATA_LOGIN'
+export const SET_DATA_USER = 'SET_DATA_USER'
 
 
 export const SET_LIST_TICKET_ROOM = 'SET_LIST_TICKET_ROOM'
+export const BOOKING_CHAIR = 'BOOKING_CHAIR'
