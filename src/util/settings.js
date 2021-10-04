@@ -9,6 +9,7 @@ export const TOKEN_CYBERSOFT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3A
 export const GROUP_ID = 'GP01';
 export const USER_LOGIN = 'userLogin'
 export const ACCESS_TOKEN = 'accessToken'
+export const DOMAIN = 'http://movienew.cybersoft.edu.vn'
 
 
 export const http = axios.create({ // async method
@@ -21,7 +22,6 @@ http.interceptors.request.use((config) => {
         ...config.headers,
         'TokenCybersoft': TOKEN_CYBERSOFT,
         'Authorization': 'Bearer ' + localStorage.getItem(ACCESS_TOKEN)
-        // Authorization: localStorage.getItem(ACCESS_TOKEN)
     }
     return config
 }, (errors) => {

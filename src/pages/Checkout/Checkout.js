@@ -1,15 +1,16 @@
 import React, {Fragment, useEffect} from 'react';
-import {UserOutlined} from '@ant-design/icons'
+import {UserOutlined, TeamOutlined} from '@ant-design/icons'
 import screen from '../../assets/img/screen.jpg'
-import {BookingAction, GetListTicketRoomAction} from "../../store/actions/TicketManagementAction";
+import {bookingAction, bookingChairAction, getListTicketRoomAction} from "../../store/actions/TicketManagementAction";
 import {useDispatch, useSelector} from "react-redux";
 import moment from "moment";
 import './Checkout.css'
-import {BOOKING_CHAIR} from "../../store/types/Type";
+import {BOOKING_CHAIR, SET_LIST_CHAIR_OTHER_USER_BOOKING, SWITCH_TAB} from "../../store/types/Type";
 import _ from "lodash";
 import {DataBooking} from "../../_core/models/dataBooking";
 import {Tabs} from 'antd';
 import {getDataUserAction} from "../../store/actions/UserAction";
+import {connection} from "../../index";
 
 const {TabPane} = Tabs;
 
@@ -17,14 +18,44 @@ function Checkout(props) {
 
     const dispatch = useDispatch();
 
-    const {userLogin} = useSelector(state => state.UserReducer)
-    const {detailTicketRoom, listBookingChair} = useSelector(state => state.TicketManagementReducer)
+    const {userLogin, dataUser} = useSelector(state => state.UserReducer)
+    const {
+        detailTicketRoom,
+        listBookingChair,
+        bookingChairByOtherUser
+    } = useSelector(state => state.TicketManagementReducer)
 
     useEffect(() => {
-        dispatch(GetListTicketRoomAction(props.match.params.id))
+        dispatch(getListTicketRoomAction(props.match.params.id))
+
+        // load list chair from server
+        connection.on('loadDanhSachGheDaDat', (listChairUserBook) => {
+            console.log('listChairUserBook', listChairUserBook)
+
+            listChairUserBook = listChairUserBook.filter(chair => chair.taiKhoan !== userLogin.taiKhoan)
+
+            console.log('list-chair-user-book', listChairUserBook)
+
+            // combine all chairs of another user to Arr
+            let arrListChairOtherUserBook = listChairUserBook.reduce((result, item, index) => {
+                let arrChair = JSON.parse(item.danhSachGhe);
+                return [...result, ...arrChair]
+            }, [])
+
+            // del chairs have same name props
+            arrListChairOtherUserBook = _.uniqBy(arrListChairOtherUserBook, 'maGhe')
+
+            dispatch({
+                type: SET_LIST_CHAIR_OTHER_USER_BOOKING,
+                arrListChairOtherUserBook
+            })
+
+        })
+
     }, [])
 
     console.log('detailTicketRoom', detailTicketRoom)
+    console.log('data-user', dataUser)
 
     const {danhSachGhe, thongTinPhim} = detailTicketRoom;
 
@@ -40,10 +71,18 @@ function Checkout(props) {
                                 let classBookedChair = chair.daDat === true ? 'bookedChair' : '';
                                 let classBookingChair = '';
                                 let classBookedChairByUser = '';
+                                let classBookingChairByOtherUser = '';
+
 
                                 if (userLogin.taiKhoan === chair.taiKhoanNguoiDat) {
                                     classBookedChairByUser = 'bookedChairByUser';
                                 }
+
+                                let indexBookingChairByOtherUser = bookingChairByOtherUser.findIndex(bchair => bchair.maGhe === chair.maGhe);
+                                if (indexBookingChairByOtherUser !== -1) {
+                                    classBookingChairByOtherUser = 'bookingChairByOtherUser'
+                                }
+
 
                                 let indexBookingChair = listBookingChair.findIndex(bchair => bchair.maGhe === chair.maGhe);
                                 if (indexBookingChair !== -1) {
@@ -52,20 +91,19 @@ function Checkout(props) {
 
                                 return <Fragment key={index}>
                                     <button
-                                        disabled={chair.daDat} key={index}
+                                        disabled={chair.daDat || classBookingChairByOtherUser !== ''} key={index}
                                         className={`
                                         chair ${classVipChair} ${classBookedChair} ${classBookingChair}
-                                        ${classBookedChairByUser}
+                                        ${classBookedChairByUser} ${classBookingChairByOtherUser}
                                         `}
                                         onClick={() => {
-                                            dispatch({
-                                                type: BOOKING_CHAIR,
-                                                bookingChair: chair
-                                            })
+                                            dispatch(bookingChairAction(chair, props.match.params.id))
                                         }}
                                     >
-                                        {classBookedChairByUser !== '' ?
-                                            <UserOutlined className='font-bold'/> : chair.stt}
+                                        {chair.daDat ? classBookedChair !== '' ?
+                                                <UserOutlined className='font-bold'/> : <TeamOutlined/>
+                                            : classBookingChairByOtherUser !== '' ? <TeamOutlined/> :
+                                                chair.stt}
                                     </button>
                                     {(index + 1) % 20 === 0 ? <br/> : ''}
                                 </Fragment>
@@ -76,10 +114,11 @@ function Checkout(props) {
                                 <thead className='bg-gray-50 p-5'>
                                 <tr>
                                     <th>Ghế chưa đặt</th>
-                                    <th>Ghế đang đặt</th>
-                                    <th>Ghế người dùng khác đã đặt</th>
                                     <th>Ghế vip</th>
+                                    <th>Ghế đang đặt</th>
+                                    <th>Ghế người dùng khác đang đặt</th>
                                     <th>Ghế người dùng đã đặt</th>
+                                    <th>Ghế người dùng khác đã đặt</th>
                                 </tr>
                                 </thead>
                                 <tbody className="bg-white divide-y divide-gray-200">
@@ -88,16 +127,23 @@ function Checkout(props) {
                                         <button className='chair'/>
                                     </td>
                                     <td>
-                                        <button className='chair bookingChair '/>
-                                    </td>
-                                    <td>
-                                        <button className='chair bookedChair'/>
-                                    </td>
-                                    <td>
                                         <button className='chair vipChair'/>
                                     </td>
                                     <td>
-                                        <button className='chair bookedChairByUser'/>
+                                        <button className='chair bookingChair '/>
+                                    </td>
+                                    <td>
+                                        <button className='chair bookingChairByOtherUser'/>
+                                    </td>
+                                    <td>
+                                        <button className='chair bookedChairByUser'>
+                                            <UserOutlined className='font-bold'/>
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button className='chair bookedChair'>
+                                            <TeamOutlined className='font-bold'/>
+                                        </button>
                                     </td>
                                 </tr>
                                 </tbody>
@@ -153,9 +199,8 @@ function Checkout(props) {
                             const dataBooking = new DataBooking()
                             dataBooking.maLichChieu = props.match.params.id;
                             dataBooking.danhSachVe = listBookingChair
-                            console.log('data-booking', dataBooking)
 
-                            dispatch(BookingAction(dataBooking))
+                            dispatch(bookingAction(dataBooking))
                         }}
                     >
                         Đặt vé
@@ -168,21 +213,28 @@ function Checkout(props) {
 
 // export default Checkout;
 
-
-function callback(key) {
-    console.log(key);
-}
-
 export default function (props) {
-    return <Tabs defaultActiveKey="1" onChange={callback}>
-        <TabPane className={{marginLeft: 20}} tab="01 CHỌN GHẾ VÀ THANH TOÁN" key="1">
-            <Checkout {...props}/>
-        </TabPane>
 
-        <TabPane tab="02 KẾT QUẢ ĐẶT VÉ" key="2">
-            <ResultBooking/>
-        </TabPane>
-    </Tabs>
+    const dispatch = useDispatch();
+    const {tabActive} = useSelector(state => state.TicketManagementReducer)
+
+    return <div className='p-5'>
+        <Tabs style={{marginLeft: 30}} activeKey={tabActive} defaultActiveKey="1" onChange={(key) => {
+            dispatch({
+                type: SWITCH_TAB,
+                numTab: key
+            })
+
+        }}>
+            <TabPane tab="01 CHỌN GHẾ VÀ THANH TOÁN" key="1">
+                <Checkout {...props}/>
+            </TabPane>
+
+            <TabPane tab="02 KẾT QUẢ ĐẶT VÉ" key="2">
+                <ResultBooking {...props}/>
+            </TabPane>
+        </Tabs>
+    </div>
 };
 
 function ResultBooking(props) {
@@ -212,9 +264,15 @@ function ResultBooking(props) {
                         )}</p>
                         <p className="text-gray-500">Địa điểm: {chairs.tenHeThongRap}</p>
                         <p className="text-gray-500">Tên rạp: {chairs.tenCumRap} -
-                            Ghế {ticket.danhSachGhe.map((chair, index) => {
-                                return <span key={index}>{chair.tenGhe}</span>
+                            <div className='grid grid-cols-6'>
+                                Ghế {ticket.danhSachGhe.map((chair, index) => {
+                                // <span key={index}>{chair.tenGhe}</span>
+                                return <div className={`chair bookingChair flex justify-center items-center p-2`}
+                                            key={index}>
+                                    <span>{chair.tenGhe}</span>
+                                </div>
                             })}
+                            </div>
                         </p>
                     </div>
                 </div>

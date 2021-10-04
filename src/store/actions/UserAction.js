@@ -1,5 +1,7 @@
-import {ACCESS_TOKEN, GROUP_ID, history, http, USER_LOGIN} from "../../util/settings";
+import {ACCESS_TOKEN, GROUP_ID, history, http, TOKEN_CYBERSOFT, USER_LOGIN} from "../../util/settings";
 import {GET_FILMS, SET_DATA_LOGIN, SET_DATA_USER} from "../types/Type";
+import {displayLoadingAction, hideLoadingAction} from "./LoadingAction";
+import axios from "axios";
 
 export const LoginAction = (dataLogin) => {
     return async (dispatch) => {
@@ -26,8 +28,8 @@ export const LoginAction = (dataLogin) => {
 export const getDataUserAction = () => {
     return async dispatch => {
         try {
+            dispatch(displayLoadingAction)
             const result = await http.post('/api/QuanLyNguoiDung/ThongTinTaiKhoan')
-            console.log('datauser', result)
 
             if (result.data.statusCode === 200) {
                 dispatch({
@@ -35,8 +37,10 @@ export const getDataUserAction = () => {
                     dataUser: result.data.content
                 })
             }
+            dispatch(hideLoadingAction)
 
         } catch (error) {
+            dispatch(hideLoadingAction)
             console.log('error', error.response.data)
         }
     }

@@ -91,8 +91,8 @@ function Detail(props) {
                                                     </div>
                                                     <div className='grid grid-cols-4'>
                                                         {cumRap.lichChieuPhim.slice(0, 4).map((showtime, index) => {
-                                                            return <div key={index} className='col-span-1 text-green-800'>
-                                                                <NavLink to={`/checkout/${showtime.maLichChieu}`} className='mt-2'>
+                                                            return <div key={index} className='col-span-1 text-green-800 mt-2'>
+                                                                <NavLink to={`/checkout/${showtime.maLichChieu}`}>
                                                                     {moment(showtime.ngayKhoiChieu).format('hh:mm A')}
                                                                 </NavLink>
                                                             </div>
