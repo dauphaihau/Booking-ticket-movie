@@ -5,3 +5,21 @@
 .borderBottom {
     @apply border-b-2 border-white text-white
 }
+
+/*.ant-switch-checked {*/
+/*    background-color: #38e26d !important;*/
+/*}*/
+
+
+.border-color {
+    border-bottom-color: red !important;
+}
+
+
+.ant-menu.ant-menu-dark, .ant-menu-dark .ant-menu-sub, .ant-menu.ant-menu-dark .ant-menu-sub {
+    background-color: black !important;
+}
+
+.ant-layout-sider {
+    background-color: black !important;
+}

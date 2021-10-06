@@ -12,19 +12,36 @@ import CheckoutTemplate from "./templates/CheckoutTemplate/CheckoutTemplate";
 import Checkout from "./pages/Checkout/Checkout";
 import {UserTemplate} from "./templates/UserTemplate/UserTemplate";
 import Loading from "./components/Loading/Loading";
+import Profile from "./pages/Profile/Profile";
+import {AdminTemplate} from "./templates/AdminTemplate/AdminTemplate";
+import Films from "./pages/Admin/Films/Films";
+import Dashboard from "./pages/Admin/Dashboard/Dashboard";
+import Showtimes from "./pages/Admin/Showtimes/Showtimes";
+import Users from "./pages/Admin/Users/Users";
+import AddFilms from "./pages/Admin/Films/AddFilms/AddFilms";
+import EditFilms from "./pages/Admin/Films/EditFilms/EditFilms";
 
 function App() {
     return (
         <Router history={history}>
             <Loading/>
             <Switch>
+                <UserTemplate exact path='/login' Component={Login}/>
+                <UserTemplate exact path='/register' Component={Register}/>
+                <HomeTemplate exact path='/profile' Component={Profile}/>
                 <HomeTemplate exact path='/home' Component={Home}/>
                 <HomeTemplate exact path='/contact' Component={Contact}/>
                 <HomeTemplate exact path='/news' Component={News}/>
                 <HomeTemplate exact path='/detail/:id' Component={Detail}/>
-                <UserTemplate exact path='/login' Component={Login}/>
                 <CheckoutTemplate exact path='/checkout/:id' Component={Checkout}/>
-                <Route exact path='/register' Component={Register}/>
+                <AdminTemplate exact path='/admin' Component={Dashboard}/>
+                <AdminTemplate exact path='/admin/films' Component={Films}/>
+                <AdminTemplate exact path='/admin/films/addfilms' Component={AddFilms}/>
+                <AdminTemplate exact path='/admin/films/edit/:id' Component={EditFilms}/>
+                <AdminTemplate exact path='/admin/showtimes' Component={Showtimes}/>
+                <AdminTemplate exact path='/admin/users' Component={Users}/>
+
+
                 <HomeTemplate path="/" Component={Home}/>
             </Switch>
         </Router>

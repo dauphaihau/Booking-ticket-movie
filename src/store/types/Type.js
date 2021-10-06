@@ -9,6 +9,7 @@ export const SET_FILM_DANG_CHIEU = 'SET_FILM_DANG_CHIEU'
 export const SET_FILM_SAP_CHIEU = 'SET_FILM_SAP_CHIEU'
 export const SET_CINEMA = 'SET_CINEMA'
 export const SET_DETAIL_FILM = 'SET_DETAIL_FILM'
+export const SET_INFO_FILM = 'SET_INFO_FILM'
 export const SET_DATA_LOGIN = 'SET_DATA_LOGIN'
 export const SET_DATA_USER = 'SET_DATA_USER'
 

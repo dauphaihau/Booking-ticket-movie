@@ -1,0 +1,60 @@
+.movie-poster {
+    border-radius: 0.625rem;
+    overflow: hidden;
+}
+
+.movie-poster div {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.8);
+    width: 80%;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s linear;
+    z-index: 10;
+}
+
+.movie-poster:hover div {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
+    visibility: visible;
+}
+
+.movie-poster div i {
+    width: 4.375rem;
+    height: 4.375rem;
+    text-align: center;
+    line-height: 4.375rem;
+    margin-bottom: 0.6rem;
+}
+
+.movie-poster div a {
+    font-weight: 300;
+    font-size: 0.7rem;
+    text-transform: uppercase;
+    letter-spacing: 0.25rem;
+}
+
+.movie-poster div p {
+    font-weight: 300;
+    font-size: 0.7rem;
+    opacity: 0.8;
+    margin-top: 0.6rem;
+}
+
+.movie-poster::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -200px;
+    width: 0;
+    height: 100%;
+    background: linear-gradient(to bottom, #fbbd61, #ec7532);
+    transform: skewX(45deg);
+    transition: all 0.3s linear;
+    opacity: 0.85;
+}
+
+.movie-poster:hover::after {
+    width: 350%;
+}

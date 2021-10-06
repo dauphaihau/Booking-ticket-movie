@@ -19,22 +19,21 @@ function HomeMenu(props) {
         return arrCinema.map((cinema, index) => {
             return <TabPane tab={<img src={cinema.logo} className='rounded-full' width={50}/>} key={index}>
                 <Tabs tabPosition={tabPosition}>
-                    {cinema.lstCumRap.map((cumRap, index) => {
+                    {cinema.lstCumRap.slice(0,6).map((cumRap, index) => {
                         return (
                             <TabPane
                                 tab={
                                     <div style={{width: 300, display: 'flex'}}>
                                         <img src={cumRap.hinhAnh} alt={cumRap.tenCumRap} width={50}/> <br/>
-                                        <div className='ml-3'>
-                                            {cumRap.tenCumRap};
-                                            <p>View detail</p>
+                                        <div className='ml-3'>{cumRap.tenCumRap};
+                                            {/*<p>View detail</p>*/}
                                         </div>
                                     </div>
                                 }
                                 key={index}>
                                 {cumRap.danhSachPhim?.slice(0,4).map((film, index) => {
                                     return <Fragment key={index}>
-                                        <div className="my-5 border-b-4 border-gray-300">
+                                        <div className="my-5 border-b-2 border-gray-100">
                                             <div className="flex">
                                                 <img src={film.hinhAnh} alt={film.tenPhim}
                                                      style={{height: 100, width: 100}}
@@ -44,9 +43,9 @@ function HomeMenu(props) {
                                                     <h1 className="text-2xl font-bold">{film.tenPhim}</h1>
                                                     <p>{cumRap.diaChi}</p>
                                                     <div className='grid grid-cols-6 gap-6'>
-                                                        {film.lstLichChieuTheoPhim?.slice(0,12).map((lichChieu, index) => {
-                                                        return <NavLink className='text-green-500 text-lg' to='/' key={index}>
-                                                            {moment(lichChieu.ngayKhoiChieu).format('hh:mm A')}
+                                                        {film.lstLichChieuTheoPhim?.slice(0,6).map((showtimes, index) => {
+                                                        return <NavLink className='text-lg' to={`/checkout/${showtimes.maLichChieu}`} key={index}>
+                                                            {moment(showtimes.ngayKhoiChieu).format('hh:mm A')}
                                                         </NavLink>
                                                     })}
                                                     </div>
@@ -69,13 +68,6 @@ function HomeMenu(props) {
         <>
             <Tabs tabPosition={tabPosition}>
                 {renderCinemaSystem()}
-                {/*<TabPane tab={<img src='https://picsum.photos/200' className="rounded-full" width='50' />} key="1">*/}
-
-                {/*</TabPane>*/}
-                {/*<TabPane tab={<img src='https://picsum.photos/200' className="rounded-full" width='50' />} key="2">*/}
-                {/*</TabPane>*/}
-                {/*<TabPane tab={<img src='https://picsum.photos/200' className="rounded-full" width='50' />} key="3">*/}
-                {/*</TabPane>*/}
             </Tabs>
         </>
     );

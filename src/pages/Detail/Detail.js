@@ -32,7 +32,7 @@ function Detail(props) {
             <CustomCard style={{paddingTop: 150, minHeight: '100vh'}}
                         effectColor="#fff" // required
                         color="#000000" // default color is white
-                        blur={10} // default blur value is 10px
+                        blur={25} // default blur value is 10px
                         borderRadius={1}
             >
                 <div className="grid grid-cols-12">
@@ -40,20 +40,19 @@ function Detail(props) {
                         <div className='grid grid-cols-3'>
                             <img className='col-span-1' src={detailFilm.hinhAnh} style={{width: 300, height: 300}}
                                  alt={detailFilm.tenPhim}/>
-                            <div className='ml-4 col-span-2'>
+                            <div className='ml-4 col-span-2 text-white'>
                                 <p className='text-sm'>{moment(detailFilm.ngayKhoiChieu).format('DD.MM.YY')}</p>
-                                <p className='leading-3 text-4xl'>{detailFilm.tenPhim}</p>
+                                <p className='leading-5 text-4xl'>{detailFilm.tenPhim}</p>
                                 <p>{detailFilm.moTa}</p>
                             </div>
                         </div>
                     </div>
                     <div className="col-span-4 ml-24">
-                        <h1 style={{marginLeft: '15%', color: 'yellow', fontWeight: 'bold', fontSize: 15}}>Đánh giá</h1>
+                        <h1 style={{marginLeft: '21%', color: 'yellow', fontWeight: 'bold', fontSize: 15}}>Đánh giá</h1>
                         <h1 style={{marginLeft: '5%'}} className='text-gray-400 text-2xl'>
-                            <Rate style={{color: '#78ed87', fontSize: 38}}
-                                  allowHalf value={detailFilm.danhGia / 2}/>
+                            <Rate style={{color: '#78ed87', fontSize: 38}} allowHalf value={detailFilm.danhGia / 2}/>
                         </h1>
-                        <div className={`c100 p${detailFilm.danhGia * 10} big green`}>
+                        <div className={`c100 p${detailFilm.danhGia * 10} big green mt-4 ml-5`}>
                             <span>{detailFilm.danhGia * 10}%</span>
                             <div className="slice">
                                 <div className="bar"/>

@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import Slider from "react-slick";
 import Film from "../Film/Film";
 import styleSlick from './MultipleRowSlick.module.css'
-import FilmFlip from "../Film/Film_Flip";
 import {useDispatch, useSelector} from "react-redux";
 import {SET_FILM_DANG_CHIEU, SET_FILM_SAP_CHIEU} from "../../store/types/Type";
 
@@ -41,9 +40,9 @@ function MultipleRowSlick(props) {
     const renderListFilms = () => {
 
         return props.arrFilms.slice(0, 12).map((film, index) => {
-            return <div key={index} className={`${styleSlick['width-item']}`}>
+            // return <div key={index} className={`${styleSlick['width-item']}`}>
+            return <div key={index}>
                 <Film film={film}/>
-                {/*<FilmFlip film={film}/>*/}
             </div>
         })
     }
@@ -65,20 +64,18 @@ function MultipleRowSlick(props) {
     return (
         <div>
             <button type="button"
-                    className={`${activeClassDC} px-8 py-3 font-semibold rounded bg-gray-800 text-white mr-5` }
+                    className={`${activeClassDC} mb-4 px-8 py-3 font-semibold rounded bg-gray-800 text-white mr-5 border rounded-xl` }
                     onClick={() => {
                         dispatch({type: SET_FILM_DANG_CHIEU})
                     }}
-
-            >Phim Dang Chieu
+            >NEW IN
             </button>
             <button type="button"
-                    className={`${activeClassSC} px-8 py-3 font-semibold text-gray-800 border-gray-800 border` }
+                    className={`${activeClassSC} mb-4 px-8 py-3 font-semibold text-gray-800 border-gray-800 border rounded-xl` }
                     onClick={() => {
                         dispatch({type: SET_FILM_SAP_CHIEU})
                     }}
-
-            >Phim Sap Chieu
+            >COMING SOON
             </button>
             <Slider {...settings}>
                 {renderListFilms()}

@@ -3,7 +3,7 @@ import HomeMenu from "./HomeMenu/HomeMenu";
 import {useDispatch, useSelector} from "react-redux";
 import MultipleRowSlick from "../../components/RSslick/MultipleRowSlick";
 import Film from "../../components/Film/Film";
-import {FilmsAction} from "../../store/actions/FilmsAction";
+import {getListFilmsAction} from "../../store/actions/FilmsAction";
 import {CinemaSystemReducer} from "../../store/reducers/CinemaSystemReducer";
 import {CinemaSystemActions} from "../../store/actions/CinemaSystemActions";
 import HomeCarousel from "../../templates/HomeTemplate/Layout/HomeCarousel/HomeCarousel";
@@ -24,12 +24,12 @@ function Home(props) {
     console.log('props', arrFilms)
 
     useEffect(() => {
-        dispatch(FilmsAction());
+        dispatch(getListFilmsAction());
         dispatch(CinemaSystemActions())
     }, [])
 
     return (
-        <div className='container mx-auto my-0'>
+        <div className='container mx-auto my-0 px-11 mb-32'>
             <HomeCarousel />
             {/*<div className='container'>*/}
             <section className="text-gray-600 body-font mx-20">
@@ -41,7 +41,7 @@ function Home(props) {
                 </div>
             </section>
 
-            <div className='mx-20'>
+            <div className='mx-20 px-5'>
                 <HomeMenu arrCinema={arrCinema}/>
             </div>
         </div>

@@ -2,7 +2,7 @@ import {SET_DATA_LOGIN, SET_DATA_USER} from "../types/Type";
 import {ACCESS_TOKEN, USER_LOGIN} from "../../util/settings";
 import {DataUser} from "../../_core/models/dataUser";
 
-let user = null;
+let user = '';
 
 if (localStorage.getItem(USER_LOGIN)) {
     user = JSON.parse(localStorage.getItem(USER_LOGIN))

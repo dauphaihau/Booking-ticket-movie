@@ -45,7 +45,7 @@
   -o-border-radius: 50%;
   border-radius: 50%;
   float: left;
-  margin: 0 0.1em 0.1em 0;
+  /*margin: 0 0.1em 0.1em 0;*/
   background-color: rgba(0,0,0,0.1);
 }
 .c100 *, .c100 *:before, .c100 *:after {
@@ -58,7 +58,7 @@
   margin: 0 auto;
 }
 .c100.big {
-  font-size: 240px;
+  font-size: 220px;
 }
 .c100.small {
   font-size: 80px;

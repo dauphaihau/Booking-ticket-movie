@@ -11,7 +11,7 @@ import {dataTicketRoom} from '../../_core/models/dataTicketRoom'
 const initialState = {
     detailTicketRoom: new dataTicketRoom(),
     listBookingChair: [],
-    tabActive: '1',
+    tabActive: '2',
     bookingChairByOtherUser: [{maGhe: 49003}, {maGhe: 49004}]
 }
 
@@ -40,9 +40,9 @@ export const TicketManagementReducer = (state = initialState, action) => {
         case SWITCH_TAB: {
             return {...state, tabActive: action.numTab}
         }
-        case SET_LIST_CHAIR_OTHER_USER_BOOKING: {
-            return {...state, bookingChairByOtherUser: action.bookingChairByOtherUser}
-        }
+        // case SET_LIST_CHAIR_OTHER_USER_BOOKING: {
+        //     return {...state, bookingChairByOtherUser: action.bookingChairByOtherUser}
+        // }
 
         default:
             return state

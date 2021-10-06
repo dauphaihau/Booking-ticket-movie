@@ -1,4 +1,4 @@
-import {GET_FILMS, SET_DETAIL_FILM, SET_FILM_DANG_CHIEU, SET_FILM_SAP_CHIEU} from "../types/Type";
+import {GET_FILMS, SET_DETAIL_FILM, SET_FILM_DANG_CHIEU, SET_FILM_SAP_CHIEU, SET_INFO_FILM} from "../types/Type";
 
 const initialState = {
     arrFilms: [
@@ -20,7 +20,8 @@ const initialState = {
     dangChieu: true,
     sapChieu: true,
     arrFilmDefault: [],
-    detailFilm: {}
+    detailFilm: {},
+    infoFilm: {}
 
 }
 
@@ -46,6 +47,9 @@ export const FilmsReducer = (state = initialState, action) => {
 
         case SET_DETAIL_FILM: {
             return {...state, detailFilm: action.detailFilm}
+        }
+        case SET_INFO_FILM: {
+            return {...state, infoFilm: action.infoFilm}
         }
         default:
             return state

@@ -1,20 +1,24 @@
 import React, {Fragment, useEffect} from 'react';
-import {UserOutlined, TeamOutlined} from '@ant-design/icons'
+import {UserOutlined,HomeOutlined, TeamOutlined} from '@ant-design/icons'
 import screen from '../../assets/img/screen.jpg'
-import {bookingAction, bookingChairAction, getListTicketRoomAction} from "../../store/actions/TicketManagementAction";
+import {bookingAction, getListTicketRoomAction} from "../../store/actions/TicketManagementAction";
 import {useDispatch, useSelector} from "react-redux";
 import moment from "moment";
 import './Checkout.css'
-import {BOOKING_CHAIR, SET_LIST_CHAIR_OTHER_USER_BOOKING, SWITCH_TAB} from "../../store/types/Type";
+import {BOOKING_CHAIR, SWITCH_TAB} from "../../store/types/Type";
 import _ from "lodash";
 import {DataBooking} from "../../_core/models/dataBooking";
 import {Tabs} from 'antd';
 import {getDataUserAction} from "../../store/actions/UserAction";
 import {connection} from "../../index";
+import {ACCESS_TOKEN, history, USER_LOGIN} from "../../util/settings";
+import DropdownTail from "../../components/Dropdown/DropdownTail";
+import {Avatar} from "@nextui-org/react";
+import {NavLink} from "react-router-dom";
 
 const {TabPane} = Tabs;
 
-function Checkout(props) {
+function Booking(props) {
 
     const dispatch = useDispatch();
 
@@ -25,34 +29,54 @@ function Checkout(props) {
         bookingChairByOtherUser
     } = useSelector(state => state.TicketManagementReducer)
 
+    console.log('user-login', userLogin)
+
     useEffect(() => {
         dispatch(getListTicketRoomAction(props.match.params.id))
 
+        // Any user who has successfully booked tickets will reload the page
+        // connection.on('datVeThanhCong', () => {
+        //     dispatch(getListTicketRoomAction(props.match.params.id))
+        // })
+
+        // load immediately all chair of other user booking
+        // connection.on('loadDanhSachGhe', props.match.params.id)
+
         // load list chair from server
-        connection.on('loadDanhSachGheDaDat', (listChairUserBook) => {
-            console.log('listChairUserBook', listChairUserBook)
+        // connection.on('loadDanhSachGheDaDat', (listChairUserBook) => {
+        //     console.log('listChairUserBook', listChairUserBook)
+        //
+        //     listChairUserBook = listChairUserBook.filter(chair => chair.taiKhoan !== userLogin.taiKhoan)
+        //
+        //     console.log('list-chair-user-book', listChairUserBook)
+        //
+        //     // combine all chairs of another user to Arr
+        //     let arrListChairOtherUserBook = listChairUserBook.reduce((result, item, index) => {
+        //         let arrChair = JSON.parse(item.danhSachGhe);
+        //         return [...result, ...arrChair]
+        //     }, [])
+        //
+        //     // del chairs have same name props
+        //     arrListChairOtherUserBook = _.uniqBy(arrListChairOtherUserBook, 'maGhe')
+        //
+        //     dispatch({
+        //         type: SET_LIST_CHAIR_OTHER_USER_BOOKING,
+        //         arrListChairOtherUserBook
+        //     })
+        // })
 
-            listChairUserBook = listChairUserBook.filter(chair => chair.taiKhoan !== userLogin.taiKhoan)
-
-            console.log('list-chair-user-book', listChairUserBook)
-
-            // combine all chairs of another user to Arr
-            let arrListChairOtherUserBook = listChairUserBook.reduce((result, item, index) => {
-                let arrChair = JSON.parse(item.danhSachGhe);
-                return [...result, ...arrChair]
-            }, [])
-
-            // del chairs have same name props
-            arrListChairOtherUserBook = _.uniqBy(arrListChairOtherUserBook, 'maGhe')
-
-            dispatch({
-                type: SET_LIST_CHAIR_OTHER_USER_BOOKING,
-                arrListChairOtherUserBook
-            })
-
-        })
+        // window.addEventListener('beforeunload', clearChair);
+        //
+        // return () => {
+        //     clearChair();
+        //     window.removeEventListener('beforeunload', clearChair)
+        // }
 
     }, [])
+
+    // const clearChair = (event) => {
+    //   connection.invoke('huyDat', userLogin.taiKhoan, props.match.params.id)
+    // }
 
     console.log('detailTicketRoom', detailTicketRoom)
     console.log('data-user', dataUser)
@@ -97,7 +121,11 @@ function Checkout(props) {
                                         ${classBookedChairByUser} ${classBookingChairByOtherUser}
                                         `}
                                         onClick={() => {
-                                            dispatch(bookingChairAction(chair, props.match.params.id))
+                                            // dispatch(bookingChairAction(chair, props.match.params.id))
+                                            dispatch({
+                                                type: BOOKING_CHAIR,
+                                                bookingChair: chair
+                                            })
                                         }}
                                     >
                                         {chair.daDat ? classBookedChair !== '' ?
@@ -152,8 +180,6 @@ function Checkout(props) {
                     </div>
                 </div>
                 <div className='col-span-3 min-h-screen'>
-                    <h3 className='text-center text-green-200 text-2xl'>0 đ</h3>
-                    <hr/>
                     <h3 className="text-xl mt-5">{thongTinPhim.tenPhim}</h3>
                     <p>{thongTinPhim.diaChi} - {thongTinPhim.tenRap}</p>
                     <p>{moment(thongTinPhim.ngayKhoiChieu).format('L')}</p>
@@ -213,24 +239,61 @@ function Checkout(props) {
 
 // export default Checkout;
 
-export default function (props) {
+export default function Checkout(props) {
 
     const dispatch = useDispatch();
     const {tabActive} = useSelector(state => state.TicketManagementReducer)
 
-    return <div className='p-5'>
-        <Tabs style={{marginLeft: 30}} activeKey={tabActive} defaultActiveKey="1" onChange={(key) => {
-            dispatch({
-                type: SWITCH_TAB,
-                numTab: key
-            })
+    const {userLogin} = useSelector(state => state.UserReducer)
+    
+    useEffect(() => {
+      dispatch({
+          type: SWITCH_TAB,
+          numTab: '2'
+      })
+    },[])
 
-        }}>
-            <TabPane tab="01 CHỌN GHẾ VÀ THANH TOÁN" key="1">
-                <Checkout {...props}/>
+    const operations = <Fragment>
+        {!_.isEmpty(userLogin) ? <Fragment>
+
+            <div className='flex flex-row items-center mb-4'>
+                <div>Xin chào, {userLogin.hoTen} </div>
+                <Avatar style={{marginLeft: 15, marginRight:35}} squared text={userLogin.hoTen.substr(0, 1)}
+                        onClick={() => {
+                            history.push('/profile')
+                        }}
+                />
+                <button
+                    onClick={() => {
+                        localStorage.removeItem(USER_LOGIN);
+                        localStorage.removeItem(ACCESS_TOKEN);
+                        history.push('/home');
+                        window.location.reload();
+                    }}
+                > Đăng xuất
+                </button>
+            </div>
+        </Fragment> : ''}
+
+    </Fragment>
+
+    return <div className='p-5'>
+        <Tabs tabBarExtraContent={operations} style={{marginLeft: 30}} activeKey={tabActive} defaultActiveKey="2"
+              onChange={(key) => {
+                  dispatch({
+                      type: SWITCH_TAB,
+                      numTab: key
+                  })
+
+              }}>
+            <TabPane tab={<div className='text-center flex justify-center items-center'><NavLink to='/home'><HomeOutlined /></NavLink></div>} key="1">
             </TabPane>
 
-            <TabPane tab="02 KẾT QUẢ ĐẶT VÉ" key="2">
+            <TabPane tab="01 CHỌN GHẾ VÀ THANH TOÁN" key="2">
+                <Booking {...props}/>
+            </TabPane>
+
+            <TabPane tab="02 KẾT QUẢ ĐẶT VÉ" key="3">
                 <ResultBooking {...props}/>
             </TabPane>
         </Tabs>

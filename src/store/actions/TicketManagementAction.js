@@ -25,9 +25,9 @@ export const getListTicketRoomAction = (idShowtimes) => {
 }
 
 export const bookingAction = (dataBooking = new DataBooking()) => {
-    return async dispatch => {
+    return async ( dispatch, getState ) => {
         try {
-            // dispatch(displayLoadingAction)
+            dispatch(displayLoadingAction)
 
             const result = await http.post('/api/QuanLyDatVe/DatVe', dataBooking)
             console.log('resultBooking', result)
@@ -38,7 +38,11 @@ export const bookingAction = (dataBooking = new DataBooking()) => {
             // clear
             await dispatch({type: BOOKING_SUCCESS})
 
-            // await dispatch(hideLoadingAction)
+            await dispatch(hideLoadingAction)
+
+            // let userLogin = getState().UserReducer.userLogin;
+            // connection.invoke('datGheThanhCong', userLogin.taiKhoan, dataBooking.maLichChieu)
+            
             dispatch({type: AUTO_SWITCH_TAB})
 
         } catch (error) {
@@ -48,22 +52,22 @@ export const bookingAction = (dataBooking = new DataBooking()) => {
     }
 }
 
-export const bookingChairAction = (chair, idShowtime) => {
-    return async (dispatch, getState) => {
-        await dispatch({
-            type: BOOKING_CHAIR,
-            bookingChair: chair
-        })
-
-        let listBookingChair = getState().TicketManagementReducer.listBookingChair;
-        let accountUser = getState().UserReducer.userLogin.taiKhoan;
-        console.log('list-booking-chair', listBookingChair)
-        console.log('account-user', accountUser)
-        console.log('id-showtime', idShowtime)
-
-        listBookingChair = JSON.stringify(listBookingChair)
-
-        connection.invoke('datGhe', listBookingChair, accountUser, idShowtime)
-
-    }
-}
+// export const bookingChairAction = (chair, idShowtime) => {
+//     return async (dispatch, getState) => {
+//         await dispatch({
+//             type: BOOKING_CHAIR,
+//             bookingChair: chair
+//         })
+//
+//         let listBookingChair = getState().TicketManagementReducer.listBookingChair;
+//         let accountUser = getState().UserReducer.userLogin.taiKhoan;
+//         console.log('list-booking-chair', listBookingChair)
+//         console.log('account-user', accountUser)
+//         console.log('id-showtime', idShowtime)
+//
+//         listBookingChair = JSON.stringify(listBookingChair)
+//
+//         connection.invoke('datGhe', listBookingChair, accountUser, idShowtime)
+//
+//     }
+// }
