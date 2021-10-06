@@ -15,7 +15,7 @@ import {
 } from 'antd';
 import {useFormik} from "formik";
 import {GROUP_ID, http} from "../../../../util/settings";
-import {getInfoFilmsAction} from "../../../../store/actions/FilmsAction";
+import {getInfoFilmsAction, updateFilmsAction} from "../../../../store/actions/FilmsAction";
 import {useDispatch, useSelector} from "react-redux";
 
 
@@ -50,22 +50,22 @@ function EditFilms(props) {
         },
         onSubmit: (values) => {
             console.log(values)
-
+            values.maNhom = GROUP_ID
             let fromData = new FormData();
 
             for (let key in values) {
                 if (key !== 'hinhAnh') {
                     fromData.append(key, values[key]);
                 } else {
-                    fromData.append('File', values.hinhAnh, values.hinhAnh.name)
+                    if (values.hinhAnh !== null) {
+                        fromData.append('File', values.hinhAnh, values.hinhAnh.name)
+                    }
                 }
             }
+            console.log('from-data', fromData)
+            console.log('values', values)
+            dispatch(updateFilmsAction(fromData))
 
-            http.post('/api/QuanLyPhim/ThemPhimUploadHinh', fromData).then((response) => {
-                console.log('response: ' + response);
-            }).catch(error => {
-                console.log({error});
-            })
         }
     })
 
@@ -74,9 +74,8 @@ function EditFilms(props) {
         setComponentSize(size);
     };
 
-    const handleChangeDataPicker = (date, dataString) => {
-        const dateLocal = moment(date).format('DD/MM/YYYY')
-        console.log('dateLocal', dateLocal);
+    const handleChangeDataPicker = (date) => {
+        const dateLocal = moment(date)
         formik.setFieldValue('ngayKhoiChieu', dateLocal)
     }
 
@@ -84,19 +83,18 @@ function EditFilms(props) {
         formik.setFieldValue(name, checked)
     }
 
-    const handleChangeFile = async (event) => {
-        let file = event.target.files[0];
+    const handleChangeFile = async (e) => {
+        let file = e.target.files[0];
 
         // console.log('file', file);
         let reader = new FileReader();
 
+        await formik.setFieldValue('hinhAnh', file)
         reader.readAsDataURL(file)
-
-        reader.onload = async (e) => {
+        reader.onload = (e) => {
             // console.log(e.target.result)
             setImgSrc(e.target.result)
         }
-        formik.setFieldValue('hinhAnh', file)
 
     }
 
@@ -133,7 +131,7 @@ function EditFilms(props) {
 
                 <Form.Item label="Ngày khởi chiếu">
                     <DatePicker onChange={handleChangeDataPicker} format='DD/MM/YYYY' name='ngayKhoiChieu'
-                                value={moment(formik.values.ngayKhoiChieu,'DD/MM/YYYY')}
+                                value={moment(formik.values.ngayKhoiChieu)}
                     />
                 </Form.Item>
 
@@ -186,9 +184,7 @@ function EditFilms(props) {
                 </Form.Item>
 
                 <Form.Item label="Chức năng">
-                    <Button shadow type='submit' color="primary" auto>
-                        Chỉnh sửa phim
-                    </Button>
+                    <Button shadow type='submit' color="primary" auto>Cập nhật</Button>
                 </Form.Item>
 
             </Form>

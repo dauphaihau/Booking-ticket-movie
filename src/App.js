@@ -16,10 +16,10 @@ import Profile from "./pages/Profile/Profile";
 import {AdminTemplate} from "./templates/AdminTemplate/AdminTemplate";
 import Films from "./pages/Admin/Films/Films";
 import Dashboard from "./pages/Admin/Dashboard/Dashboard";
-import Showtimes from "./pages/Admin/Showtimes/Showtimes";
 import Users from "./pages/Admin/Users/Users";
 import AddFilms from "./pages/Admin/Films/AddFilms/AddFilms";
 import EditFilms from "./pages/Admin/Films/EditFilms/EditFilms";
+import Showtime from "./pages/Admin/Showtimes/Showtime";
 
 function App() {
     return (
@@ -38,7 +38,7 @@ function App() {
                 <AdminTemplate exact path='/admin/films' Component={Films}/>
                 <AdminTemplate exact path='/admin/films/addfilms' Component={AddFilms}/>
                 <AdminTemplate exact path='/admin/films/edit/:id' Component={EditFilms}/>
-                <AdminTemplate exact path='/admin/showtimes' Component={Showtimes}/>
+                <AdminTemplate exact path='/admin/films/showtime/:id/:tenphim' Component={Showtime}/>
                 <AdminTemplate exact path='/admin/users' Component={Users}/>
 
 

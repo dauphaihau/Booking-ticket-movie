@@ -1,6 +1,6 @@
 import React, {Fragment, useState} from 'react';
 import moment from "moment";
-import { Button } from '@nextui-org/react';
+import {Button} from '@nextui-org/react';
 
 import {
     Form,
@@ -14,11 +14,14 @@ import {
     Switch,
 } from 'antd';
 import {useFormik} from "formik";
-import {GROUP_ID, http} from "../../../../util/settings";
+import {GROUP_ID, history, http} from "../../../../util/settings";
+import {getListFilmsAction} from "../../../../store/actions/FilmsAction";
+import {useDispatch} from "react-redux";
 
 
 function AddFilms(props) {
 
+    const dispatch = useDispatch();
     const [componentSize, setComponentSize] = useState('default');
 
     const [imgSrc, setImgSrc] = useState('https://picsum.photos/200/200');
@@ -52,6 +55,9 @@ function AddFilms(props) {
 
             http.post('/api/QuanLyPhim/ThemPhimUploadHinh', fromData).then((response) => {
                 console.log('response: ' + response);
+                alert('Thêm phim thành công')
+                dispatch(getListFilmsAction())
+                history.push('/admin/films')
             }).catch(error => {
                 console.log({error});
             })
@@ -92,7 +98,7 @@ function AddFilms(props) {
 
     return (
         <Fragment>
-            <h3>add movie</h3>
+            <h3></h3>
             <Form
                 onSubmitCapture={formik.handleSubmit}
                 labelCol={{span: 4}}
@@ -110,14 +116,18 @@ function AddFilms(props) {
                     </Radio.Group>
                 </Form.Item>
 
+                <Form.Item label='Chức năng'>
+                    <span className="ant-form-text">THÊM PHIM</span>
+                </Form.Item>
+
                 <Form.Item label="Tên phim">
-                    <Input onChange={formik.handleChange} name='tenPhim'/>
+                    <Input style={{width: 300}} onChange={formik.handleChange} name='tenPhim'/>
                 </Form.Item>
                 <Form.Item label="Mô tả">
-                    <Input onChange={formik.handleChange} name='moTa'/>
+                    <Input style={{width: 300}} onChange={formik.handleChange} name='moTa'/>
                 </Form.Item>
                 <Form.Item label="Trailer">
-                    <Input onChange={formik.handleChange} name='trailer'/>
+                    <Input style={{width: 300}} onChange={formik.handleChange} name='trailer'/>
                 </Form.Item>
 
                 <Form.Item label="Ngày khởi chiếu">
@@ -153,7 +163,10 @@ function AddFilms(props) {
                     <img style={{width: 200}} className='mt-2' src={imgSrc} alt="..."/>
                 </Form.Item>
 
-                <Form.Item label="Chức năng">
+                <Form.Item wrapperCol={{
+                    span: 1,
+                    offset: 4,
+                }}>
                     <Button shadow type='submit' color="primary" auto>
                         Thêm phim
                     </Button>

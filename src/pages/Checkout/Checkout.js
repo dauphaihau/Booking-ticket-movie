@@ -13,7 +13,7 @@ import {getDataUserAction} from "../../store/actions/UserAction";
 import {connection} from "../../index";
 import {ACCESS_TOKEN, history, USER_LOGIN} from "../../util/settings";
 import DropdownTail from "../../components/Dropdown/DropdownTail";
-import {Avatar} from "@nextui-org/react";
+import {Avatar, Button} from "@nextui-org/react";
 import {NavLink} from "react-router-dom";
 
 const {TabPane} = Tabs;
@@ -185,6 +185,15 @@ function Booking(props) {
                     <p>{moment(thongTinPhim.ngayKhoiChieu).format('L')}</p>
                     <hr/>
                     <div className='my-5'>
+                        <i>Email</i><br/>
+                        <p>{userLogin.email}</p>
+                    </div>
+                    <hr/>
+                    <div className='my-5'>
+                        <i>Số điện thoại</i><br/>
+                        <p>{userLogin.soDT}</p>
+                    </div>
+                    <div className='my-5'>
                         <div className='w-4/5'>
                             <p className='text-xl'>Ghế bạn chọn</p>
 
@@ -208,29 +217,21 @@ function Booking(props) {
                             </div>
                         </div>
                     </div>
-                    <hr/>
-                    <div className='my-5'>
-                        <i>Email</i><br/>
-                        <p>{userLogin.email}</p>
-                    </div>
-                    <hr/>
-                    <div className='my-5'>
-                        <i>Số điện thoại</i><br/>
-                        <p>{userLogin.soDT}</p>
-                    </div>
-                    <hr/>
-                    <div
-                        className="text-center bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded"
-                        onClick={() => {
-                            const dataBooking = new DataBooking()
-                            dataBooking.maLichChieu = props.match.params.id;
-                            dataBooking.danhSachVe = listBookingChair
+                    {/*<div*/}
+                    {/*    className="text-center bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded"*/}
+                    {/*>*/}
+                    {/*</div>*/}
+                    <Button className='w-full' shadow color="error" auto
+                            onClick={() => {
+                                const dataBooking = new DataBooking()
+                                dataBooking.maLichChieu = props.match.params.id;
+                                dataBooking.danhSachVe = listBookingChair
 
-                            dispatch(bookingAction(dataBooking))
-                        }}
+                                dispatch(bookingAction(dataBooking))
+                            }}
                     >
                         Đặt vé
-                    </div>
+                    </Button>
                 </div>
             </div>
         </div>

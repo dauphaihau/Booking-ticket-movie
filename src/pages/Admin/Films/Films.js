@@ -1,9 +1,11 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {Table, Button, Space} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
-import {getDetailFilmsAction, getListFilmsAction} from "../../../store/actions/FilmsAction";
-import {CloseOutlined, EditOutlined} from "@ant-design/icons";
+import {deleteFilmsAction, getDetailFilmsAction, getListFilmsAction} from "../../../store/actions/FilmsAction";
+import {CalendarOutlined, CloseOutlined, EditOutlined} from "@ant-design/icons";
 import {NavLink} from "react-router-dom";
+import Search from "antd/es/input/Search";
+
 
 function Films(props) {
 
@@ -70,11 +72,23 @@ function Films(props) {
             render: (item, film, index) => {
                 return <Fragment>
                     <NavLink to={`/admin/films/edit/${film.maPhim}`}>
-                        <Button className='mr-4' type="primary" icon={<EditOutlined/>}/>
+                        <Button type="primary" icon={<EditOutlined/>}/>
                     </NavLink>
-
-                    <NavLink to={`/admin/edit/${film.maPhim}`}>
-                        <Button type="primary" danger icon={<CloseOutlined/>}/>
+                    <Button type="primary" danger icon={<CloseOutlined/>}
+                            className='mx-4'
+                            onClick={() => {
+                                if (window.confirm('Bạn có chắc muốn xóa phim' + film.tenPhim)) {
+                                    dispatch(deleteFilmsAction(film.maPhim))
+                                }
+                            }}
+                    />
+                    <NavLink to={`/admin/films/showtime/${film.maPhim}/${film.tenPhim}`}
+                             onClick={() => {
+                                 localStorage.setItem('filmParams', JSON.stringify(film))
+                             }}
+                    >
+                        <Button style={{backgroundColor: 'green', color: 'white', border: 'none'}}
+                                icon={<CalendarOutlined/>}/>
                     </NavLink>
                 </Fragment>
             },
@@ -86,9 +100,19 @@ function Films(props) {
     const onChange = (pagination, filters, sorter, extra) => {
         console.log('params', pagination, filters, sorter, extra);
     }
+
+    const onSearch = (values) => {
+        console.log('values', values)
+        dispatch(getListFilmsAction(values))
+    };
+
     return (
         <div>
-            <Table columns={columns} dataSource={arrFilmDefault} onChange={onChange}/>
+            <Search
+                placeholder="input search text"
+                size='large' className='mb-5' allowClear onSearch={onSearch}
+            />
+            <Table columns={columns} dataSource={arrFilmDefault} onChange={onChange} rowKey={"maPhim"}/>
         </div>
     );
 }

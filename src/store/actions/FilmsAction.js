@@ -1,11 +1,16 @@
 import {GET_FILMS, SET_DETAIL_FILM, SET_INFO_FILM} from "../types/Type";
-import {GROUP_ID, http} from '../../util/settings'
+import {GROUP_ID, history, http} from '../../util/settings'
 
 
-export const getListFilmsAction = () => {
+export const getListFilmsAction = (nameMovie = '') => {
     return async (dispatch) => {
         try {
+            if (nameMovie.trim() !== '') {
+                const result = await http.get(`/api/QuanLyPhim/LayDanhSachPhim?maNhom=${GROUP_ID}&tenPhim=${nameMovie}`)
+            }
             const result = await http.get(`/api/QuanLyPhim/LayDanhSachPhim?maNhom=${GROUP_ID}`)
+
+
             dispatch({
                 type: GET_FILMS,
                 arrFilms: result.data.content
@@ -34,13 +39,41 @@ export const getDetailFilmsAction = (id) => {
 
 export const getInfoFilmsAction = (id) => {
     return async (dispatch) => {
-       try {
+        try {
             const result = await http.get(`/api/QuanLyPhim/LayThongTinPhim?MaPhim=${id}`)
             dispatch({
                 type: SET_INFO_FILM,
                 infoFilm: result.data.content
             })
 
+        } catch (error) {
+            console.log('error', error)
+        }
+    }
+}
+
+
+export const updateFilmsAction = (filmEdited) => {
+    return async (dispatch) => {
+        try {
+            const result = await http.post(`/api/QuanLyPhim/CapNhatPhimUpload`, filmEdited)
+            alert('sửa phim thành công')
+            console.log('result', result)
+            dispatch(getListFilmsAction())
+            history.push('/admin/films')
+        } catch (error) {
+            console.log('error', error)
+        }
+    }
+}
+
+export const deleteFilmsAction = (idFilm) => {
+    return async (dispatch) => {
+        try {
+            const result = await http.delete(`/api/QuanLyPhim/XoaPhim?MaPhim=${idFilm}`)
+            console.log('resultdelete', result)
+            alert('Xóa phim thành công')
+            dispatch(getListFilmsAction())
         } catch (error) {
             console.log('error', error)
         }
