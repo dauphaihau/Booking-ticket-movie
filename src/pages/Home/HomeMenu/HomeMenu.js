@@ -2,6 +2,8 @@ import React, {Fragment, memo, useState} from 'react';
 import {Tabs, Radio, Space} from 'antd';
 import {NavLink} from "react-router-dom";
 import moment from "moment";
+import {Button} from "@nextui-org/react";
+import {history} from "../../../util/settings";
 
 const {TabPane} = Tabs;
 
@@ -33,21 +35,26 @@ function HomeMenu(props) {
                                 key={index}>
                                 {cumRap.danhSachPhim?.slice(0,4).map((film, index) => {
                                     return <Fragment key={index}>
-                                        <div className="my-5 border-b-2 border-gray-100">
+                                        <div className="my-5 ">
                                             <div className="flex">
                                                 <img src={film.hinhAnh} alt={film.tenPhim}
-                                                     style={{height: 100, width: 100}}
+                                                     style={{height: 104, width: 104}}
                                                      onError={(e)=>{e.target.onerror = null; e.target.src="https://picsum.photos/200/200"}}
                                                 />
                                                 <div className="ml-3">
                                                     <h1 className="text-2xl font-bold">{film.tenPhim}</h1>
                                                     <p>{cumRap.diaChi}</p>
-                                                    <div className='grid grid-cols-6 gap-6'>
-                                                        {film.lstLichChieuTheoPhim?.slice(0,6).map((showtimes, index) => {
-                                                        return <NavLink className='text-lg' to={`/checkout/${showtimes.maLichChieu}`} key={index}>
-                                                            {moment(showtimes.ngayKhoiChieu).format('hh:mm A')}
-                                                        </NavLink>
-                                                    })}
+                                                    <div className='flex flex-row'>
+                                                        {film.lstLichChieuTheoPhim.slice(0, 4).map((showtime, index) => {
+                                                            return <Button className='mr-4' size='mini' shadow key={index}
+                                                                           color="primary" auto
+                                                                           onClick={() => {
+                                                                               history.push(`/checkout/${showtime.maLichChieu}`)
+                                                                           }}
+                                                            >
+                                                                {moment(showtime.ngayKhoiChieu).format('hh:mm A')}
+                                                            </Button>
+                                                        })}
                                                     </div>
                                                 </div>
                                             </div>

@@ -1,4 +1,10 @@
-import {GET_FILMS, SET_DETAIL_FILM, SET_FILM_DANG_CHIEU, SET_FILM_SAP_CHIEU, SET_INFO_FILM} from "../types/Type";
+import {
+    SET_FILMS,
+    SET_DETAIL_FILM,
+    SET_FILM_COMING_SOON,
+    SET_FILM_NEW_IN,
+    SET_INFO_FILM
+} from "../types/Type";
 
 const initialState = {
     arrFilms: [
@@ -17,8 +23,8 @@ const initialState = {
             "sapChieu": false
         },
     ],
-    dangChieu: true,
-    sapChieu: true,
+    filmNewIn: true,
+    filmComingSoon: true,
     arrFilmDefault: [],
     detailFilm: {},
     infoFilm: {}
@@ -27,21 +33,22 @@ const initialState = {
 
 export const FilmsReducer = (state = initialState, action) => {
     switch (action.type) {
-        case GET_FILMS: {
-            state.arrFilmDefault = action.arrFilms;
-            return {...state, arrFilms: action.arrFilms}
-        }
-
-        case SET_FILM_DANG_CHIEU: {
-
-            state.dangChieu = !state.dangChieu;
-            state.arrFilms = state.arrFilmDefault.filter(film => film.dangChieu === state.dangChieu)
+        case SET_FILMS: {
+            state.arrFilms = action.arrFilms
+            state.arrFilmDefault = state.arrFilms;
+            console.log('arr-film-default', state.arrFilmDefault)
             return {...state}
         }
 
-        case SET_FILM_SAP_CHIEU: {
-            state.sapChieu = !state.sapChieu;
-            state.arrFilms = state.arrFilmDefault.filter(film => film.sapChieu === film.sapChieu)
+        case SET_FILM_NEW_IN: {
+            state.filmNewIn = !state.filmNewIn;
+            state.arrFilms = state.arrFilmDefault.filter(film => film.dangChieu === state.filmNewIn)
+            return {...state}
+        }
+
+        case SET_FILM_COMING_SOON: {
+            state.filmComingSoon = !state.filmComingSoon;
+            state.arrFilms = state.arrFilmDefault.filter(film => film.sapChieu === film.filmComingSoon)
             return {...state}
         }
 

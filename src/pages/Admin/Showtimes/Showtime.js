@@ -95,8 +95,8 @@ function Showtime(props) {
             initialValues={{remember: true,}}
             onSubmitCapture={formik.handleSubmit}
         >
-            <Form.Item label='Tạo lịch Chiếu Phim'>
-                <span className="ant-form-text">{props.match.params.tenphim}</span>
+            <Form.Item label='Tạo lịch chiếu phim'>
+                <span className="ant-form-text font-bold" style={{marginLeft: 5}}>{props.match.params.tenphim}</span>
             </Form.Item>
 
             <Form.Item label="Hệ thống rạp">
@@ -129,7 +129,7 @@ function Showtime(props) {
                 span: 1,
                 offset: 8,
             }}>
-                <Button shadow type='submit' color="primary" auto>Tạo lịch chiếu phim</Button>
+                <Button shadow type='submit' color="primary" auto>Tạo lịch</Button>
             </Form.Item>
         </Form>
     </div>

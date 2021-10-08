@@ -1,4 +1,4 @@
-import {SET_DATA_LOGIN, SET_DATA_USER} from "../types/Type";
+import {SET_ALL_TYPE_USER, SET_DATA_LOGIN, SET_DATA_USER, SET_INFO_USER, SET_LIST_USER} from "../types/Type";
 import {ACCESS_TOKEN, USER_LOGIN} from "../../util/settings";
 import {DataUser} from "../../_core/models/dataUser";
 
@@ -11,6 +11,9 @@ if (localStorage.getItem(USER_LOGIN)) {
 const initialState = {
     userLogin: user,
     dataUser: new DataUser(),
+    listUser: [],
+    infoUser: {},
+    typeUser: [],
 }
 
 export const UserReducer = (state = initialState, action) => {
@@ -25,6 +28,18 @@ export const UserReducer = (state = initialState, action) => {
         }
         case SET_DATA_USER: {
             return {...state, dataUser: action.dataUser}
+        }
+
+        case SET_LIST_USER: {
+            return {...state, listUser: action.listUser}
+        }
+
+        case SET_INFO_USER: {
+            return {...state, infoUser: action.infoUser}
+        }
+
+        case SET_ALL_TYPE_USER: {
+            return {...state, typeUser: action.typeUser}
         }
 
         default:

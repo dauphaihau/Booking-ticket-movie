@@ -1,17 +1,19 @@
+.slick-prev:before, .slick-next:before {
 
-/*.slick-prev:before, .slick-next:before {*/
-/*    color: gray !important;*/
-/*    font-size: 3em !important;*/
-/*}*/
+    color: gray !important;
+    font-size: 3rem !important;
+}
 
-/*.width-item {*/
-/*    width: 100% !important;*/
-/*}*/
 
-/*.active-film {*/
-/*    @apply bg-gray-800 text-white*/
-/*}*/
+.width-item {
+    width: 100%  !important;
+}
 
-/*.non-active-film {*/
-/*    @apply bg-white text-gray-800*/
-/*}*/
+.active_Film {
+    @apply bg-blue-400 text-white
+}
+
+
+.none_active_Film {
+    @apply bg-white text-blue-400
+}

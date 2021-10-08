@@ -1,20 +1,24 @@
 import React from 'react';
-import {history} from "../../util/settings";
 import {useFormik} from "formik";
 import {NavLink} from "react-router-dom";
-import {useDispatch, useSelector} from "react-redux";
-import {LoginAction, UserAction} from "../../store/actions/UserAction";
+import {useDispatch} from "react-redux";
+import {LoginAction} from "../../store/actions/UserAction";
+import * as Yup from "yup";
+import {Button, Input} from "@nextui-org/react";
 
 function Login(props) {
 
     const dispatch = useDispatch();
-    // const {userLogin} = useSelector(state => state.UserReducer)
 
     const formik = useFormik({
         initialValues: {
             taiKhoan: '',
             matKhau: '',
         },
+        validationSchema: Yup.object({
+            taiKhoan: Yup.string().required('Tài khoản không được bỏ trống').min(6, 'Tài khoản ít nhất phải 6 ký tự').max(32, 'Tài khoản không được quá 32 ký tự'),
+            matKhau: Yup.string().required('Mật khẩu không được để trống').min(6, 'Mật khẩu ít nhất phải 6 ký tự').max(32, 'Mật khẩu không được quá 32 ký tự'),
+        }),
         onSubmit: values => {
             dispatch(LoginAction(values))
         }
@@ -59,53 +63,37 @@ function Login(props) {
                 <h2 className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl xl:text-bold">Đăng
                     Nhập</h2>
                 <div className="mt-12">
-                    <div>
-                        <div>
-                            <div className="text-sm font-bold text-gray-700 tracking-wide">Tài Khoản</div>
-                            <input
-                                className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
-                                name='taiKhoan'
-                                type
-                                onChange={formik.handleChange}
-                                placeholder="mike@gmail.com"
-                            />
-                        </div>
-                        <div className="mt-8">
-                            <div className="flex justify-between items-center">
-                                <div className="text-sm font-bold text-gray-700 tracking-wide">
-                                    Mật Khẩu
-                                </div>
-                                {/*<div>*/}
-                                {/*    <a*/}
-                                {/*        className="text-xs font-display font-semibold text-indigo-600 hover:text-indigo-800*/}
-                                {/*  cursor-pointer"*/}
-                                {/*    >*/}
-                                {/*        Forgot Password?*/}
-                                {/*    </a>*/}
-                                {/*</div>*/}
-                            </div>
-                            <input
-                                className="w-full text-lg py-2 border-b border-gray-300 focus:outline-none focus:border-indigo-500"
-                                name='matKhau'
-                                onChange={formik.handleChange}
-                                type
-                                placeholder="nhập vào mật khẩu"
-                            />
-                        </div>
-                        <div className="mt-10">
-                            <button
-                                type='submit'
-                                className="bg-indigo-500 text-gray-100 p-4 w-full rounded-full tracking-wide
-                          font-semibold font-display focus:outline-none focus:shadow-outline hover:bg-indigo-600
-                          shadow-lg"
-                            >
-                                Đăng Nhập
-                            </button>
-                        </div>
+                    <div className='mt-6'>
+                        <Input
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            helperText={formik.touched.taiKhoan && formik.errors.taiKhoan ? `${formik.errors.taiKhoan}` : null}
+                            clearable name='taiKhoan'
+                            // helperText="Please enter your name"
+                            label="Tài khoản" size='large' placeholder="Nhập tên tài khoản của bạn" width='100%'
+                        />
+                    </div>
+                    <div className='mt-10'>
+                        <Input.Password
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            helperText={formik.touched.matKhau && formik.errors.matKhau ? `${formik.errors.matKhau}` : null}
+                            name='matKhau'
+                            // helperText="Please enter your name"
+                            label="Mật khẩu" size='large' type="password" placeholder="Nhập mật khẩu của bạn"
+                            width='100%'
+                        />
+                    </div>
+                    <div className="mt-10">
+                        <Button style={{width: '100%'}} shadow color="primary" auto
+                                type='submit' size='xlarge'
+                        >
+                            Đăng Nhập
+                        </Button>
                     </div>
                     <div className="mt-12 text-sm font-display font-semibold text-gray-700 text-center">
                         Bạn chưa có tài khoản ?{" "}
-                        <NavLink to='/register' className="cursor-pointer text-indigo-600 hover:text-indigo-800">
+                        <NavLink to='/register' className="cursor-pointer text-blue-600 hover:text-blue-800">
                             Đăng ký
                         </NavLink>
                     </div>

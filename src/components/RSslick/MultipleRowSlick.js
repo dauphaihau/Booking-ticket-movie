@@ -1,46 +1,45 @@
-import React, {Component} from "react";
+import React from "react";
 import Slider from "react-slick";
 import Film from "../Film/Film";
 import styleSlick from './MultipleRowSlick.module.css'
 import {useDispatch, useSelector} from "react-redux";
-import {SET_FILM_DANG_CHIEU, SET_FILM_SAP_CHIEU} from "../../store/types/Type";
+import {SET_FILM_COMING_SOON, SET_FILM_NEW_IN} from "../../store/types/Type";
+
+function SamplePrevArrow(props) {
+    const {className, style, onClick} = props;
+    return (
+        <div
+            className={`${className} ${styleSlick['slick-prev']}`}
+            style={{...style, display: "block", left: '-50px' }}
+            onClick={onClick}
+        />
+    );
+}
 
 function SampleNextArrow(props) {
     const {className, style, onClick} = props;
     return (
         <div
             className={`${className} ${styleSlick['slick-prev']}`}
-            style={{...style, display: "inline", background: 'black'}}
+            style={{...style, display: "block" }}
             onClick={onClick}
         />
     );
 }
-
-function SamplePrevArrow(props) {
-    const {className, style, onClick} = props;
-    return (
-        <div
-            className={`${className} ${styleSlick['slickPrev']}`}
-            style={{...style, display: "block", background: "black"}}
-            onClick={onClick}
-        />
-    );
-}
-
 
 
 function MultipleRowSlick(props) {
 
-    const {dangChieu, sapChieu} = useSelector(state => state.FilmsReducer)
-    let activeClassDC = dangChieu === true ? 'active-film' : 'non-active-film'
-    let activeClassSC = sapChieu === true ? 'active-film' : 'non-active-film'
-
     const dispatch = useDispatch();
+    const {filmNewIn, filmComingSoon} = useSelector(state => state.FilmsReducer)
+    let activeClassDC = filmNewIn === true ? 'active_Film' : 'none_active_Film';
+    let activeClassSC = filmComingSoon === true ? 'active_Film' : 'none_active_Film';
+
+    console.log('active-class-sc', activeClassSC)
 
     const renderListFilms = () => {
 
         return props.arrFilms.slice(0, 12).map((film, index) => {
-            // return <div key={index} className={`${styleSlick['width-item']}`}>
             return <div key={index}>
                 <Film film={film}/>
             </div>
@@ -48,14 +47,20 @@ function MultipleRowSlick(props) {
     }
 
     const settings = {
-        className: "center variable-width",
-        centerMode: true,
+        dots: true,
         infinite: true,
-        centerPadding: "60px",
+        speed: 1500,
         slidesToShow: 3,
-        speed: 500,
+        slidesToScroll: 3,
+
+        className: "center variable-width",
+        // centerMode: true,
+        // centerPadding: "60px",
         rows: 1,
         slidesPerRow: 2,
+        autoplay: true,
+        pauseOnHover: true,
+
         variableWidth: true,
         nextArrow: <SampleNextArrow/>,
         prevArrow: <SamplePrevArrow/>
@@ -63,25 +68,25 @@ function MultipleRowSlick(props) {
 
     return (
         <div>
-            <button type="button"
-                    className={`${activeClassDC} mb-4 px-8 py-3 font-semibold rounded bg-gray-800 text-white mr-5 border rounded-xl` }
-                    onClick={() => {
-                        dispatch({type: SET_FILM_DANG_CHIEU})
-                    }}
-            >NEW IN
+            <button
+                type="button"
+                className={`${styleSlick[activeClassDC]} mb-4 px-8 py-3 font-semibold rounded bg-blue-400 text-white mr-5 border rounded-xl`}
+                onClick={() => {
+                    dispatch({type: SET_FILM_NEW_IN})
+                }}
+            >
+                NEW IN
             </button>
-            <button type="button"
-                    className={`${activeClassSC} mb-4 px-8 py-3 font-semibold text-gray-800 border-gray-800 border rounded-xl` }
-                    onClick={() => {
-                        dispatch({type: SET_FILM_SAP_CHIEU})
-                    }}
-            >COMING SOON
+            <button
+                type="button"
+                className={`${styleSlick[activeClassSC]} mb-4 px-8 py-3 font-semibold bg-white text-blue-400 border-gray-400 border rounded-xl`}
+                onClick={() => {
+                    dispatch({type: SET_FILM_COMING_SOON})
+                }}
+            >
+                COMING SOON
             </button>
             <Slider {...settings}>
-                {renderListFilms()}
-                {renderListFilms()}
-                {renderListFilms()}
-                {renderListFilms()}
                 {renderListFilms()}
                 {renderListFilms()}
                 {renderListFilms()}

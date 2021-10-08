@@ -10,11 +10,15 @@
 /*    background-color: #38e26d !important;*/
 /*}*/
 
+a { color: inherit; }
 
 .border-color {
     border-bottom-color: red !important;
 }
 
+.ant-tabs-tab.ant-tabs-tab-active .ant-tabs-tab-btn {
+    color: black !important;
+}
 
 .ant-menu.ant-menu-dark, .ant-menu-dark .ant-menu-sub, .ant-menu.ant-menu-dark .ant-menu-sub {
     background-color: black !important;
@@ -23,3 +27,11 @@
 .ant-layout-sider {
     background-color: black !important;
 }
+
+
+
+/*-----------*/
+
+
+
+

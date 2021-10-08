@@ -5,6 +5,8 @@ import {deleteFilmsAction, getDetailFilmsAction, getListFilmsAction} from "../..
 import {CalendarOutlined, CloseOutlined, EditOutlined} from "@ant-design/icons";
 import {NavLink} from "react-router-dom";
 import Search from "antd/es/input/Search";
+import {GROUP_ID, history, http} from "../../../util/settings";
+import {SET_FILMS} from "../../../store/types/Type";
 
 
 function Films(props) {
@@ -101,9 +103,16 @@ function Films(props) {
         console.log('params', pagination, filters, sorter, extra);
     }
 
-    const onSearch = (values) => {
-        console.log('values', values)
-        dispatch(getListFilmsAction(values))
+    const onSearch = (nameMovie = '') => {
+        http.get(`/api/QuanLyPhim/LayDanhSachPhim?maNhom=${GROUP_ID}&tenPhim=${nameMovie}`).then((response) => {
+            console.log('response: ' + response);
+            dispatch({
+                type: SET_FILMS,
+                arrFilms: response.data.content
+            })
+        }).catch(error => {
+            console.log({error});
+        })
     };
 
     return (

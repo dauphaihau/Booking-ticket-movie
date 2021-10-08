@@ -1,18 +1,15 @@
-import {GET_FILMS, SET_DETAIL_FILM, SET_INFO_FILM} from "../types/Type";
+import {SET_FILMS, SET_DETAIL_FILM, SET_INFO_FILM} from "../types/Type";
 import {GROUP_ID, history, http} from '../../util/settings'
 
 
-export const getListFilmsAction = (nameMovie = '') => {
+export const getListFilmsAction = () => {
     return async (dispatch) => {
         try {
-            if (nameMovie.trim() !== '') {
-                const result = await http.get(`/api/QuanLyPhim/LayDanhSachPhim?maNhom=${GROUP_ID}&tenPhim=${nameMovie}`)
-            }
             const result = await http.get(`/api/QuanLyPhim/LayDanhSachPhim?maNhom=${GROUP_ID}`)
 
 
             dispatch({
-                type: GET_FILMS,
+                type: SET_FILMS,
                 arrFilms: result.data.content
             })
 

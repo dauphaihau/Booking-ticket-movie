@@ -117,7 +117,7 @@ function AddFilms(props) {
                 </Form.Item>
 
                 <Form.Item label='Chức năng'>
-                    <span className="ant-form-text">THÊM PHIM</span>
+                    <span className="font-bold ant-form-text">THÊM PHIM</span>
                 </Form.Item>
 
                 <Form.Item label="Tên phim">

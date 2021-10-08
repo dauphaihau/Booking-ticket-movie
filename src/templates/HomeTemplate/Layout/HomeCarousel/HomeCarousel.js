@@ -27,6 +27,7 @@ function HomeCarousel(props) {
         return arrCarousel.map((banner, index) => {
             return <div key={index}>
                 <div style={{...contentStyle, backgroundImage: `url(${banner.hinhAnh}`}}>
+                    ackackalcanl
                     <img src={banner.hinhAnh} width='100%'
                          className='w-full h-full opacity-0' alt="..."/>
                 </div>
@@ -35,7 +36,8 @@ function HomeCarousel(props) {
     }
 
     return (
-        <Carousel effect="fade" className='z-0'>
+        <Carousel autoplay effect="fade"
+                  style={{width: '100%', padding: 0, margin: 0}}>
             {renderCarousel()}
         </Carousel>
     );

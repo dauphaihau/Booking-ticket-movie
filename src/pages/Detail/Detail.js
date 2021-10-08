@@ -6,6 +6,8 @@ import {useDispatch, useSelector} from "react-redux";
 import {getDetailFilmsAction} from "../../store/actions/FilmsAction";
 import moment from "moment";
 import {NavLink} from "react-router-dom";
+import {Button} from "@nextui-org/react";
+import {history} from "../../util/settings";
 
 const {TabPane} = Tabs;
 
@@ -32,37 +34,30 @@ function Detail(props) {
             <CustomCard style={{paddingTop: 150, minHeight: '100vh'}}
                         effectColor="#fff" // required
                         color="#000000" // default color is white
-                        blur={25} // default blur value is 10px
+                        blur={50} // default blur value is 10px
                         borderRadius={1}
             >
-                <div className="grid grid-cols-12">
-                    <div className="col-span-4 col-start-4">
-                        <div className='grid grid-cols-3'>
-                            <img className='col-span-1' src={detailFilm.hinhAnh} style={{width: 300, height: 300}}
-                                 alt={detailFilm.tenPhim}/>
-                            <div className='ml-4 col-span-2 text-white'>
-                                <p className='text-sm'>{moment(detailFilm.ngayKhoiChieu).format('DD.MM.YY')}</p>
-                                <p className='leading-5 text-4xl'>{detailFilm.tenPhim}</p>
-                                <p>{detailFilm.moTa}</p>
+                <div className='w-2/3 ml-72 mx-auto container py-5 rounded-lg'>
+                    <div className='grid grid-cols-3 gap-x-8'>
+                        <img className='col-span-1 rounded-lg' src={detailFilm.hinhAnh}
+                             style={{width: 250, height: 300}}
+                             alt={detailFilm.tenPhim}/>
+                        <div className='col-span-2 text-white'>
+                            <p className='text-4xl mb-4'>{detailFilm.tenPhim}</p>
+                            <p>{detailFilm.moTa}</p>
+                            <p className='text-sm'>Ngày khởi
+                                chiếu: {moment(detailFilm.ngayKhoiChieu).format('DD.MM.YY')}</p>
+                            <div style={{marginBottom: 18}}>
+                                <Rate style={{fontSize: 16}} allowHalf value={detailFilm.danhGia / 2}/>
                             </div>
-                        </div>
-                    </div>
-                    <div className="col-span-4 ml-24">
-                        <h1 style={{marginLeft: '21%', color: 'yellow', fontWeight: 'bold', fontSize: 15}}>Đánh giá</h1>
-                        <h1 style={{marginLeft: '5%'}} className='text-gray-400 text-2xl'>
-                            <Rate style={{color: '#78ed87', fontSize: 38}} allowHalf value={detailFilm.danhGia / 2}/>
-                        </h1>
-                        <div className={`c100 p${detailFilm.danhGia * 10} big green mt-4 ml-5`}>
-                            <span>{detailFilm.danhGia * 10}%</span>
-                            <div className="slice">
-                                <div className="bar"/>
-                                <div className="fill"/>
-                            </div>
+                            <Button shadow color="white" auto>
+                                <a href={detailFilm.trailer} style={{color: 'black'}}>XEM TRAILER</a>
+                            </Button>
                         </div>
                     </div>
                 </div>
 
-                <div className='mt-20 w-2/3 ml-72 mx-auto container bg-white px-5 py-5 rounded-lg'>
+                <div className='my-20 w-2/3 ml-72 mx-auto container bg-white px-5 py-5 rounded-lg'>
                     <Tabs defaultActiveKey='1' centered>
                         <TabPane tab="Lịch chiếu" key="1">
                             <div>
@@ -78,24 +73,27 @@ function Detail(props) {
                                                                 </div>
                                                             </div>
                                                         }>
-                                            {cinema.cumRapChieu.map((cumRap, index) => {
+                                            {cinema.cumRapChieu.slice(0,5).map((cumRap, index) => {
                                                 return <div className='mt-5' key={index}>
                                                     <div className='flex flex-row  mt-2'>
-                                                        <img width={50} height={50} src={cumRap.hinhAnh}
+                                                        <img width={100} height={100} src={cumRap.hinhAnh}
                                                              alt={cumRap.tenCumRap}/>
                                                         <div className='ml-5'>
                                                             <p className='text-xl font-bold leading-3'>{cumRap.tenCumRap}</p>
-                                                            <p>{cumRap.diaChi}</p>
-                                                        </div>
-                                                    </div>
-                                                    <div className='grid grid-cols-4'>
-                                                        {cumRap.lichChieuPhim.slice(0, 4).map((showtime, index) => {
-                                                            return <div key={index} className='col-span-1 text-green-800 mt-2'>
-                                                                <NavLink to={`/checkout/${showtime.maLichChieu}`}>
-                                                                    {moment(showtime.ngayKhoiChieu).format('hh:mm A')}
-                                                                </NavLink>
+                                                            <p style={{marginBottom: 21}}>{cumRap.diaChi}</p>
+                                                            <div className='flex flex-row'>
+                                                                {cumRap.lichChieuPhim.slice(0, 4).map((showtime, index) => {
+                                                                    return <Button className='mr-4' size='mini' shadow key={index}
+                                                                                   color="primary" auto
+                                                                                   onClick={() => {
+                                                                                       history.push(`/checkout/${showtime.maLichChieu}`)
+                                                                                   }}
+                                                                    >
+                                                                        {moment(showtime.ngayKhoiChieu).format('hh:mm A')}
+                                                                    </Button>
+                                                                })}
                                                             </div>
-                                                        })}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             })}
@@ -105,11 +103,11 @@ function Detail(props) {
                                 </Tabs>
                             </div>
                         </TabPane>
-                        <TabPane tab="Tab 2" key="2" style={{minHeight: 300}}>
-                            Content of Tab Pane 2
+                        <TabPane tab="Thông tin" key="2" style={{minHeight: 300}}>
+
                         </TabPane>
-                        <TabPane tab="Tab 3" key="3" style={{minHeight: 300}}>
-                            Content of Tab Pane 3
+                        <TabPane tab="Đánh giá" key="3" style={{minHeight: 300}}>
+
                         </TabPane>
                     </Tabs></div>
 

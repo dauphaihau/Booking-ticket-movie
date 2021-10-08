@@ -1,7 +1,6 @@
 import {Route} from "react-router-dom";
-import {Fragment, useEffect} from "react";
+import React, {Fragment, useEffect} from "react";
 import Header from "./Layout/Header/Header";
-import HomeCarousel from "./Layout/HomeCarousel/HomeCarousel";
 import Footer from "./Layout/Footer/Footer";
 
 

@@ -78,9 +78,6 @@ function Booking(props) {
     //   connection.invoke('huyDat', userLogin.taiKhoan, props.match.params.id)
     // }
 
-    console.log('detailTicketRoom', detailTicketRoom)
-    console.log('data-user', dataUser)
-
     const {danhSachGhe, thongTinPhim} = detailTicketRoom;
 
     return (
@@ -221,7 +218,7 @@ function Booking(props) {
                     {/*    className="text-center bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded"*/}
                     {/*>*/}
                     {/*</div>*/}
-                    <Button className='w-full' shadow color="error" auto
+                    <Button style={{width: '100%'}} shadow color="error" auto
                             onClick={() => {
                                 const dataBooking = new DataBooking()
                                 dataBooking.maLichChieu = props.match.params.id;
@@ -255,11 +252,11 @@ export default function Checkout(props) {
     },[])
 
     const operations = <Fragment>
-        {!_.isEmpty(userLogin) ? <Fragment>
-
+        {!_.isEmpty(userLogin) ?
+            <Fragment>
             <div className='flex flex-row items-center mb-4'>
-                <div>Xin chào, {userLogin.hoTen} </div>
-                <Avatar style={{marginLeft: 15, marginRight:35}} squared text={userLogin.hoTen.substr(0, 1)}
+                <div>Xin chào, {userLogin.name} </div>
+                <Avatar style={{marginLeft: 15, marginRight:35, cursor:'pointer'}} squared text={userLogin.name?.substr(0, 1)}
                         onClick={() => {
                             history.push('/profile')
                         }}
@@ -278,7 +275,7 @@ export default function Checkout(props) {
 
     </Fragment>
 
-    return <div className='p-5'>
+    return <div className='p-16'>
         <Tabs tabBarExtraContent={operations} style={{marginLeft: 30}} activeKey={tabActive} defaultActiveKey="2"
               onChange={(key) => {
                   dispatch({

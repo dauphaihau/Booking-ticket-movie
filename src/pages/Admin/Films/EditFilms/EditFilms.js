@@ -101,7 +101,6 @@ function EditFilms(props) {
 
     return (
         <Fragment>
-            <h3>add movie</h3>
             <Form
                 onSubmitCapture={formik.handleSubmit}
                 labelCol={{span: 4}}
@@ -117,6 +116,10 @@ function EditFilms(props) {
                         <Radio.Button value="default">Default</Radio.Button>
                         <Radio.Button value="large">Large</Radio.Button>
                     </Radio.Group>
+                </Form.Item>
+
+                <Form.Item label='Chức năng'>
+                    <span className="ant-form-text font-bold">CHỈNH SỬA PHIM</span>
                 </Form.Item>
 
                 <Form.Item label="Tên phim">
@@ -183,9 +186,10 @@ function EditFilms(props) {
                     />
                 </Form.Item>
 
-                <Form.Item label="Chức năng">
+                <Form.Item wrapperCol={{span: 1, offset: 4,}}>
                     <Button shadow type='submit' color="primary" auto>Cập nhật</Button>
                 </Form.Item>
+
 
             </Form>
         </Fragment>

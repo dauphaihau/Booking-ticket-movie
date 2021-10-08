@@ -20,6 +20,8 @@ import Users from "./pages/Admin/Users/Users";
 import AddFilms from "./pages/Admin/Films/AddFilms/AddFilms";
 import EditFilms from "./pages/Admin/Films/EditFilms/EditFilms";
 import Showtime from "./pages/Admin/Showtimes/Showtime";
+import EditUser from "./pages/Admin/Users/EditUser/EditUser";
+import AddUser from "./pages/Admin/Users/AddUser/AddUser";
 
 function App() {
     return (
@@ -29,17 +31,22 @@ function App() {
                 <UserTemplate exact path='/login' Component={Login}/>
                 <UserTemplate exact path='/register' Component={Register}/>
                 <HomeTemplate exact path='/profile' Component={Profile}/>
+
                 <HomeTemplate exact path='/home' Component={Home}/>
                 <HomeTemplate exact path='/contact' Component={Contact}/>
                 <HomeTemplate exact path='/news' Component={News}/>
                 <HomeTemplate exact path='/detail/:id' Component={Detail}/>
+
                 <CheckoutTemplate exact path='/checkout/:id' Component={Checkout}/>
+
                 <AdminTemplate exact path='/admin' Component={Dashboard}/>
                 <AdminTemplate exact path='/admin/films' Component={Films}/>
                 <AdminTemplate exact path='/admin/films/addfilms' Component={AddFilms}/>
                 <AdminTemplate exact path='/admin/films/edit/:id' Component={EditFilms}/>
                 <AdminTemplate exact path='/admin/films/showtime/:id/:tenphim' Component={Showtime}/>
                 <AdminTemplate exact path='/admin/users' Component={Users}/>
+                <AdminTemplate exact path='/admin/users/adduser' Component={AddUser}/>
+                <AdminTemplate exact path='/admin/users/edit/:id/:tentaikhoan' Component={EditUser}/>
 
 
                 <HomeTemplate path="/" Component={Home}/>
