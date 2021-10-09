@@ -1,13 +1,13 @@
-import {Route} from "react-router-dom";
+import {Redirect, Route} from "react-router-dom";
 import {Fragment, useEffect} from "react";
 
 export const UserTemplate = (props) => {
 
-    const {Component, ...restProps} = props;
+    if (localStorage.getItem('accessToken')) {
+        return <Redirect to="/"/>
+    }
 
-    useEffect(() => {
-        window.scrollTo(0,0)
-    },)
+    const {Component, ...restProps} = props;
 
     return <Route {...restProps} render={(propsRoute) => {
 

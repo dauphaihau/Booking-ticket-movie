@@ -55,7 +55,7 @@ function Login(props) {
                         </svg>
                     </div>
                     <div className="text-2xl text-indigo-800 tracking-wide ml-2 font-semibold">
-                        Movie
+                        Moviee
                     </div>
                 </div>
             </div>

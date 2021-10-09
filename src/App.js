@@ -22,6 +22,7 @@ import EditFilms from "./pages/Admin/Films/EditFilms/EditFilms";
 import Showtime from "./pages/Admin/Showtimes/Showtime";
 import EditUser from "./pages/Admin/Users/EditUser/EditUser";
 import AddUser from "./pages/Admin/Users/AddUser/AddUser";
+import {SettingTemplate} from "./templates/SettingTemplate/SettingsTemplate";
 
 function App() {
     return (
@@ -30,7 +31,7 @@ function App() {
             <Switch>
                 <UserTemplate exact path='/login' Component={Login}/>
                 <UserTemplate exact path='/register' Component={Register}/>
-                <HomeTemplate exact path='/profile' Component={Profile}/>
+                <SettingTemplate exact path='/setting/profile/:tentaikhoan' Component={Profile}/>
 
                 <HomeTemplate exact path='/home' Component={Home}/>
                 <HomeTemplate exact path='/contact' Component={Contact}/>

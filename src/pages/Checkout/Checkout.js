@@ -176,7 +176,7 @@ function Booking(props) {
                         </div>
                     </div>
                 </div>
-                <div className='col-span-3 min-h-screen'>
+                <div className='col-span-3 min-h-screen mr-12'>
                     <h3 className="text-xl mt-5">{thongTinPhim.tenPhim}</h3>
                     <p>{thongTinPhim.diaChi} - {thongTinPhim.tenRap}</p>
                     <p>{moment(thongTinPhim.ngayKhoiChieu).format('L')}</p>
@@ -190,11 +190,12 @@ function Booking(props) {
                         <i>Số điện thoại</i><br/>
                         <p>{userLogin.soDT}</p>
                     </div>
+                    <hr/>
                     <div className='my-5'>
-                        <div className='w-4/5'>
+                        <div className='w-full'>
                             <p className='text-xl'>Ghế bạn chọn</p>
 
-                            <div className='grid grid-cols-6'>
+                            <div className='grid grid-cols-7'>
                                 {_.sortBy(listBookingChair, ['stt']).map((bchair, index) => {
                                     return <div className={`chair bookingChair flex justify-center items-center p-2`}
                                                 key={index}>
@@ -214,10 +215,6 @@ function Booking(props) {
                             </div>
                         </div>
                     </div>
-                    {/*<div*/}
-                    {/*    className="text-center bg-green-500 hover:bg-green-400 text-white font-bold py-2 px-4 border-b-4 border-green-700 hover:border-green-500 rounded"*/}
-                    {/*>*/}
-                    {/*</div>*/}
                     <Button style={{width: '100%'}} shadow color="error" auto
                             onClick={() => {
                                 const dataBooking = new DataBooking()
@@ -234,8 +231,6 @@ function Booking(props) {
         </div>
     );
 }
-
-// export default Checkout;
 
 export default function Checkout(props) {
 
@@ -275,14 +270,14 @@ export default function Checkout(props) {
 
     </Fragment>
 
-    return <div className='p-16'>
-        <Tabs tabBarExtraContent={operations} style={{marginLeft: 30}} activeKey={tabActive} defaultActiveKey="2"
+    return <div className='p-20'>
+        <Tabs tabBarExtraContent={operations} style={{marginLeft: 30}}
+              activeKey={tabActive} defaultActiveKey="2"
               onChange={(key) => {
                   dispatch({
                       type: SWITCH_TAB,
                       numTab: key
                   })
-
               }}>
             <TabPane tab={<div className='text-center flex justify-center items-center'><NavLink to='/home'><HomeOutlined /></NavLink></div>} key="1">
             </TabPane>

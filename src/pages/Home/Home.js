@@ -31,8 +31,8 @@ function Home(props) {
 
     return <div>
         {/*<HomeCarousel/>*/}
-        {/*<SimpleSlider/>*/}
-        <DaisyCarousel/>
+        <SimpleSlider/>
+        {/*<DaisyCarousel/>*/}
 
         <section className='container mx-auto my-0 px-11 mb-32'>
             {/*<div className='container'>*/}

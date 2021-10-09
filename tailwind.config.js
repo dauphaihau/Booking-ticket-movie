@@ -969,6 +969,6 @@ module.exports = {
     zIndex: ['responsive', 'focus-within', 'focus'],
   },
   plugins: [
-    // require('daisyui'),
+    require('daisyui'),
   ],
 }

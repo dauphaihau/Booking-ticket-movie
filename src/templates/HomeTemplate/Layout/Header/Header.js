@@ -40,7 +40,7 @@ function Header(props) {
         return <Fragment>
             <button className="self-center px-8 py-3 font-semibold rounded bg-violet-600 text-gray-50"
                     onClick={() => {
-                        history.push('/profile')
+                        history.push(`/setting/profile/${userLogin.taiKhoan}`)
                     }}
             >
                 {t('Hi')}, {userLogin.hoTen}

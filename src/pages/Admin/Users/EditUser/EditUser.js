@@ -15,7 +15,7 @@ import {
 } from 'antd';
 import {useFormik} from "formik";
 import {useDispatch, useSelector} from "react-redux";
-import {getAllTypeUserAction, getInfoUserAction, updateUserAction} from "../../../../store/actions/UserAction";
+import {getAllTypeUserAction, getInfoUserAction, updateInfoUserAction} from "../../../../store/actions/UserAction";
 import {GROUP_ID} from "../../../../util/settings";
 import {Option} from "antd/es/mentions";
 import * as Yup from "yup";
@@ -55,7 +55,7 @@ function EditUser(props) {
         onSubmit: (newData) => {
 
             console.log('new-data', newData)
-            dispatch(updateUserAction(newData))
+            dispatch(updateInfoUserAction(newData))
         }
     })
 
@@ -105,16 +105,10 @@ function EditUser(props) {
                     <Input name='hoTen' style={{width: 300}} onChange={formik.handleChange}
                            value={formik.values.hoTen}/>
                 </Form.Item>
-                {/*{formik.touched.hoTen && formik.errors.hoTen ? (*/}
-                {/*    <p className='text-danger'>{formik.errors.hoTen}</p>*/}
-                {/*) : null}*/}
 
                 <Form.Item label="Email" required>
                     <Input style={{width: 300}} name="email" onChange={formik.handleChange}
                            value={formik.values.email}/>
-                    {/*{formik.touched.phoneNumber && formik.errors.phoneNumber ? (*/}
-                    {/*    <p className='text-danger'>{formik.errors.phoneNumber}</p>*/}
-                    {/*) : null}*/}
 
                 </Form.Item>
 
@@ -141,9 +135,6 @@ function EditUser(props) {
                 <Form.Item label="Mã Nhóm" required>
                     <Input style={{width: 300}} onChange={formik.handleChange} name='maNhom'
                            value={formik.values.maNhom}/>
-                    {/*{formik.touched.phoneNumber && formik.errors.phoneNumber ? (*/}
-                    {/*    <p className='text-danger'>{formik.errors.phoneNumber}</p>*/}
-                    {/*) : null}*/}
                 </Form.Item>
 
 

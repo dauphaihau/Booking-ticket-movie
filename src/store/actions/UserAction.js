@@ -27,7 +27,10 @@ export const LoginAction = (dataLogin) => {
             }
 
         } catch (error) {
-            console.log('error', error.response.data)
+            console.log({error})
+            if (error.response.status === 404) {
+              alert('Tài khoản hoặc mật khẩu không đúng')
+            }   
         }
     }
 }
@@ -128,7 +131,7 @@ export const getAllTypeUserAction = (account) => {
     }
 }
 
-export const updateUserAction = (newData) => {
+export const updateInfoUserAction = (newData) => {
     return async (dispatch) => {
         try {
             const result = await http.post(`/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung`, newData)
@@ -139,6 +142,26 @@ export const updateUserAction = (newData) => {
 
         } catch (error) {
             console.log('error', error)
+        }
+    }
+}
+
+export const getInfoProfileAction = (account) => {
+    return async (dispatch) => {
+        try {
+            dispatch(displayLoadingAction)
+            const result = await http.post(`/api/QuanLyNguoiDung/LayThongTinNguoiDung?taiKhoan=${account}`)
+            dispatch({
+                type: SET_INFO_USER,
+                infoUser: result.data.content
+            })
+            dispatch(hideLoadingAction)
+
+        } catch (error) {
+
+            console.log('error', error.response.status)
+            // history.push('/admin/users')
+            dispatch(hideLoadingAction)
         }
     }
 }

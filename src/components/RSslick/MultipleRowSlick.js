@@ -75,7 +75,7 @@ function MultipleRowSlick(props) {
                     dispatch({type: SET_FILM_NEW_IN})
                 }}
             >
-                NEW IN
+                 ĐANG CHIẾU
             </button>
             <button
                 type="button"
@@ -84,7 +84,7 @@ function MultipleRowSlick(props) {
                     dispatch({type: SET_FILM_COMING_SOON})
                 }}
             >
-                COMING SOON
+                SẮP CHIẾU
             </button>
             <Slider {...settings}>
                 {renderListFilms()}
