@@ -60,6 +60,7 @@ function AddFilms(props) {
                 history.push('/admin/films')
             }).catch(error => {
                 console.log({error});
+                alert(error.response.data.content)
             })
         }
     })
@@ -98,7 +99,6 @@ function AddFilms(props) {
 
     return (
         <Fragment>
-            <h3></h3>
             <Form
                 onSubmitCapture={formik.handleSubmit}
                 labelCol={{span: 4}}
@@ -166,8 +166,11 @@ function AddFilms(props) {
                 <Form.Item wrapperCol={{
                     span: 1,
                     offset: 4,
-                }}>
-                    <Button shadow type='submit' color="primary" auto>
+                }}
+                >
+                    <Button
+                        // className='md:-ml-16'
+                        shadow type='submit' color="primary" auto>
                         Thêm phim
                     </Button>
                 </Form.Item>

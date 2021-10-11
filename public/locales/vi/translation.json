@@ -1,8 +1,10 @@
 {
     "Sign in": "Đăng nhập",
+    "dangnhap": "Sign in",
     "Sign up": "Đăng ký",
     "Hi": "Xin chào",
     "Home": "Trang chủ",
     "Contact": "Liên hệ",
-    "News": "Tin tức"
+    "News": "Tin tức",
+    "Log out": "Đăng xuất"
 }

@@ -101,7 +101,9 @@ export const AdminTemplate = (props) => {
                 </Sider>
                 <Layout className="site-layout ">
                     <Content
-                        className="site-layout-background lg:m-auto"
+                        className="site-layout-background
+                        {/*lg:m-auto*/}
+                        "
                         style={{
                             margin: '24px 16px',
                             padding: 24,

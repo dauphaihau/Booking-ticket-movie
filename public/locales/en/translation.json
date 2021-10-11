@@ -1,8 +1,10 @@
 {
-    "Sign in": "Sign in",
-    "Sign up": "Sign up",
-    "Home": "Home",
-    "Contact": "Contact",
-    "News": "News",
-    "Hello": "Hello"
+    "Trang chủ": "Home",
+    "Trang cá nhân": "Profile",
+    "Đăng nhập": "Sign in",
+    "Đăng ký": "Sign up",
+    "Đăng xuất": "Log out",
+    "Xin chào": "Hi",
+    "Liên hệ": "Contact",
+    "Tin tức": "News"
 }

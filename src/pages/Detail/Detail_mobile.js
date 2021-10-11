@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect} from 'react';
 import {CustomCard} from "@tsamantanis/react-glassmorphism";
 import '../../assets/styles/circle.css'
 import {Tabs, Radio, Space, Rate} from 'antd';
@@ -11,39 +11,18 @@ import {history} from "../../util/settings";
 
 const {TabPane} = Tabs;
 
-function Detail(props) {
+function Detail_mobile(props) {
 
     const dispatch = useDispatch();
     const {detailFilm} = useSelector(state => state.FilmsReducer)
 
     console.log('detail-film', detailFilm)
 
-    const [state, setState] = useState({
-        tabPosition: 'left',
-        // tabPosition: 'top',
-        width: window.innerWidth,
-        height: window.innerHeight
-    })
-
-    if (state.width <= 768) {
-        setState({
-            tabPosition: 'top'
-        })
-    }
-
     useEffect(() => {
         let {id} = props.match.params;
 
         dispatch(getDetailFilmsAction(id))
-        window.onload = () => {
-            setState({
-                width: window.innerWidth,
-                height: window.innerHeight
-            })
-        }
     }, [])
-
-    const {tabPosition} = state;
 
     return (
         <div style={{
@@ -58,12 +37,13 @@ function Detail(props) {
                         blur={50} // default blur value is 10px
                         borderRadius={1}
             >
-                <div className='w-2/3 lg:w-9/12 ml-72 lg:ml-52 mx-auto container py-5 rounded-lg'>
-                    <div className='grid grid-cols-3 gap-x-8'>
+                <div className='mx-auto container py-5 rounded-lg'>
+                    <div className=' gap-x-8'>
                         <img className='col-span-1 rounded-lg' src={detailFilm.hinhAnh}
-                             style={{width: 250, height: 300}}
-                             alt={detailFilm.tenPhim}/>
-                        <div className='col-span-2 text-white -ml-20'>
+                             // style={{width: 250, height: 300}}
+                             alt={detailFilm.tenPhim}
+                        />
+                        <div className='col-span-2 text-white mt-8'>
                             <p className='text-4xl mb-4'>{detailFilm.tenPhim}</p>
                             <p>{detailFilm.moTa}</p>
                             <p className='text-sm'>Ngày khởi
@@ -71,19 +51,18 @@ function Detail(props) {
                             <div style={{marginBottom: 18}}>
                                 <Rate style={{fontSize: 16}} allowHalf value={detailFilm.danhGia / 2}/>
                             </div>
-                            <button
-                                className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded-xl shadow">
+                            <Button shadow color="white" auto>
                                 <a href={detailFilm.trailer} style={{color: 'black'}}>XEM TRAILER</a>
-                            </button>
+                            </Button>
                         </div>
                     </div>
                 </div>
 
-                <div className='my-20 w-2/3 lg:w-9/12 ml-72 lg:ml-52 mx-auto container bg-white px-5 py-9 rounded-lg'>
-                    <Tabs tabPosition={tabPosition} defaultActiveKey='1' centered>
+                <div className='my-20 mx-auto container bg-white px-5 py-5 rounded-lg'>
+                    <Tabs defaultActiveKey='1' centered>
                         <TabPane tab="Lịch chiếu" key="1">
                             <div>
-                                <Tabs tabPosition={tabPosition}>
+                                <Tabs tabPosition={'left'}>
                                     {detailFilm.heThongRapChieu?.map((cinema, index) => {
                                         return <TabPane key={index}
                                                         tab={
@@ -105,7 +84,7 @@ function Detail(props) {
                                                             <p style={{marginBottom: 21}}>{cumRap.diaChi}</p>
                                                             <div className='flex flex-row'>
                                                                 {cumRap.lichChieuPhim.slice(0, 4).map((showtime, index) => {
-                                                                    return <Button className='mr-4 hover:bg-gray-100' size='mini' shadow key={index}
+                                                                    return <Button className='mr-4' size='mini' shadow key={index}
                                                                                    color="primary" auto
                                                                                    onClick={() => {
                                                                                        history.push(`/checkout/${showtime.maLichChieu}`)
@@ -137,4 +116,4 @@ function Detail(props) {
         </div>);
 }
 
-export default Detail;
+export default Detail_mobile;

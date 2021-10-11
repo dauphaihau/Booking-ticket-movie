@@ -5,9 +5,7 @@ import MultipleRowSlick from "../../components/RSslick/MultipleRowSlick";
 import {getListFilmsAction} from "../../store/actions/FilmsAction";
 import {CinemaSystemActions} from "../../store/actions/CinemaSystemActions";
 import HomeCarousel from "../../templates/HomeTemplate/Layout/HomeCarousel/HomeCarousel";
-import Simple from "antd/lib/empty/simple";
-import SimpleSlider from "../../templates/HomeTemplate/Layout/HomeCarousel/SimpleSlider";
-import DaisyCarousel from "../../templates/HomeTemplate/Layout/HomeCarousel/DaisyCarousel";
+import News from "../News/News";
 
 function Home(props) {
 
@@ -15,38 +13,34 @@ function Home(props) {
     const {arrFilms} = useSelector(state => state.FilmsReducer)
     const {arrCinema} = useSelector(state => state.CinemaSystemReducer)
 
-    // const renderListFilms = () => {
-    //
-    //     return arrFilms.map((film, index) => {
-    //         return  <Film key={index} />
-    //     })
-    // }
-
-    console.log('arrfilm', arrFilms)
-
     useEffect(() => {
         dispatch(getListFilmsAction());
         dispatch(CinemaSystemActions())
     }, [])
 
     return <div>
-        {/*<HomeCarousel/>*/}
-        <SimpleSlider/>
-        {/*<DaisyCarousel/>*/}
+        <HomeCarousel/>
 
-        <section className='container mx-auto my-0 px-11 mb-32'>
-            {/*<div className='container'>*/}
-            <div className="text-gray-600 body-font mx-20">
-                <div className="px-5 py-24 mx-auto">
+        <section className='container lg:mx-auto my-0 lg:px-36 px-11 mb-32'>
+            {/*<div className="text-gray-600 body-font mx-20">*/}
+            {/*    <div className="px-5 py-24 mx-auto">*/}
+            {/*        <MultipleRowSlick arrFilms={arrFilms}/>*/}
+            {/*    </div>*/}
+            {/*</div>*/}
+            <div className="px-0 lg:px-5 py-24 mx-auto text-gray-600 body-font mx-0
+            {/*md:mx-20*/}
+            ">
                     <MultipleRowSlick arrFilms={arrFilms}/>
-                    {/*<div className="flex flex-wrap -m-4">*/}
-                    {/*    {renderListFilms()}*/}
-                    {/*</div>*/}
-                </div>
             </div>
 
-            <div className='mx-20 px-5'>
+            <div className='
+            mx-0
+            {/*md:mx-20*/}
+            px-0
+            {/*md:px-9*/}
+            '>
                 <HomeMenu arrCinema={arrCinema}/>
+                <News/>
             </div>
         </section>
     </div>

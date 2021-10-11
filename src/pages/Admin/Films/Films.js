@@ -1,11 +1,11 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import {Table, Button, Space} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
-import {deleteFilmsAction, getDetailFilmsAction, getListFilmsAction} from "../../../store/actions/FilmsAction";
+import {deleteFilmsAction, getListFilmsAction} from "../../../store/actions/FilmsAction";
 import {CalendarOutlined, CloseOutlined, EditOutlined} from "@ant-design/icons";
 import {NavLink} from "react-router-dom";
 import Search from "antd/es/input/Search";
-import {GROUP_ID, history, http} from "../../../util/settings";
+import {GROUP_ID, http} from "../../../util/settings";
 import {SET_FILMS} from "../../../store/types/Type";
 
 
@@ -13,7 +13,6 @@ function Films(props) {
 
     const {arrFilmDefault} = useSelector(state => state.FilmsReducer)
     const dispatch = useDispatch();
-    console.log('arr-film-default', arrFilmDefault)
 
     useEffect(() => {
         dispatch(getListFilmsAction())
@@ -26,6 +25,7 @@ function Films(props) {
             width: '8%',
             sorter: (a, b) => a.maPhim - b.maPhim,
             sortDirections: ['descend', 'ascend'],
+            responsive: ['lg'],
         },
         {
             title: 'Hình ảnh',
@@ -42,6 +42,7 @@ function Films(props) {
                          src={film.hinhAnh} alt={film.tenPhim}/>
                 </Fragment>
             }
+            , responsive: ['lg'],
         },
         {
             title: 'Tên phim',
@@ -67,6 +68,7 @@ function Films(props) {
             },
             sortDirections: ['descend', 'ascend'],
             width: '35%'
+            , responsive: ['lg'],
         },
         {
             title: 'Hành động',

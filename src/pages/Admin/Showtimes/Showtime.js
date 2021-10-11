@@ -29,6 +29,7 @@ function Showtime(props) {
                 history.push('/admin/films')
             }).catch(error => {
                 console.log({error});
+                alert('Bạn không đủ quyền tạo lịch chiếu phim này')
             })
         }
     })
@@ -87,7 +88,10 @@ function Showtime(props) {
 
 
     return <div className='container flex flex-row justify-evenly mt-20'>
-        <img src={film.hinhAnh} alt='...' width={300} height={100}/>
+
+        <figure className='hidden md:block'>
+            <img src={film.hinhAnh} alt='...' width={250} height={200} className='rounded-xl'/>
+        </figure>
         <Form
             name="basic"
             labelCol={{span: 8,}}
@@ -128,8 +132,14 @@ function Showtime(props) {
             <Form.Item wrapperCol={{
                 span: 1,
                 offset: 8,
-            }}>
-                <Button shadow type='submit' color="primary" auto>Tạo lịch</Button>
+            }}
+
+            // className='flex md:flex-row-reverse'
+            //     className='-ml-8 md:-ml-16 mt-8 sm:mt-8'
+            >
+                <Button
+                    // className='-ml-36 md:-ml-48 lg:-ml-48'
+                    shadow type='submit' color="primary" auto>Tạo lịch</Button>
             </Form.Item>
         </Form>
     </div>

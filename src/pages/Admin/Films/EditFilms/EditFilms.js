@@ -187,10 +187,10 @@ function EditFilms(props) {
                 </Form.Item>
 
                 <Form.Item wrapperCol={{span: 1, offset: 4,}}>
-                    <Button shadow type='submit' color="primary" auto>Cập nhật</Button>
+                    <Button
+                        // className='-ml-8 md:-ml-16 mt-8 sm:mt-8'
+                        shadow type='submit' color="primary" auto>Cập nhật</Button>
                 </Form.Item>
-
-
             </Form>
         </Fragment>
     );

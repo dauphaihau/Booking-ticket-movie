@@ -6,13 +6,10 @@ export const getListFilmsAction = () => {
     return async (dispatch) => {
         try {
             const result = await http.get(`/api/QuanLyPhim/LayDanhSachPhim?maNhom=${GROUP_ID}`)
-
-
             dispatch({
                 type: SET_FILMS,
                 arrFilms: result.data.content
             })
-
         } catch (error) {
             console.log('error', error)
         }

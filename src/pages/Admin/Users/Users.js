@@ -23,15 +23,6 @@ function Users(props) {
 
     const columns = [
         {
-            title: 'STT',
-            dataIndex: 'key',
-            // key: '1',
-            width: '5%',
-            // sorter: (a, b) => a.index - b.index,
-            // sortDirections: ['descend', 'ascend'],
-            responsive: ['lg'],
-        },
-        {
             title: 'Tài khoản',
             dataIndex: 'taiKhoan',
             width: '10%',
@@ -43,10 +34,6 @@ function Users(props) {
             dataIndex: 'matKhau',
             defaultSortOrder: 'descend',
             width: '10%',
-            // render: (item, film, index) => {
-            //     return <Fragment>
-            //     </Fragment>
-            // }
             responsive: ['lg'],
         },
         {
@@ -62,6 +49,18 @@ function Users(props) {
             //     return -1
             // },
             sortDirections: ['descend', 'ascend'],
+            responsive: ['lg'],
+        },
+        {
+            title: 'Mã loại người dùng',
+            dataIndex: 'maLoaiNguoiDung',
+            // render: (item, film, index) => {
+            //     return <Fragment>
+            //         {film.moTa.length > 50 ? film.moTa.substr(0, 50) + '...' : film.moTa}
+            //     </Fragment>
+            // },
+            sortDirections: ['descend', 'ascend'],
+            width: '10%',
             responsive: ['lg'],
         },
         {

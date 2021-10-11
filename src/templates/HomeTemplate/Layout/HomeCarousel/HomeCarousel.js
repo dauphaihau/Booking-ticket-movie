@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-
+import './HomeCarousel.css'
 import {Carousel} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import {getCarouselAction} from "../../../../store/actions/CarouselAction";
@@ -11,6 +11,7 @@ const contentStyle = {
     textAlign: 'center',
     backgroundPosition: 'center',
     backgroundSize: '100%',
+    // backgroundSize: 'unset',
     backgroundRepeat: 'no-repeat'
 };
 
@@ -27,9 +28,7 @@ function HomeCarousel(props) {
         return arrCarousel.map((banner, index) => {
             return <div key={index}>
                 <div style={{...contentStyle, backgroundImage: `url(${banner.hinhAnh}`}}>
-                    ackackalcanl
-                    <img src={banner.hinhAnh} width='100%'
-                         className='w-full h-full opacity-0' alt="..."/>
+                    <img src={banner.hinhAnh} className='opacity-0' alt={banner.hinhAnh}/>
                 </div>
             </div>
         })
@@ -37,7 +36,8 @@ function HomeCarousel(props) {
 
     return (
         <Carousel autoplay effect="fade"
-                  style={{width: '100%', padding: 0, margin: 0}}>
+                  // style={{width: '100%', padding: 0, margin: 0}}
+        >
             {renderCarousel()}
         </Carousel>
     );

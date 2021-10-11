@@ -36,7 +36,7 @@ function Profile(props) {
     console.log('info-user', infoUser)
 
     useEffect(() => {
-        dispatch(getInfoProfileAction(props.match.params.tentaikhoan))
+        dispatch(getInfoProfileAction())
     }, [])
 
     const [componentSize, setComponentSize] = useState('default');
@@ -78,7 +78,7 @@ function Profile(props) {
     };
 
     return (
-        <Fragment>
+        <div className='ml-12 sm:ml-12'>
             <Form
                 onSubmitCapture={formik.handleSubmit}
                 labelCol={{span: 4}}
@@ -136,7 +136,7 @@ function Profile(props) {
                     <Button shadow type='submit' color="primary" auto>Cập nhật</Button>
                 </Form.Item>
             </Form>
-        </Fragment>
+        </div>
     );
 }
 

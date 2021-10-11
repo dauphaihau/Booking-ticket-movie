@@ -10,7 +10,7 @@ function SamplePrevArrow(props) {
     return (
         <div
             className={`${className} ${styleSlick['slick-prev']}`}
-            style={{...style, display: "block", left: '-50px' }}
+            style={{...style, display: "block", left: '-50px'}}
             onClick={onClick}
         />
     );
@@ -21,7 +21,7 @@ function SampleNextArrow(props) {
     return (
         <div
             className={`${className} ${styleSlick['slick-prev']}`}
-            style={{...style, display: "block" }}
+            style={{...style, display: "block"}}
             onClick={onClick}
         />
     );
@@ -31,11 +31,7 @@ function SampleNextArrow(props) {
 function MultipleRowSlick(props) {
 
     const dispatch = useDispatch();
-    const {filmNewIn, filmComingSoon} = useSelector(state => state.FilmsReducer)
-    let activeClassDC = filmNewIn === true ? 'active_Film' : 'none_active_Film';
-    let activeClassSC = filmComingSoon === true ? 'active_Film' : 'none_active_Film';
-
-    console.log('active-class-sc', activeClassSC)
+    console.log('props', props)
 
     const renderListFilms = () => {
 
@@ -60,36 +56,63 @@ function MultipleRowSlick(props) {
         slidesPerRow: 2,
         autoplay: true,
         pauseOnHover: true,
-
         variableWidth: true,
         nextArrow: <SampleNextArrow/>,
         prevArrow: <SamplePrevArrow/>
+        , responsive: [
+            {
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    infinite: true,
+                    dots: false
+                }
+            },
+            {
+                breakpoint: 768,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 2,
+                    initialSlide: 2,
+                    prevArrow: false,
+                    nextArrow: false,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    // centerMode: true,
+                    // centerPadding: "60px",
+                    dots: false,
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                    prevArrow: false,
+                    nextArrow: false,
+                }
+            }
+        ]
     };
 
     return (
         <div>
-            <button
-                type="button"
-                className={`${styleSlick[activeClassDC]} mb-4 px-8 py-3 font-semibold rounded bg-blue-400 text-white mr-5 border rounded-xl`}
-                onClick={() => {
+            <div className='flex mb-4'>
+                <button
+                    className="bg-white mr-4 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                    onClick={() => {
                     dispatch({type: SET_FILM_NEW_IN})
-                }}
-            >
-                 ĐANG CHIẾU
-            </button>
-            <button
-                type="button"
-                className={`${styleSlick[activeClassSC]} mb-4 px-8 py-3 font-semibold bg-white text-blue-400 border-gray-400 border rounded-xl`}
-                onClick={() => {
-                    dispatch({type: SET_FILM_COMING_SOON})
-                }}
-            >
-                SẮP CHIẾU
-            </button>
+                }}>
+                    ĐANG CHIẾU
+                </button>
+                <button
+                    className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                    onClick={() => {
+                        dispatch({type: SET_FILM_COMING_SOON})
+                    }}>
+                    SẮP CHIẾU
+                </button>
+            </div>
             <Slider {...settings}>
-                {renderListFilms()}
-                {renderListFilms()}
-                {renderListFilms()}
                 {renderListFilms()}
             </Slider>
         </div>

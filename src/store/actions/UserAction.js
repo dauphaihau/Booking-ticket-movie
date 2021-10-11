@@ -1,15 +1,13 @@
 import {ACCESS_TOKEN, GROUP_ID, history, http, TOKEN_CYBERSOFT, USER_LOGIN} from "../../util/settings";
 import {
-    GET_FILMS, SET_ALL_TYPE_USER,
+    SET_ALL_TYPE_USER,
     SET_DATA_LOGIN,
     SET_DATA_USER,
-    SET_DETAIL_FILM,
-    SET_INFO_FILM,
     SET_INFO_USER,
     SET_LIST_USER
 } from "../types/Type";
 import {displayLoadingAction, hideLoadingAction} from "./LoadingAction";
-import axios from "axios";
+import {notifiFuntion} from "../../util/Notification";
 
 export const LoginAction = (dataLogin) => {
     return async (dispatch) => {
@@ -86,6 +84,7 @@ export const deleteUserAction = (account) => {
 
             dispatch(getListUserAction())
             dispatch(hideLoadingAction)
+            notifiFuntion('success','Bạn đã xóa người dùng thành công')
 
         } catch (error) {
             dispatch(hideLoadingAction)
@@ -150,7 +149,7 @@ export const getInfoProfileAction = (account) => {
     return async (dispatch) => {
         try {
             dispatch(displayLoadingAction)
-            const result = await http.post(`/api/QuanLyNguoiDung/LayThongTinNguoiDung?taiKhoan=${account}`)
+            const result = await http.post(`/api/QuanLyNguoiDung/ThongTinTaiKhoan`)
             dispatch({
                 type: SET_INFO_USER,
                 infoUser: result.data.content
@@ -158,9 +157,7 @@ export const getInfoProfileAction = (account) => {
             dispatch(hideLoadingAction)
 
         } catch (error) {
-
             console.log('error', error.response.status)
-            // history.push('/admin/users')
             dispatch(hideLoadingAction)
         }
     }

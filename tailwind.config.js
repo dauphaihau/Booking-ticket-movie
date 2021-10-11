@@ -4,6 +4,7 @@ module.exports = {
   mode: 'jit',
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   presets: [],
+  // important: true,
   darkMode: false, // or 'media' or 'class'
   theme: {
     screens: {
@@ -526,6 +527,7 @@ module.exports = {
       lg: '32rem',
       xl: '36rem',
       '2xl': '42rem',
+      '45rem': '45rem', // we set
       '3xl': '48rem',
       '4xl': '56rem',
       '5xl': '64rem',
@@ -969,6 +971,6 @@ module.exports = {
     zIndex: ['responsive', 'focus-within', 'focus'],
   },
   plugins: [
-    require('daisyui'),
+    // require('daisyui'),
   ],
 }

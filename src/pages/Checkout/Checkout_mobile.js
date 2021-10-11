@@ -34,60 +34,18 @@ function Booking(props) {
 
     useEffect(() => {
         dispatch(getListTicketRoomAction(props.match.params.id))
-
-        // Any user who has successfully booked tickets will reload the page
-        // connection.on('datVeThanhCong', () => {
-        //     dispatch(getListTicketRoomAction(props.match.params.id))
-        // })
-
-        // load immediately all chair of other user booking
-        // connection.on('loadDanhSachGhe', props.match.params.id)
-
-        // load list chair from server
-        // connection.on('loadDanhSachGheDaDat', (listChairUserBook) => {
-        //     console.log('listChairUserBook', listChairUserBook)
-        //
-        //     listChairUserBook = listChairUserBook.filter(chair => chair.taiKhoan !== userLogin.taiKhoan)
-        //
-        //     console.log('list-chair-user-book', listChairUserBook)
-        //
-        //     // combine all chairs of another user to Arr
-        //     let arrListChairOtherUserBook = listChairUserBook.reduce((result, item, index) => {
-        //         let arrChair = JSON.parse(item.danhSachGhe);
-        //         return [...result, ...arrChair]
-        //     }, [])
-        //
-        //     // del chairs have same name props
-        //     arrListChairOtherUserBook = _.uniqBy(arrListChairOtherUserBook, 'maGhe')
-        //
-        //     dispatch({
-        //         type: SET_LIST_CHAIR_OTHER_USER_BOOKING,
-        //         arrListChairOtherUserBook
-        //     })
-        // })
-
-        // window.addEventListener('beforeunload', clearChair);
-        //
-        // return () => {
-        //     clearChair();
-        //     window.removeEventListener('beforeunload', clearChair)
-        // }
-
     }, [])
-
-    // const clearChair = (event) => {
-    //   connection.invoke('huyDat', userLogin.taiKhoan, props.match.params.id)
-    // }
 
     const {danhSachGhe, thongTinPhim} = detailTicketRoom;
 
     return (
         <div className='container mx-auto min-h-screen mt-5'>
-            <div className='grid grid-cols-12'>
-                <div className='col-span-9 mr-16'>
+            <div className=''>
+                {/*<div className='col-span-9 mr-16'>*/}
+                <div className=''>
                     <div className='flex flex-col'>
-                        <img width={1000} src={screen} alt={screen}/>
-                        <div className='ml-12 mt-20'>
+                        {/*<img width={100} src={screen} alt={screen}/>*/}
+                        <div className='mt-20'>
                             {danhSachGhe.map((chair, index) => {
                                 let classVipChair = chair.loaiGhe === 'Vip' ? 'vipChair' : '';
                                 let classBookedChair = chair.daDat === true ? 'bookedChair' : '';
@@ -131,12 +89,12 @@ function Booking(props) {
                                             : classBookingChairByOtherUser !== '' ? <HomeOutlined/>
                                                 : chair.stt}
                                     </button>
-                                    {(index + 1) % 20 === 0 ? <br/> : ''}
+                                    {(index + 1) % 15 === 0 ? <br/> : ''}
                                 </Fragment>
-                            })}
+                        })}
                         </div>
-                        <div className="mt-20 ml-12">
-                            <table className="divide-y divide-gray-200" width={'87%'}>
+                        <div className="my-12">
+                            <table className="divide-y divide-gray-200" >
                                 <thead className='bg-gray-50 p-5'>
                                 <tr>
                                     <th>Ghế chưa đặt</th>
@@ -177,25 +135,19 @@ function Booking(props) {
                         </div>
                     </div>
                 </div>
-                <div className='col-span-3 min-h-screen ml-12'>
-                    <figure>
-                        <img src={thongTinPhim.hinhAnh} alt="..." height={250} width={250}/>
-                    </figure>
-                    <h3 className="text-xl mt-5">{thongTinPhim.tenPhim}</h3>
-                    <p>{thongTinPhim.diaChi} - {thongTinPhim.tenRap}</p>
-                    <p>Ngày khởi chiếu: {moment(thongTinPhim.ngayKhoiChieu).format('L')}</p>
+                <div className='
+                {/*min-h-screen*/}
+                 mx-auto pb-20'>
+                    <div className='flex'>
+                        <figure><img src={thongTinPhim.hinhAnh} alt="..." height={250} width={250}/></figure>
+                        <div className='ml-3'>
+                            <h3 className="text-xl mt-5">{thongTinPhim.tenPhim}</h3>
+                            <p>{thongTinPhim.diaChi}</p>
+                            <p>{thongTinPhim.tenRap}</p>
+                            <p>Ngày khởi chiếu: {moment(thongTinPhim.ngayKhoiChieu).format('L')}</p>
+                        </div>
+                    </div>
                     <hr/>
-                    {/*<div className='my-5'>*/}
-                    {/*    <i>Email</i><br/>*/}
-                    {/*    <p>{userLogin.email}</p>*/}
-                    {/*</div>*/}
-                    {/*<hr/>*/}
-                    {/*<div className='my-5'>*/}
-                    {/*    <i>Số điện thoại</i><br/>*/}
-                    {/*    <p>{userLogin.soDT}</p>*/}
-                    {/*</div>*/}
-                    {/*<hr/>*/}
-
                     <div className='my-5'>
                         <div className='w-full'>
                             <p className='text-xl'>Ghế bạn chọn</p>
@@ -223,13 +175,13 @@ function Booking(props) {
                     <Button
                         style={{width: '100%'}}
                         shadow color="error" auto
-                            onClick={() => {
-                                const dataBooking = new DataBooking()
-                                dataBooking.maLichChieu = props.match.params.id;
-                                dataBooking.danhSachVe = listBookingChair
+                        onClick={() => {
+                            const dataBooking = new DataBooking()
+                            dataBooking.maLichChieu = props.match.params.id;
+                            dataBooking.danhSachVe = listBookingChair
 
-                                dispatch(bookingAction(dataBooking))
-                            }}
+                            dispatch(bookingAction(dataBooking))
+                        }}
                     >
                         Đặt vé
                     </Button>
@@ -239,7 +191,7 @@ function Booking(props) {
     );
 }
 
-export default function Checkout(props) {
+export default function Checkout_mobile(props) {
 
     const dispatch = useDispatch();
     const {tabActive} = useSelector(state => state.TicketManagementReducer)
@@ -255,8 +207,8 @@ export default function Checkout(props) {
     const operations = <Fragment>
         {!_.isEmpty(userLogin) ?
             <Fragment>
-                <div className='flex flex-row items-center mb-4'>
-                    <div>Xin chào, {userLogin.hoTen} </div>
+                <div className='flex flex-row items-center mb-4 ml-8'>
+                    {/*<div>Xin chào, {userLogin.hoTen} </div>*/}
                     <Avatar style={{marginLeft: 15, marginRight: 35, cursor: 'pointer'}} squared
                             text={userLogin.hoTen?.substr(0, 1)}
                             onClick={() => {
@@ -277,7 +229,7 @@ export default function Checkout(props) {
 
     </Fragment>
 
-    return <div className='px-20 pt-8'>
+    return <div className='pt-8 mx-8'>
         <Tabs tabBarExtraContent={operations}
               activeKey={tabActive} defaultActiveKey="2"
               onChange={(key) => {
@@ -286,11 +238,13 @@ export default function Checkout(props) {
                       numTab: key
                   })
               }}>
-            <TabPane tab={
+            <TabPane
+                tab={
                 <div className='text-center flex justify-center items-center'>
                     <NavLink to='/home'><i className="fas fa-arrow-left"/></NavLink>
                 </div>
-            } key="1">
+            }
+                key="1">
             </TabPane>
 
             <TabPane tab="01 CHỌN GHẾ VÀ THANH TOÁN" key="2">
@@ -320,9 +274,6 @@ function ResultBooking(props) {
 
             return <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
                 <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-                    {/*<img alt="team"*/}
-                    {/*     className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"*/}
-                    {/*     src="https://dummyimage.com/80x80"/>*/}
                     <div className="flex-grow">
                         <h2 className="text-gray-900 title-font font-medium">{ticket.tenPhim}</h2>
                         <p className="text-gray-500">
@@ -332,9 +283,9 @@ function ResultBooking(props) {
                         <p className="text-gray-500">Địa điểm: {chairs.tenHeThongRap}</p>
                         <p className="text-gray-500">Tên rạp: {chairs.tenCumRap} -
                             <span className="font-bold">Ghế:</span> {ticket.danhSachGhe.map((chair, index) =>
-                                // { return <span className="text-blue-500 text-xl" key={index}>{chair.tenGhe}</span>
-                            {return <span className="chair bookingChair p-2" key={index}>  {chair.tenGhe}  </span>
-                            })}
+                                { return <span className="text-blue-500 text-xl">[ {chair.tenGhe} ]</span>}
+                            // {return <span className="chair bookingChair p-2" key={index}>  {chair.tenGhe}  </span>}
+                            )}
                         </p>
                     </div>
                 </div>

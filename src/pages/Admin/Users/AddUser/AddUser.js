@@ -175,7 +175,9 @@ function AddUser(props) {
                     span: 1,
                     offset: 4,
                 }}>
-                    <Button shadow type='submit' color="primary" auto>Thêm</Button>
+                    <Button
+                        // className='-ml-16 sm:-ml-16 mt-8 sm:mt-8 w-full sm:w-10/12'
+                        shadow type='submit' color="primary" auto>Thêm</Button>
                 </Form.Item>
             </Form>
         </Fragment>

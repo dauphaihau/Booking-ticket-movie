@@ -23,6 +23,10 @@ import Showtime from "./pages/Admin/Showtimes/Showtime";
 import EditUser from "./pages/Admin/Users/EditUser/EditUser";
 import AddUser from "./pages/Admin/Users/AddUser/AddUser";
 import {SettingTemplate} from "./templates/SettingTemplate/SettingsTemplate";
+import HistoryBooking from "./pages/Profile/HistoryBooking";
+import Detail_mobile from "./pages/Detail/Detail_mobile";
+import Checkout_mobile from "./pages/Checkout/Checkout_mobile";
+import Home_mobile from "./pages/Home/Home_mobile";
 
 function App() {
     return (
@@ -32,13 +36,14 @@ function App() {
                 <UserTemplate exact path='/login' Component={Login}/>
                 <UserTemplate exact path='/register' Component={Register}/>
                 <SettingTemplate exact path='/setting/profile/:tentaikhoan' Component={Profile}/>
+                <SettingTemplate exact path='/setting/history/:tentaikhoan' Component={HistoryBooking}/>
 
-                <HomeTemplate exact path='/home' Component={Home}/>
+                <HomeTemplate exact path='/home' Component={Home} MobileComponent={Home_mobile}/>
                 <HomeTemplate exact path='/contact' Component={Contact}/>
                 <HomeTemplate exact path='/news' Component={News}/>
-                <HomeTemplate exact path='/detail/:id' Component={Detail}/>
+                <HomeTemplate exact path='/detail/:id' Component={Detail} MobileComponent={Detail_mobile}/>
 
-                <CheckoutTemplate exact path='/checkout/:id' Component={Checkout}/>
+                <CheckoutTemplate exact path='/checkout/:id' Component={Checkout} MobileComponent={Checkout_mobile} />
 
                 <AdminTemplate exact path='/admin' Component={Dashboard}/>
                 <AdminTemplate exact path='/admin/films' Component={Films}/>
@@ -48,7 +53,6 @@ function App() {
                 <AdminTemplate exact path='/admin/users' Component={Users}/>
                 <AdminTemplate exact path='/admin/users/adduser' Component={AddUser}/>
                 <AdminTemplate exact path='/admin/users/edit/:id/:tentaikhoan' Component={EditUser}/>
-
 
                 <HomeTemplate path="/" Component={Home}/>
             </Switch>
