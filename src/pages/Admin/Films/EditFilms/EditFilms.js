@@ -51,21 +51,20 @@ function EditFilms(props) {
         onSubmit: (values) => {
             console.log(values)
             values.maNhom = GROUP_ID
-            let fromData = new FormData();
+            let formData = new FormData();
 
             for (let key in values) {
                 if (key !== 'hinhAnh') {
-                    fromData.append(key, values[key]);
+                    formData.append(key, values[key]);
                 } else {
                     if (values.hinhAnh !== null) {
-                        fromData.append('File', values.hinhAnh, values.hinhAnh.name)
+                        formData.append('File', values.hinhAnh, values.hinhAnh.name)
                     }
                 }
             }
-            console.log('from-data', fromData)
+            console.log('from-data', formData)
             console.log('values', values)
-            dispatch(updateFilmsAction(fromData))
-
+            dispatch(updateFilmsAction(formData))
         }
     })
 
@@ -86,10 +85,9 @@ function EditFilms(props) {
     const handleChangeFile = async (e) => {
         let file = e.target.files[0];
 
+        await formik.setFieldValue('hinhAnh', file)
         // console.log('file', file);
         let reader = new FileReader();
-
-        await formik.setFieldValue('hinhAnh', file)
         reader.readAsDataURL(file)
         reader.onload = (e) => {
             // console.log(e.target.result)

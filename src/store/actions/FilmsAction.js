@@ -50,13 +50,13 @@ export const getInfoFilmsAction = (id) => {
 export const updateFilmsAction = (filmEdited) => {
     return async (dispatch) => {
         try {
-            const result = await http.post(`/api/QuanLyPhim/CapNhatPhimUpload`, filmEdited)
+            const result = await http.put(`/api/QuanLyPhim/CapNhatPhimUpload`, filmEdited)
             alert('sửa phim thành công')
             console.log('result', result)
             dispatch(getListFilmsAction())
             history.push('/admin/films')
         } catch (error) {
-            console.log('error', error)
+            console.log({error})
         }
     }
 }

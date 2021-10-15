@@ -99,6 +99,7 @@ export const AdminTemplate = (props) => {
                         </Menu.Item>
                     </Menu>
                 </Sider>
+
                 <Layout className="site-layout ">
                     <Content
                         className="site-layout-background

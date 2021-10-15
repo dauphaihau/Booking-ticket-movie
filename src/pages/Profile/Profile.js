@@ -48,13 +48,11 @@ function Profile(props) {
             matKhau: infoUser.matKhau,
             hoTen: infoUser.hoTen,
             email: infoUser.email,
-            soDT: infoUser.soDT,
+            soDt: infoUser.soDt,
             maLoaiNguoiDung: infoUser.maLoaiNguoiDung,
             maNhom: GROUP_ID,
         },
         // validationSchema: Yup.object({
-        //     maNhom: Yup.string().required('Mã nhóm không được bỏ trống'),
-        //     taiKhoan: Yup.string().required('Tài khoản không được bỏ trống').min(6, 'Tài khoản ít nhất phải 6 ký tự').max(32, 'Tài khoản không được quá 32 ký tự'),
         //     matKhau: Yup.string().required('Mật khẩu không được để trống').min(6, 'Mật khẩu ít nhất phải 6 ký tự').max(32, 'Mật khẩu không được quá 32 ký tự'),
         //     email: Yup.string().required('Email không được để trống').email('Email không hợp lệ'),
         //     hoTen: Yup.string().required('Họ tên không được để trống').matches(/^[A-Z a-z]+$/, 'Tên không được chứa số !'),
@@ -63,7 +61,7 @@ function Profile(props) {
         onSubmit: (newData) => {
             console.log('new-data', newData)
 
-            http.post(`/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung`, newData).then((response) => {
+            http.put(`/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung`, newData).then((response) => {
                 console.log('response: ' + response);
                 alert('chỉnh sửa thành công')
             }).catch(error => {
@@ -106,9 +104,6 @@ function Profile(props) {
                     <Input style={{width: 300}} onChange={formik.handleChange} name='matKhau'
                            value={formik.values.matKhau}/>
                 </Form.Item>
-                {formik.touched.soDT && formik.errors.soDT ? (
-                    <p className='text-danger'>{formik.errors.soDT}</p>
-                ) : null}
 
                 <Form.Item label="Họ tên">
                     <Input name='hoTen' style={{width: 300}} onChange={formik.handleChange}
@@ -118,7 +113,6 @@ function Profile(props) {
                 <Form.Item label="Email" required>
                     <Input style={{width: 300}} name="email" onChange={formik.handleChange}
                            value={formik.values.email}/>
-
                 </Form.Item>
 
                 <Form.Item label="Số điện thoại">
@@ -126,8 +120,11 @@ function Profile(props) {
                                  onChange={(value) => {
                                      formik.setFieldValue('soDt', value)
                                  }}
-                                 name='soDT' value={formik.values.soDT}/>
+                                 name='soDt' defaultValue={formik.values.soDt}/>
                 </Form.Item>
+                {/*{formik.touched.soDT && formik.errors.soDT ? (*/}
+                {/*    <p className='text-danger'>{formik.errors.soDT}</p>*/}
+                {/*) : null}*/}
 
                 <Form.Item wrapperCol={{
                     span: 1,

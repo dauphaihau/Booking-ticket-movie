@@ -185,17 +185,6 @@ function Booking(props) {
                     <p>{thongTinPhim.diaChi} - {thongTinPhim.tenRap}</p>
                     <p>Ngày khởi chiếu: {moment(thongTinPhim.ngayKhoiChieu).format('L')}</p>
                     <hr/>
-                    {/*<div className='my-5'>*/}
-                    {/*    <i>Email</i><br/>*/}
-                    {/*    <p>{userLogin.email}</p>*/}
-                    {/*</div>*/}
-                    {/*<hr/>*/}
-                    {/*<div className='my-5'>*/}
-                    {/*    <i>Số điện thoại</i><br/>*/}
-                    {/*    <p>{userLogin.soDT}</p>*/}
-                    {/*</div>*/}
-                    {/*<hr/>*/}
-
                     <div className='my-5'>
                         <div className='w-full'>
                             <p className='text-xl'>Ghế bạn chọn</p>
