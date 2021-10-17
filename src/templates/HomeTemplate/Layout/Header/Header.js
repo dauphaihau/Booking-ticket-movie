@@ -39,14 +39,14 @@ export default function Header() {
                     onClick={() => {
                         history.push('/login')
                     }}
-                >{t('Đăng nhập')}
+                >Đăng nhập
                 </button>
                 <button
                     className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
                     onClick={() => {
                         history.push('/register')
                     }}
-                >{t('Đăng ký')}
+                >Đăng ký
                 </button>
             </>
         }

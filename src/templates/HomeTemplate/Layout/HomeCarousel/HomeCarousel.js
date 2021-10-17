@@ -11,7 +11,6 @@ const contentStyle = {
     textAlign: 'center',
     backgroundPosition: 'center',
     backgroundSize: '100%',
-    // backgroundSize: 'unset',
     backgroundRepeat: 'no-repeat'
 };
 
@@ -27,7 +26,7 @@ function HomeCarousel(props) {
     const renderCarousel = () => {
         return arrCarousel.map((banner, index) => {
             return <div key={index}>
-                <div style={{...contentStyle, backgroundImage: `url(${banner.hinhAnh}`}}>
+                <div style={{...contentStyle, backgroundSize: 'unset', backgroundImage: `url(${banner.hinhAnh}`}}>
                     <img src={banner.hinhAnh} className='opacity-0' alt={banner.hinhAnh}/>
                 </div>
             </div>
@@ -36,7 +35,7 @@ function HomeCarousel(props) {
 
     return (
         <Carousel autoplay effect="fade"
-                  // style={{width: '100%', padding: 0, margin: 0}}
+            // style={{width: '100%', padding: 0, margin: 0}}
         >
             {renderCarousel()}
         </Carousel>

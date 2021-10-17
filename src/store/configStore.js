@@ -14,7 +14,6 @@ const rootReducer = combineReducers({
     UserReducer,
     TicketManagementReducer,
     LoadingReducer,
-
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk));
