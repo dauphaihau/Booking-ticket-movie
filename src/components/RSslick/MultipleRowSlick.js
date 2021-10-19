@@ -28,14 +28,13 @@ function SampleNextArrow(props) {
 }
 
 
-function MultipleRowSlick(props) {
+function MultipleRowSlick({arrFilms}) {
 
     const dispatch = useDispatch();
-    console.log('props', props)
+    console.log('arrFilms', arrFilms)
 
     const renderListFilms = () => {
-
-        return props.arrFilms.slice(0, 12).map((film, index) => {
+        return arrFilms.slice(0, 12).map((film, index) => {
             return <div key={index}>
                 <Film film={film}/>
             </div>
@@ -56,10 +55,10 @@ function MultipleRowSlick(props) {
         slidesPerRow: 2,
         autoplay: true,
         pauseOnHover: true,
-        variableWidth: true,
+        // variableWidth: true,
         nextArrow: <SampleNextArrow/>,
-        prevArrow: <SamplePrevArrow/>
-        , responsive: [
+        prevArrow: <SamplePrevArrow/>,
+        responsive: [
             {
                 breakpoint: 1024,
                 settings: {
@@ -84,39 +83,39 @@ function MultipleRowSlick(props) {
                 settings: {
                     // centerMode: true,
                     // centerPadding: "60px",
-                    dots: false,
+                    dots: true,
                     slidesToShow: 1,
                     slidesToScroll: 1,
                     prevArrow: false,
                     nextArrow: false,
+                    rows: 2,
+                    slidesPerRow: 2
                 }
             }
         ]
     };
 
-    return (
-        <div>
-            <div className='flex mb-4'>
-                <button
-                    className="bg-white mr-4 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                    onClick={() => {
+    return <>
+        <div className='flex mb-4'>
+            <button
+                className="bg-white mr-4 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                onClick={() => {
                     dispatch({type: SET_FILM_NEW_IN})
                 }}>
-                    ĐANG CHIẾU
-                </button>
-                <button
-                    className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                    onClick={() => {
-                        dispatch({type: SET_FILM_COMING_SOON})
-                    }}>
-                    SẮP CHIẾU
-                </button>
-            </div>
-            <Slider {...settings}>
-                {renderListFilms()}
-            </Slider>
+                ĐANG CHIẾU
+            </button>
+            <button
+                className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
+                onClick={() => {
+                    dispatch({type: SET_FILM_COMING_SOON})
+                }}>
+                SẮP CHIẾU
+            </button>
         </div>
-    );
+        <Slider {...settings}>
+            {renderListFilms()}
+        </Slider>
+    </>
 }
 
 

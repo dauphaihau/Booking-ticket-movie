@@ -6,9 +6,8 @@ import {
     UserOutlined,
     HistoryOutlined, PoweroffOutlined, HomeOutlined,
 } from '@ant-design/icons';
-import {history, USER_LOGIN} from "../../util/settings";
+import {USER_LOGIN} from "../../util/settings";
 import {useSelector} from "react-redux";
-import {Avatar} from "@nextui-org/react";
 
 const {Sider, Content} = Layout;
 
@@ -41,10 +40,10 @@ export const SettingTemplate = (props) => {
                        breakpoint="lg"
                        collapsedWidth="0"
                        onBreakpoint={broken => {
-                           console.log(broken);
+                           // console.log(broken);
                        }}
                        onCollapse={(collapsed, type) => {
-                           console.log(collapsed, type);
+                           // console.log(collapsed, type);
                        }}
                 >
                     <div className=" bg-white logo text-center flex justify-center py-6">
@@ -70,8 +69,6 @@ export const SettingTemplate = (props) => {
                         <Menu.Item key="2" icon={<UserOutlined/>}>
                             <NavLink to={`/setting/profile/${userLogin.taiKhoan}`}>Thông tin tài khoản</NavLink>
                         </Menu.Item>
-
-
                         <Menu.Item key="3" icon={<HistoryOutlined/>}>
                             <NavLink to={`/setting/history/${userLogin.taiKhoan}`}>Lịch sử đặt vé</NavLink>
                         </Menu.Item>

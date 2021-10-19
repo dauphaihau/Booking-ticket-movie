@@ -5,7 +5,6 @@ import {BellIcon, MenuIcon, XIcon} from '@heroicons/react/outline'
 import {ACCESS_TOKEN, history, USER_LOGIN} from "../../../../util/settings";
 import _ from "lodash";
 import {useSelector} from "react-redux";
-import {useTranslation} from "react-i18next";
 
 const navigation = [
     {name: 'Trang chủ', href: '/', current: true},
@@ -19,17 +18,7 @@ function classNames(...classes) {
 
 export default function Header() {
 
-    const [stateLang, setStateLang] = useState('Tiếng Anh')
     const {userLogin} = useSelector(state => state.UserReducer)
-    const {t, i18n} = useTranslation();
-
-    const handleChange = () => {
-        setStateLang( 'Tiếng Việt')
-        let keyLang = '';
-        stateLang === 'Tiếng Việt' ? keyLang = 'en' : keyLang = 'vi';
-        // if(stateLang === 'Tiếng Việt' ) return keyLang = 'en';
-        i18n.changeLanguage(keyLang)
-    }
 
     const renderLogin = () => {
         if (_.isEmpty(userLogin)) {
@@ -42,7 +31,7 @@ export default function Header() {
                 >Đăng nhập
                 </button>
                 <button
-                    className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
+                    className='hidden md:block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
                     onClick={() => {
                         history.push('/register')
                     }}
@@ -86,18 +75,6 @@ export default function Header() {
                             </a>
                         )}
                     </Menu.Item>
-                    {/*<Menu.Item>*/}
-                    {/*    {({active}) => (*/}
-                    {/*        <a*/}
-
-                    {/*            className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}*/}
-                    {/*            onClick={handleChange}*/}
-                    {/*        >*/}
-                    {/*            Tiếng Anh*/}
-                    {/*            {stateLang}*/}
-                    {/*        </a>*/}
-                    {/*    )}*/}
-                    {/*</Menu.Item>*/}
                     <Menu.Item>
                         {({active}) => (
                             <a
@@ -139,7 +116,7 @@ export default function Header() {
                             </div>
                             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                                 <div className="flex-shrink-0 flex items-center">
-                                    <svg className="w-10 text-indigo-500" xmlns="http://www.w3.org/2000/svg"
+                                    <svg className="w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg"
                                          xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px"
                                          viewBox="0 0 225 225" style={{enableBackground: "new 0 0 225 225"}} xmlSpace="preserve">
                                         <style type="text/css"

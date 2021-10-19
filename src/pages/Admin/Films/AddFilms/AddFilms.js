@@ -1,29 +1,38 @@
 import React, {Fragment, useState} from 'react';
 import moment from "moment";
-import {Button} from '@nextui-org/react';
 
 import {
     Form,
     Input,
     Radio,
-    Select,
-    Cascader,
     DatePicker,
-    InputNumber,
-    TreeSelect,
-    Switch,
+    Button,
+    Switch, Rate,
 } from 'antd';
 import {useFormik} from "formik";
 import {GROUP_ID, history, http} from "../../../../util/settings";
 import {getListFilmsAction} from "../../../../store/actions/FilmsAction";
 import {useDispatch} from "react-redux";
 
+const validateMessages = {
+    required: '${label} không được bỏ trống',
+    types: {
+        email: '${label} không hợp lệ!',
+        number: '${label} không hợp lệ!',
+    },
+    number: {
+        range: '${label} phải từ 1 - 5',
+    },
+};
+
+const desc = ['quá tệ', 'tệ', 'bình thường', 'tốt', 'tuyệt vời'];
+
 
 function AddFilms(props) {
 
     const dispatch = useDispatch();
     const [componentSize, setComponentSize] = useState('default');
-
+    const [star, setStar] = useState(3);
     const [imgSrc, setImgSrc] = useState('https://picsum.photos/200/200');
 
     const formik = useFormik({
@@ -72,7 +81,6 @@ function AddFilms(props) {
 
     const handleChangeDataPicker = (date, dataString) => {
         const dateLocal = moment(date).format('DD/MM/YYYY')
-        // console.log('dateLocal', dateLocal);
         formik.setFieldValue('ngayKhoiChieu', dateLocal)
     }
 
@@ -83,30 +91,27 @@ function AddFilms(props) {
     const handleChangeFile = async (event) => {
         let file = event.target.files[0];
 
-        // console.log('file', file);
         let reader = new FileReader();
 
         reader.readAsDataURL(file)
 
         reader.onload = async (e) => {
-            // console.log(e.target.result)
             setImgSrc(e.target.result)
         }
-        formik.setFieldValue('hinhAnh', file)
-
+        await formik.setFieldValue('hinhAnh', file)
     }
-
 
     return (
         <Fragment>
             <Form
                 onSubmitCapture={formik.handleSubmit}
-                labelCol={{span: 4}}
-                wrapperCol={{span: 14}}
+                labelCol={{span: 8}}
+                wrapperCol={{span: 16}}
                 layout="horizontal"
                 initialValues={{size: componentSize}}
                 onValuesChange={onFormLayoutChange}
                 size={componentSize}
+                validateMessages={validateMessages}
             >
                 <Form.Item label="Form Size" name="size">
                     <Radio.Group>
@@ -120,17 +125,17 @@ function AddFilms(props) {
                     <span className="font-bold ant-form-text">THÊM PHIM</span>
                 </Form.Item>
 
-                <Form.Item label="Tên phim">
+                <Form.Item label="Tên phim" name={['tenPhim']} rules={[{required: true}]}>
                     <Input style={{width: 300}} onChange={formik.handleChange} name='tenPhim'/>
                 </Form.Item>
-                <Form.Item label="Mô tả">
+                <Form.Item label="Mô tả" name={['moTa']} rules={[{required: true}]}>
                     <Input style={{width: 300}} onChange={formik.handleChange} name='moTa'/>
                 </Form.Item>
-                <Form.Item label="Trailer">
+                <Form.Item label="Trailer" name={['trailer']} rules={[{required: true}]}>
                     <Input style={{width: 300}} onChange={formik.handleChange} name='trailer'/>
                 </Form.Item>
 
-                <Form.Item label="Ngày khởi chiếu">
+                <Form.Item label="Ngày khởi chiếu" name="date-picker" rules={[{required: true}]}>
                     <DatePicker onChange={handleChangeDataPicker} format='DD/MM/YYYY' name='ngayKhoiChieu'/>
                 </Form.Item>
 
@@ -149,29 +154,30 @@ function AddFilms(props) {
                         handleChangeSwitch('hot', checked)
                     }} name='hot'/>
                 </Form.Item>
-
-
-                <Form.Item label="Đánh giá">
-                    <InputNumber onChange={(value) => {
+                <Form.Item label="Đánh giá" name={['danhGia']}>
+                    <Rate tooltips={desc} value={star} onChange={(value) => {
+                        setStar(value);
                         formik.setFieldValue('danhGia', value)
-                    }} name='danhGia'/>
+                    }} name='danhGia'
+                    />
+                    {star ? <span className="ant-rate-text">{desc[star - 1]}</span> : ''}
                 </Form.Item>
 
-                <Form.Item label="Hình ảnh">
+                <Form.Item label="Hình ảnh" required tooltip="Không được để trống hình">
                     <input onChange={handleChangeFile} accept='image/png, image/jpq, image/jpeg, image/gif' type='file'
                            name='hinhAnh'/>
                     <img style={{width: 200}} className='mt-2' src={imgSrc} alt="..."/>
                 </Form.Item>
 
-                <Form.Item wrapperCol={{
-                    span: 1,
-                    offset: 4,
-                }}
+                <Form.Item
+                    wrapperCol={{
+                        xs: {span: 24, offset: 0},
+                        sm: {span: 16, offset: 8},
+
+                    }}
                 >
-                    <Button
-                        // className='md:-ml-16'
-                        shadow type='submit' color="primary" auto>
-                        Thêm phim
+                    <Button type="primary" htmlType="submit">
+                        Thêm
                     </Button>
                 </Form.Item>
 

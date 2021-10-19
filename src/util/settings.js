@@ -9,12 +9,12 @@ export const TOKEN_CYBERSOFT = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0ZW5Mb3A
 export const GROUP_ID = 'GP01';
 export const USER_LOGIN = 'userLogin'
 export const ACCESS_TOKEN = 'accessToken'
-export const DOMAIN = 'http://movienew.cybersoft.edu.vn'
+export const DOMAIN = 'https://movienew.cybersoft.edu.vn'
 
 
-export const http = axios.create({ // async method
-    baseURL: 'http://movienew.cybersoft.edu.vn'
-    , timeout: 30000
+export const http = axios.create({
+    baseURL: 'https://movienew.cybersoft.edu.vn',
+    timeout: 30000
 })
 
 http.interceptors.request.use((config) => {

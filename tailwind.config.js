@@ -4,7 +4,7 @@ module.exports = {
   mode: 'jit',
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
   presets: [],
-  // important: true,
+  important: true,
   darkMode: false, // or 'media' or 'class'
   theme: {
     screens: {

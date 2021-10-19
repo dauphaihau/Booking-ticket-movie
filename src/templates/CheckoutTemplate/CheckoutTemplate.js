@@ -2,20 +2,17 @@ import {Redirect, Route} from "react-router-dom";
 import React, {Fragment, useEffect, useState} from "react";
 import {USER_LOGIN} from "../../util/settings";
 
-
 const CheckoutTemplate = (props) => {
-
-    const {Component, MobileComponent, ...restProps} = props;
-
-    useEffect(() => {
-        window.scrollTo(0,0)
-    },)
-
 
     const [state, setState] = useState({
         width: window.innerWidth,
         height: window.innerHeight
     })
+    const {Component, MobileComponent, ...restProps} = props;
+
+    useEffect(() => {
+        window.scrollTo(0, 0)
+    },)
 
     useEffect(() => {
         window.onload = () => {
@@ -33,7 +30,7 @@ const CheckoutTemplate = (props) => {
         }
     }, [])
 
-    if (!localStorage.getItem(USER_LOGIN)) {
+    if (!localStorage.getItem(USER_LOGIN))   {
         return <Redirect to='/login'/>
     }
 
@@ -57,4 +54,6 @@ const CheckoutTemplate = (props) => {
     }}/>
 }
 
-export default CheckoutTemplate
+export default CheckoutTemplate;
+
+

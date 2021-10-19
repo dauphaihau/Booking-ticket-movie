@@ -19,9 +19,9 @@ function Home(props) {
     }, [])
 
     return <div>
-        <HomeCarousel/>
+        <HomeCarousel className='hidden lg:block'/>
 
-        <section className='container lg:mx-auto my-0 lg:px-36 px-11 mb-32'>
+        <section className='container lg:mx-auto my-0 xl:px-36 px-7 mb-32'>
             {/*<div className="text-gray-600 body-font mx-20">*/}
             {/*    <div className="px-5 py-24 mx-auto">*/}
             {/*        <MultipleRowSlick arrFilms={arrFilms}/>*/}
@@ -30,7 +30,7 @@ function Home(props) {
             <div className="px-0 lg:px-5 py-24 mx-auto text-gray-600 body-font mx-0
             {/*md:mx-20*/}
             ">
-                    <MultipleRowSlick arrFilms={arrFilms}/>
+                <MultipleRowSlick arrFilms={arrFilms}/>
             </div>
 
             <div className='

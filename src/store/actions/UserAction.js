@@ -27,8 +27,8 @@ export const LoginAction = (dataLogin) => {
         } catch (error) {
             console.log({error})
             if (error.response.status === 404) {
-              alert('Tài khoản hoặc mật khẩu không đúng')
-            }   
+                alert('Tài khoản hoặc mật khẩu không đúng')
+            }
         }
     }
 }
@@ -84,7 +84,7 @@ export const deleteUserAction = (account) => {
 
             dispatch(getListUserAction())
             dispatch(hideLoadingAction)
-            notifiFuntion('success','Bạn đã xóa người dùng thành công')
+            notifiFuntion('success', 'Bạn đã xóa người dùng thành công')
 
         } catch (error) {
             dispatch(hideLoadingAction)
@@ -100,14 +100,16 @@ export const getInfoUserAction = (account) => {
         try {
             dispatch(displayLoadingAction)
             const result = await http.post(`/api/QuanLyNguoiDung/LayThongTinNguoiDung?taiKhoan=${account}`)
+            console.log('result', result)
+
             dispatch({
                 type: SET_INFO_USER,
                 infoUser: result.data.content
             })
-            dispatch(hideLoadingAction)
 
+            dispatch(hideLoadingAction)
         } catch (error) {
-            console.log('error', error.response.status)
+            console.log('error', error)
             alert('Bạn không đủ quyền chỉnh sửa người dùng này')
             history.push('/admin/users')
             dispatch(hideLoadingAction)
@@ -150,11 +152,14 @@ export const getInfoProfileAction = (account) => {
         try {
             dispatch(displayLoadingAction)
             const result = await http.post(`/api/QuanLyNguoiDung/ThongTinTaiKhoan`)
-            dispatch({
-                type: SET_INFO_USER,
-                infoUser: result.data.content
-            })
-            dispatch(hideLoadingAction)
+            console.log('result', result)
+            if (result.status === 200) {
+                dispatch(hideLoadingAction)
+                dispatch({
+                    type: SET_INFO_USER,
+                    infoUser: result.data.content
+                })
+            }
 
         } catch (error) {
             console.log('error', error.response.status)

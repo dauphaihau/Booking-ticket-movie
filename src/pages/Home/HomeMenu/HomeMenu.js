@@ -64,21 +64,22 @@ function HomeMenu(props) {
                                 {cumRap.danhSachPhim?.slice(0, 4).map((film, index) => {
                                     return <Fragment key={index}>
                                         <div className="my-5 ">
-                                            <div className="flex">
+                                            <div className="flex h-full">
                                                 <img src={film.hinhAnh} alt={film.tenPhim} className='rounded-md'
-                                                     style={{height: 104, width: 104}}
+                                                     width={104} height={104}
+                                                     // style={{height: 104, width: 104}}
                                                      onError={(e) => {
                                                          e.target.onerror = null;
                                                          e.target.src = "https://picsum.photos/200/200"
                                                      }}
                                                 />
                                                 <div className="ml-3">
-                                                    <h1 className="text-2xl font-bold">{film.tenPhim}</h1>
+                                                    <h1 className="text-lg lg:text-2xl font-bold">{film.tenPhim}</h1>
                                                     <p>{cumRap.diaChi}</p>
-                                                    <div className='flex flex-row'>
+                                                    <div className='flex flex-row flex-wrap'>
 
                                                         {film.lstLichChieuTheoPhim.slice(0, 4).map((showtime, index) => {
-                                                            return <Button className='mr-4' size='mini' shadow
+                                                            return <Button className='mr-4 mb-2' size='mini' shadow
                                                                            key={index}
                                                                            color="primary" auto
                                                                            onClick={() => {

@@ -15,8 +15,6 @@ function Users(props) {
     const {listUser} = useSelector(state => state.UserReducer)
     const dispatch = useDispatch();
 
-    console.log('list-user', listUser)
-
     useEffect(() => {
         dispatch(getListUserAction())
     }, [])
@@ -25,7 +23,7 @@ function Users(props) {
         {
             title: 'Tài khoản',
             dataIndex: 'taiKhoan',
-            width: '10%',
+            width: '15%',
             sorter: (a, b) => a.taiKhoan - b.taiKhoan,
             sortDirections: ['descend', 'ascend'],
         },
@@ -34,57 +32,43 @@ function Users(props) {
             dataIndex: 'matKhau',
             defaultSortOrder: 'descend',
             width: '10%',
-            responsive: ['lg'],
+            responsive: ['md'],
         },
         {
             title: 'Họ tên',
             dataIndex: 'hoTen',
             width: '15%',
-            // sorter: (a, b) => {
-            //     let nameFilmA = a.tenPhim.toLowerCase().trim();
-            //     let nameFilmB = b.tenPhim.toLowerCase().trim();
-            //     if (nameFilmA > nameFilmB) {
-            //         return 1
-            //     }
-            //     return -1
-            // },
+            sorter: (a, b) => {
+                let nameA = a.hoTen.toLowerCase().trim();
+                let nameB = b.hoTen.toLowerCase().trim();
+                if (nameA > nameB) {
+                    return 1
+                }
+                return -1
+            },
             sortDirections: ['descend', 'ascend'],
             responsive: ['lg'],
         },
         {
             title: 'Mã loại người dùng',
             dataIndex: 'maLoaiNguoiDung',
-            // render: (item, film, index) => {
-            //     return <Fragment>
-            //         {film.moTa.length > 50 ? film.moTa.substr(0, 50) + '...' : film.moTa}
-            //     </Fragment>
-            // },
             sortDirections: ['descend', 'ascend'],
             width: '10%',
-            responsive: ['lg'],
+            responsive: ['md'],
         },
         {
             title: 'Email',
             dataIndex: 'email',
-            // render: (item, film, index) => {
-            //     return <Fragment>
-            //         {film.moTa.length > 50 ? film.moTa.substr(0, 50) + '...' : film.moTa}
-            //     </Fragment>
-            // },
             sortDirections: ['descend', 'ascend'],
-            width: '15%',
+            width: '25%',
             responsive: ['lg'],
         },
         {
             title: 'Số điện thoại',
             dataIndex: 'soDt',
-            // render: (item, film, index) => {
-            //     return <Fragment>
-            //     </Fragment>
-            // },
             sortDirections: ['descend', 'ascend'],
             width: '15%',
-            responsive: ['lg'],
+            responsive: ['xxl'],
         },
         {
             title: 'Hành động',
@@ -105,8 +89,7 @@ function Users(props) {
                 </Fragment>
             },
             sortDirections: ['descend', 'ascend'],
-            width: '10%',
-            // responsive: ['lg'],
+            width: '20%',
         },
     ];
 
@@ -133,7 +116,7 @@ function Users(props) {
                 size='large' className='mb-5' allowClear onSearch={onSearch}
             />
             <Table columns={columns} dataSource={listUser} onChange={onChange}
-                   // rowKey={"maPhim"}
+                // rowKey={"maPhim"}
             />
         </div>
     );

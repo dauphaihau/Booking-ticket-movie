@@ -1,6 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {Form, Input, Checkbox, Select, DatePicker, Space, InputNumber} from 'antd';
-import {Button} from "@nextui-org/react";
+import {Form, Input,Button, Checkbox, Select, DatePicker, Space, InputNumber} from 'antd';
 import moment from "moment";
 import {history, http} from "../../../util/settings";
 import {useFormik} from "formik";
@@ -29,7 +28,13 @@ function Showtime(props) {
                 history.push('/admin/films')
             }).catch(error => {
                 console.log({error});
-                alert('Bạn không đủ quyền tạo lịch chiếu phim này')
+                if (error.response.status === 400) {
+                    alert('Thông tin lịch chiếu phim chưa hợp lệ')
+                } else {
+                    if (error.response.status === 403) {
+                        alert('Chỉ admin mới có quyền tạo lịch chiếu phim')
+                    }
+                }
             })
         }
     })
@@ -87,6 +92,17 @@ function Showtime(props) {
     }
 
 
+    const validateMessages = {
+        required: '${label} không được bỏ trống',
+        types: {
+            number: '${label} không hợp lệ!',
+        },
+        number: {
+            range: '${label} phải từ 75000 - 150000',
+        },
+    };
+
+
     return <div className='container flex flex-row justify-evenly mt-20'>
 
         <figure className='hidden md:block'>
@@ -98,17 +114,18 @@ function Showtime(props) {
             wrapperCol={{span: 16,}}
             initialValues={{remember: true,}}
             onSubmitCapture={formik.handleSubmit}
+            validateMessages={validateMessages}
         >
             <Form.Item label='Tạo lịch chiếu phim'>
                 <span className="ant-form-text font-bold" style={{marginLeft: 5}}>{props.match.params.tenphim}</span>
             </Form.Item>
 
-            <Form.Item label="Hệ thống rạp">
+            <Form.Item label="Hệ thống rạp" name={['heThongRap']} rules={[{required: true}]}>
                 <Select options={optionCinemas()} style={{width: 300}} onChange={handleChangeCinema}
                         placeholder="Chọn hệ thống rạp"/>
             </Form.Item>
 
-            <Form.Item label="Cụm rạp">
+            <Form.Item label="Cụm rạp" name={['cumRap']} rules={[{required: true}]}>
                 <Select
                     style={{width: 300}}
                     options={state.arrMiniCinema.map((cinema, i) => ({
@@ -119,27 +136,25 @@ function Showtime(props) {
             </Form.Item>
 
 
-            <Form.Item label="Ngày khởi chiếu">
+            <Form.Item label="Ngày khởi chiếu" name="date-picker" rules={[{required: true}]}>
                 <DatePicker
                     showTime onOk={onOk} format='DD/MM/YYYY hh:mm:ss' placeholder='Chọn Ngày khởi chiếu'
                 />
             </Form.Item>
 
-            <Form.Item label="Giá vé">
-                <InputNumber onChange={onChangeNumber} min={75000} max={150000}/>
+            <Form.Item label="Giá vé" name={['giaVe']}
+                       rules={[{required: true, type: 'number', min: 75000, max: 150000}]}>
+                <InputNumber onChange={onChangeNumber}/>
             </Form.Item>
-
-            <Form.Item wrapperCol={{
-                span: 1,
-                offset: 8,
-            }}
-
-            // className='flex md:flex-row-reverse'
-            //     className='-ml-8 md:-ml-16 mt-8 sm:mt-8'
+            <Form.Item
+                wrapperCol={{
+                    xs: { span: 24, offset: 0 },
+                    sm: { span: 16, offset: 8 },
+                }}
             >
-                <Button
-                    // className='-ml-36 md:-ml-48 lg:-ml-48'
-                    shadow type='submit' color="primary" auto>Tạo lịch</Button>
+                <Button type="primary" htmlType="submit">
+                    Tạo lịch
+                </Button>
             </Form.Item>
         </Form>
     </div>

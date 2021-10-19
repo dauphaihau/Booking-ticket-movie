@@ -1,7 +1,5 @@
 import React, {Fragment, useEffect, useState} from 'react';
 import moment from "moment";
-import {Button} from '@nextui-org/react';
-
 import {
     Form,
     Input,
@@ -10,7 +8,7 @@ import {
     Cascader,
     DatePicker,
     InputNumber,
-    TreeSelect,
+    Button,
     Switch,
 } from 'antd';
 import {useFormik} from "formik";
@@ -18,6 +16,17 @@ import {GROUP_ID, http} from "../../../../util/settings";
 import {getInfoFilmsAction, updateFilmsAction} from "../../../../store/actions/FilmsAction";
 import {useDispatch, useSelector} from "react-redux";
 
+
+const validateMessages = {
+    required: '${label} không được bỏ trống',
+    types: {
+        email: '${label} không hợp lệ!',
+        number: '${label} không hợp lệ!',
+    },
+    number: {
+        range: '${label} phải từ 1 - 5',
+    },
+};
 
 function EditFilms(props) {
 
@@ -62,7 +71,6 @@ function EditFilms(props) {
                     }
                 }
             }
-            console.log('from-data', formData)
             console.log('values', values)
             dispatch(updateFilmsAction(formData))
         }
@@ -85,28 +93,30 @@ function EditFilms(props) {
     const handleChangeFile = async (e) => {
         let file = e.target.files[0];
 
-        await formik.setFieldValue('hinhAnh', file)
-        // console.log('file', file);
-        let reader = new FileReader();
-        reader.readAsDataURL(file)
-        reader.onload = (e) => {
-            // console.log(e.target.result)
-            setImgSrc(e.target.result)
+        if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/gif' || file.type === 'image/png') {
+            await formik.setFieldValue('hinhAnh', file)
+            // console.log('file', file);
+            let reader = new FileReader();
+            reader.readAsDataURL(file)
+            reader.onload = (e) => {
+                // console.log(e.target.result)
+                setImgSrc(e.target.result)
+            }
         }
 
     }
-
 
     return (
         <Fragment>
             <Form
                 onSubmitCapture={formik.handleSubmit}
-                labelCol={{span: 4}}
+                labelCol={{span: 6}}
                 wrapperCol={{span: 14}}
                 layout="horizontal"
                 initialValues={{size: componentSize}}
                 onValuesChange={onFormLayoutChange}
                 size={componentSize}
+                validateMessages={validateMessages}
             >
                 <Form.Item label="Form Size" name="size">
                     <Radio.Group>
@@ -120,7 +130,8 @@ function EditFilms(props) {
                     <span className="ant-form-text font-bold">CHỈNH SỬA PHIM</span>
                 </Form.Item>
 
-                <Form.Item label="Tên phim">
+                {/*<Form.Item label="Tên phim">*/}
+                <Form.Item label="Tên phim" rules={[{required: true}]}>
                     <Input onChange={formik.handleChange} name='tenPhim' value={formik.values.tenPhim}/>
                 </Form.Item>
                 <Form.Item label="Mô tả">
@@ -184,10 +195,16 @@ function EditFilms(props) {
                     />
                 </Form.Item>
 
-                <Form.Item wrapperCol={{span: 1, offset: 4,}}>
-                    <Button
-                        // className='-ml-8 md:-ml-16 mt-8 sm:mt-8'
-                        shadow type='submit' color="primary" auto>Cập nhật</Button>
+                <Form.Item
+                    wrapperCol={{
+                        xs: { span: 24, offset: 0 },
+                        sm: { span: 16, offset: 6 },
+                        lg: { span: 16, offset: 6 },
+                    }}
+                >
+                    <Button type="primary" htmlType="submit">
+                        Chỉnh sửa
+                    </Button>
                 </Form.Item>
             </Form>
         </Fragment>

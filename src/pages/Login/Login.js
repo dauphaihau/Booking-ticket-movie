@@ -26,11 +26,11 @@ function Login(props) {
 
 
     return (
-        <form onSubmit={formik.handleSubmit} className="lg:w-1/2 xl:max-w-screen-sm">
-            <div className="py-12 bg-indigo-100 lg:bg-white flex justify-center lg:justify-start lg:px-12">
+        <form onSubmit={formik.handleSubmit} className="lg:w-1/2 xl:max-w-lg">
+            <div className="py-12 bg-white flex  lg:justify-start px-12">
                 <div className="cursor-pointer flex items-center">
                     <div>
-                        <svg className="w-10 text-indigo-500"
+                        <svg className="w-10 text-blue-500"
                              xmlns="http://www.w3.org/2000/svg"
                              xmlnsXlink="http://www.w3.org/1999/xlink"
                              version="1.1"
@@ -54,7 +54,7 @@ function Login(props) {
                             </g>
                         </svg>
                     </div>
-                    <div className="text-2xl text-indigo-800 tracking-wide ml-2 font-semibold">
+                    <div className="text-2xl text-blue-800 tracking-wide ml-2 font-semibold">
                         Moviee
                     </div>
                 </div>
@@ -70,23 +70,24 @@ function Login(props) {
                             helperText={formik.touched.taiKhoan && formik.errors.taiKhoan ? `${formik.errors.taiKhoan}` : null}
                             clearable name='taiKhoan'
                             // helperText="Please enter your name"
-                            label="Tài khoản" size='large' placeholder="Nhập tên tài khoản của bạn" width='100%'
+                            labelPlaceholder="Tài khoản"
+                            size='large' width='100%'
                         />
                     </div>
-                    <div className='mt-10'>
+                    <div className='mt-12 mb-8'>
                         <Input.Password
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.matKhau && formik.errors.matKhau ? `${formik.errors.matKhau}` : null}
                             name='matKhau'
-                            // helperText="Please enter your name"
-                            label="Mật khẩu" size='large' type="password" placeholder="Nhập mật khẩu của bạn"
+                            labelPlaceholder="Mật khẩu"
+                            size='large' type="password"
                             width='100%'
                         />
                     </div>
-                    <div className="mt-10">
+                    <div className="mt-16">
                         <Button style={{width: '100%'}} shadow color="primary" auto
-                                type='submit' size='xlarge'
+                                type='submit' size='large'
                         >
                             Đăng Nhập
                         </Button>

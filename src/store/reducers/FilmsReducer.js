@@ -23,12 +23,11 @@ const initialState = {
             "sapChieu": false
         },
     ],
-    filmNewIn: true,
-    filmComingSoon: true,
+    dangChieu: true,
+    sapChieu: true,
     arrFilmDefault: [],
     detailFilm: {},
     infoFilm: {}
-
 }
 
 export const FilmsReducer = (state = initialState, action) => {
@@ -41,14 +40,14 @@ export const FilmsReducer = (state = initialState, action) => {
         }
 
         case SET_FILM_NEW_IN: {
-            state.filmNewIn = !state.filmNewIn;
-            state.arrFilms = state.arrFilmDefault.filter(film => film.dangChieu === state.filmNewIn)
+            state.dangChieu = !state.dangChieu;
+            state.arrFilms = state.arrFilmDefault.filter(film => film.dangChieu === state.dangChieu)
             return {...state}
         }
 
         case SET_FILM_COMING_SOON: {
-            state.filmComingSoon = !state.filmComingSoon;
-            state.arrFilms = state.arrFilmDefault.filter(film => film.sapChieu === film.filmComingSoon)
+            state.sapChieu = !state.sapChieu;
+            state.arrFilms = state.arrFilmDefault.filter(film => film.sapChieu === film.sapChieu)
             return {...state}
         }
 

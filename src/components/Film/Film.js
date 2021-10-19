@@ -8,7 +8,7 @@ function Film(props) {
     const {film} = props;
 
     return (
-        <div className="movie-poster relative mr-2">
+        <div className="movie-poster relative mr-2 mb-2">
             <img src={film.hinhAnh} className="w-full inline" alt={film.tenPhim}/>
             <div className="absolute text-white text-center flex flex-col  justify-center items-center">
                 <a href={film.trailer} className='hidden md:block'>

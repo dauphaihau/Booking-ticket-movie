@@ -25,7 +25,7 @@ function Films(props) {
             width: '8%',
             sorter: (a, b) => a.maPhim - b.maPhim,
             sortDirections: ['descend', 'ascend'],
-            responsive: ['lg'],
+            responsive: ['md'],
         },
         {
             title: 'Hình ảnh',
@@ -67,8 +67,8 @@ function Films(props) {
                 </Fragment>
             },
             sortDirections: ['descend', 'ascend'],
-            width: '35%'
-            , responsive: ['lg'],
+            width: '35%',
+            responsive: ['xxl'],
         },
         {
             title: 'Hành động',
@@ -91,13 +91,14 @@ function Films(props) {
                                  localStorage.setItem('filmParams', JSON.stringify(film))
                              }}
                     >
-                        <Button style={{backgroundColor: 'green', color: 'white', border: 'none'}}
+                        <Button className='md:mt-0 mt-4'
+                                style={{backgroundColor: 'green', color: 'white', border: 'none'}}
                                 icon={<CalendarOutlined/>}/>
                     </NavLink>
                 </Fragment>
             },
             sortDirections: ['descend', 'ascend'],
-            width: '20%'
+            width: '15%'
         },
     ];
 

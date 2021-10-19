@@ -25,7 +25,7 @@ function HomeCarousel(props) {
 
     const renderCarousel = () => {
         return arrCarousel.map((banner, index) => {
-            return <div key={index}>
+            return <div className='hidden lg:block' key={index}>
                 <div style={{...contentStyle, backgroundSize: 'unset', backgroundImage: `url(${banner.hinhAnh}`}}>
                     <img src={banner.hinhAnh} className='opacity-0' alt={banner.hinhAnh}/>
                 </div>

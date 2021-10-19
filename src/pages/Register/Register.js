@@ -1,12 +1,13 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {GROUP_ID, history, http} from "../../util/settings";
 import {useFormik} from "formik";
 import {NavLink, Redirect} from "react-router-dom";
-import {Button, Input} from "@nextui-org/react";
+import {Button, Input, useInput} from "@nextui-org/react";
 import * as Yup from "yup";
 
 function Register(props) {
 
+    const { reset } = useInput('');
     const formik = useFormik({
         initialValues: {
             taiKhoan: "",
@@ -17,7 +18,6 @@ function Register(props) {
             maNhom: GROUP_ID,
         },
         validationSchema: Yup.object({
-            // maNhom: Yup.string().required('Mã nhóm không được bỏ trống'),
             taiKhoan: Yup.string().required('Tài khoản không được bỏ trống').min(6, 'Tài khoản ít nhất phải 6 ký tự').max(32, 'Tài khoản không được quá 32 ký tự'),
             matKhau: Yup.string().required('Mật khẩu không được để trống').min(6, 'Mật khẩu ít nhất phải 6 ký tự').max(32, 'Mật khẩu không được quá 32 ký tự'),
             email: Yup.string().required('Email không được để trống').email('Email không hợp lệ'),
@@ -40,10 +40,13 @@ function Register(props) {
     if (localStorage.getItem('accessToken')) {
         return <Redirect to='/'/>
     }
+    const handleColor = () => {
+        return formik.touched.email && formik.errors.email ? 'error' : ''
+    }
 
     return (
-        <form onSubmit={formik.handleSubmit} className="lg:w-1/2 xl:max-w-screen-sm">
-            <div className="px-12 md:pt-12 sm:px-24 md:px-48 lg:px-12 lg:mt-16 xl:px-24 xl:max-w-2xl">
+        <form onSubmit={formik.handleSubmit} className="lg:w-1/2 xl:max-w-lg">
+            <div className="px-12 py-12 md:pt-12 sm:px-24 md:px-48 lg:px-12 lg:mt-16 xl:px-24 xl:max-w-2xl">
                 <h2 className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl xl:text-bold">
                     Đăng Ký
                 </h2>
@@ -54,8 +57,7 @@ function Register(props) {
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.taiKhoan && formik.errors.taiKhoan ? `${formik.errors.taiKhoan}` : null}
                             clearable name='taiKhoan'
-                            // helperText="Please enter your name"
-                            label="Tài khoản" size='large' placeholder="Nhập tên tài khoản của bạn" width='100%'
+                            label="Tài khoản" size='large' width='100%'
                         />
                     </div>
                     <div className='mb-8'>
@@ -64,8 +66,7 @@ function Register(props) {
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.matKhau && formik.errors.matKhau ? `${formik.errors.matKhau}` : null}
                             name='matKhau'
-                            // helperText="Please enter your name"
-                            label="Mật khẩu" size='large' type="password" placeholder="Nhập mật khẩu của bạn"
+                            label="Mật khẩu" size='large' type="password"
                             width='100%'
                         />
                     </div>
@@ -74,8 +75,13 @@ function Register(props) {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.email && formik.errors.email ? `${formik.errors.email}` : null}
+                            helperColor={handleColor()}
+                            status={handleColor()}
+                            color={handleColor()}
+                            onClearClick={reset}
                             clearable name='email'
-                            label="Email" size='large' placeholder="Nhập email của bạn" width='100%'
+                            type='email'
+                            label="Email" size='large' width='100%'
                         />
                     </div>
                     <div className='mb-8'>
@@ -84,7 +90,7 @@ function Register(props) {
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.hoTen && formik.errors.hoTen ? `${formik.errors.hoTen}` : null}
                             clearable name='hoTen'
-                            label="Họ tên" size='large' placeholder="Nhập họ tên của bạn" width='100%'
+                            label="Họ tên" size='large' width='100%'
                         />
                     </div>
                     <div className='mb-16'>
@@ -93,12 +99,12 @@ function Register(props) {
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.soDt && formik.errors.soDt ? `${formik.errors.soDt}` : null}
                             clearable name='soDt'
-                            label="Số điện thoại" size='large' placeholder="Nhập số điện thoại của bạn" width='100%'
+                            label="Số điện thoại" size='large' width='100%'
                         />
                     </div>
                     <div>
                         <Button style={{width: '100%'}} shadow color="primary" auto
-                                type='submit' size='xlarge'
+                                type='submit' size='large'
                         >
                             Đăng Ký
                         </Button>
