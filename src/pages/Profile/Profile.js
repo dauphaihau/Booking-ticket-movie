@@ -59,8 +59,10 @@ function Profile(props) {
 
     return <Form
         validateMessages={validateMessages}
-        labelCol={{span: 4}}
-        wrapperCol={{span: 14}}
+        // labelCol={{span: 4}}
+        // wrapperCol={{span: 14}}
+        labelCol={{span: 8}}
+        wrapperCol={{span: 16}}
         layout="horizontal"
         onFinish={onFinish}
         initialValues={{
@@ -109,9 +111,11 @@ function Profile(props) {
         <Form.Item hidden name={['maNhom']}/>
 
         <Form.Item wrapperCol={{
+            // xs: {span: 24, offset: 0},
+            // sm: {span: 16, offset: 4},
+            // lg: {span: 10, offset: 4},
             xs: {span: 24, offset: 0},
-            sm: {span: 16, offset: 4},
-            lg: {span: 10, offset: 4},
+            sm: {span: 16, offset: 8},
         }}
         >
             <Button type="primary" htmlType="submit">

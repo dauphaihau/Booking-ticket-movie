@@ -34,7 +34,7 @@ export const HomeTemplate = (props) => { // props: path, exact, Component
   }, [])
 
   const renderComponent = (propsRoute) => {
-    if (state.width <= 768) {
+    if (state.width <= 414) {
       if (MobileComponent) {
         return <MobileComponent {...propsRoute} />
       }

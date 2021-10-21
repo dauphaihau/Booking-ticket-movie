@@ -35,7 +35,7 @@ const CheckoutTemplate = (props) => {
     }
 
     const renderComponent = (propsRoute) => {
-        if (state.width <= 768) {
+        if (state.width <= 414) {
             if (MobileComponent) {
                 return <MobileComponent {...propsRoute} />
             }
@@ -48,7 +48,6 @@ const CheckoutTemplate = (props) => {
     return <Route {...restProps} render={(propsRoute) => {
 
         return <Fragment>
-            {/*<Component {...propsRoute}/>*/}
             {renderComponent(propsRoute)}
         </Fragment>
     }}/>

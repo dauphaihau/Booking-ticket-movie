@@ -1,6 +1,5 @@
 import React, {Fragment, memo, useEffect, useState} from 'react';
 import {Tabs, Radio, Space} from 'antd';
-import {NavLink} from "react-router-dom";
 import moment from "moment";
 import {Button} from "@nextui-org/react";
 import {history} from "../../../util/settings";
@@ -12,7 +11,7 @@ function HomeMenu(props) {
     const {arrCinema} = props;
 
     useEffect(() => {
-        window.onload = () => { // run when window load first time ( in case user change size before load screen )
+        window.onload = () => { // run when window load first time ( in case user change size before render )
             setState({
                 width: window.innerWidth,
                 height: window.innerHeight
@@ -66,7 +65,7 @@ function HomeMenu(props) {
                                         <div className="my-5 ">
                                             <div className="flex h-full">
                                                 <img src={film.hinhAnh} alt={film.tenPhim} className='rounded-md'
-                                                     width={104} height={104}
+                                                     width={90} height={90}
                                                      // style={{height: 104, width: 104}}
                                                      onError={(e) => {
                                                          e.target.onerror = null;
@@ -79,7 +78,7 @@ function HomeMenu(props) {
                                                     <div className='flex flex-row flex-wrap'>
 
                                                         {film.lstLichChieuTheoPhim.slice(0, 4).map((showtime, index) => {
-                                                            return <Button className='mr-4 mb-2' size='mini' shadow
+                                                            return <Button className='mr-4 mt-2' size='mini' shadow
                                                                            key={index}
                                                                            color="primary" auto
                                                                            onClick={() => {

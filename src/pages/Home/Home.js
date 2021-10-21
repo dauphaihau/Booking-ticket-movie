@@ -21,7 +21,7 @@ function Home(props) {
     return <div>
         <HomeCarousel className='hidden lg:block'/>
 
-        <section className='container lg:mx-auto my-0 xl:px-36 px-7 mb-32'>
+        <section className='container lg:mx-auto my-0 lg:px-4 xl:px-36 px-7 mb-32'>
             {/*<div className="text-gray-600 body-font mx-20">*/}
             {/*    <div className="px-5 py-24 mx-auto">*/}
             {/*        <MultipleRowSlick arrFilms={arrFilms}/>*/}
@@ -43,6 +43,7 @@ function Home(props) {
                 <News/>
             </div>
         </section>
+
     </div>
 }
 

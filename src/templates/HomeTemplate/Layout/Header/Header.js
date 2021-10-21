@@ -117,8 +117,10 @@ export default function Header() {
                             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                                 <div className="flex-shrink-0 flex items-center">
                                     <svg className="w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg"
-                                         xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px" y="0px"
-                                         viewBox="0 0 225 225" style={{enableBackground: "new 0 0 225 225"}} xmlSpace="preserve">
+                                         xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px"
+                                         y="0px"
+                                         viewBox="0 0 225 225" style={{enableBackground: "new 0 0 225 225"}}
+                                         xmlSpace="preserve">
                                         <style type="text/css"
                                                dangerouslySetInnerHTML={{__html: "\n.st0{fill:none;stroke:currentColor;stroke-width:20;stroke-linecap:round;stroke-miterlimit:3;}\n                                "}}/>
                                         <g transform="matrix( 1, 0, 0, 1, 0,0) ">
@@ -147,8 +149,6 @@ export default function Header() {
                                     </div>
                                 </div>
                             </div>
-
-
                             <div
                                 className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 {/* Profile dropdown */}

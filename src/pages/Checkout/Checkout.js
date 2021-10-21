@@ -82,19 +82,24 @@ function Booking(props) {
     const {danhSachGhe, thongTinPhim} = detailTicketRoom;
 
     return (
-        <div className='container mx-auto min-h-screen mt-5'>
-            <div className='grid grid-cols-12'>
-                <div className='col-span-9 mr-16'>
+        <div className='xl:container mx-auto min-h-screen mt-5'>
+            <div className='grid grid-cols-none xl:grid-cols-12'>
+                <div className='xl:col-span-9 xl:mr-16'>
                     <div className='flex flex-col'>
                         <img width={1000} src={screen} alt={screen}/>
-                        <div className='ml-12 mt-20'>
+                        <div className='mx-auto xl:ml-12 mt-20'>
                             {danhSachGhe.map((chair, index) => {
                                 let classVipChair = chair.loaiGhe === 'Vip' ? 'vipChair' : '';
                                 let classBookedChair = chair.daDat === true ? 'bookedChair' : '';
                                 let classBookingChair = '';
                                 let classBookedChairByUser = '';
                                 let classBookingChairByOtherUser = '';
-
+                                let classChair = '';
+                                if (window.innerWidth <= 768) {
+                                    classChair = 'chairMini'
+                                } else {
+                                    classChair = 'chair'
+                                }
 
                                 if (userLogin.taiKhoan === chair.taiKhoanNguoiDat) {
                                     classBookedChairByUser = 'bookedChairByUser';
@@ -114,8 +119,8 @@ function Booking(props) {
                                 return <Fragment key={index}>
                                     <button
                                         disabled={chair.daDat || classBookingChairByOtherUser !== ''} key={index}
-                                        className={`
-                                        chair ${classVipChair} ${classBookedChair} ${classBookingChair}
+                                        className={` ${classChair}
+                                         ${classVipChair} ${classBookedChair} ${classBookingChair}
                                         ${classBookedChairByUser} ${classBookingChairByOtherUser}
                                         `}
                                         onClick={() => {
@@ -135,8 +140,8 @@ function Booking(props) {
                                 </Fragment>
                             })}
                         </div>
-                        <div className="mt-20 ml-12">
-                            <table className="divide-y divide-gray-200" width={'87%'}>
+                        <div className="mt-4 xl:mt-20 mx-6 xl:ml-12">
+                            <table className="divide-y divide-gray-200 lg:w-11/12">
                                 <thead className='bg-gray-50 p-5'>
                                 <tr>
                                     <th>Ghế chưa đặt</th>
@@ -150,24 +155,24 @@ function Booking(props) {
                                 <tbody className="bg-white divide-y divide-gray-200">
                                 <tr className='text-center'>
                                     <td>
-                                        <button className='chair'/>
+                                        <button className='lg:w-[35px] lg:h-[35px] chairMini'/>
                                     </td>
                                     <td>
-                                        <button className='chair vipChair'/>
+                                        <button className='lg:w-[35px] lg:h-[35px] chairMini vipChair'/>
                                     </td>
                                     <td>
-                                        <button className='chair bookingChair '/>
+                                        <button className='lg:w-[35px] lg:h-[35px] chairMini bookingChair '/>
                                     </td>
                                     <td>
-                                        <button className='chair bookingChairByOtherUser'/>
+                                        <button className='lg:w-[35px] lg:h-[35px] chairMini bookingChairByOtherUser'/>
                                     </td>
                                     <td>
-                                        <button className='chair bookedChairByUser'>
+                                        <button className='lg:w-[35px] lg:h-[35px] chairMini bookedChairByUser'>
                                             <UserOutlined className='font-bold'/>
                                         </button>
                                     </td>
                                     <td>
-                                        <button className='chair bookedChair'>
+                                        <button className='lg:w-[35px] lg:h-[35px] chairMini bookedChair'>
                                             <TeamOutlined className='font-bold'/>
                                         </button>
                                     </td>
@@ -177,51 +182,57 @@ function Booking(props) {
                         </div>
                     </div>
                 </div>
-                <div className='col-span-3 min-h-screen ml-12'>
-                    <figure>
-                        <img src={thongTinPhim.hinhAnh} alt="..." height={250} width={250}/>
-                    </figure>
-                    <h3 className="text-xl mt-5">{thongTinPhim.tenPhim}</h3>
-                    <p>{thongTinPhim.diaChi} - {thongTinPhim.tenRap}</p>
-                    <p>Ngày khởi chiếu: {moment(thongTinPhim.ngayKhoiChieu).format('L')}</p>
-                    <hr/>
-                    <div className='my-5'>
-                        <div className='w-full'>
-                            <p className='text-xl'>Ghế bạn chọn</p>
-
-                            <div className='grid grid-cols-7'>
-                                {_.sortBy(listBookingChair, ['stt']).map((bchair, index) => {
-                                    return <div className={`chair bookingChair flex justify-center items-center p-2`}
-                                                key={index}>
-                                        <span>{bchair.stt}</span>
+                <div className='xl:col-span-3 min-h-screen mx-6 lg:mx-0 xl:ml-12 mt-6'>
+                    <div className='flex flex-row xl:block'>
+                        <figure>
+                            <img className='rounded-xl w-full' src={thongTinPhim.hinhAnh} alt={thongTinPhim.tenPhim}/>
+                        </figure>
+                        <div className='ml-8 xl:ml-0'>
+                            <h3 className="text-xl xl:mt-5">{thongTinPhim.tenPhim}</h3>
+                            <p>{thongTinPhim.diaChi} - {thongTinPhim.tenRap}</p>
+                            <p>Ngày khởi chiếu: {moment(thongTinPhim.ngayKhoiChieu).format('L')}</p>
+                            <hr/>
+                            <div className='my-5'>
+                                <div className='w-full'>
+                                    <p className='text-xl md:mb-[13px]'>Ghế bạn chọn</p>
+                                    <div className='flex flex-row'>
+                                        <div className={`lg:chair chairMini bookingChair vipChair flex justify-center items-center p-2`}/>
+                                        {_.filter(listBookingChair,['loaiGhe','Vip']).reduce((sumBill, chair, index) => {
+                                            return sumBill += chair.giaVe
+                                        }, 0).toLocaleString()}đ
+                                        <div className={`lg:chair chairMini bookingChair flex justify-center items-center p-2 ml-8`}/>
+                                        {_.filter(listBookingChair,['loaiGhe','Thuong']).reduce((sumBill, chair, index) => {
+                                            return sumBill += chair.giaVe
+                                        }, 0).toLocaleString()}đ
                                     </div>
-                                })}
+                                </div>
+                                <div className='col-span-1 mt-5'>
+                                    <div className='flex flex-row justify-between'>
+                                        <span className='text-xl'>Tổng tiền: </span>
+                                        <span className='text-xl font-bold'>
+                                            {listBookingChair.reduce((sumBill, chair, index) => {
+                                                return sumBill += chair.giaVe
+                                            }, 0).toLocaleString()}đ
+                                        </span>
+                                    </div>
+                                </div>
                             </div>
-                        </div>
-                        <div className='col-span-1 mt-5'>
-                            <div className='flex flex-row justify-between'>
-                                <span className='text-xl'>Tổng tiền: </span>
-                                <span className='text-xl font-bold'>
-                                {listBookingChair.reduce((sumBill, chair, index) => {
-                                    return sumBill += chair.giaVe
-                                }, 0).toLocaleString()}đ
-                            </span>
-                            </div>
+                            <Button
+                                style={{width: '100%'}}
+                                shadow color="error" auto
+                                onClick={() => {
+                                    const dataBooking = new DataBooking()
+                                    dataBooking.maLichChieu = props.match.params.id;
+                                    dataBooking.danhSachVe = listBookingChair
+
+                                    dispatch(bookingAction(dataBooking))
+                                }}
+                            >
+                                Đặt vé
+                            </Button>
                         </div>
                     </div>
-                    <Button
-                        style={{width: '100%'}}
-                        shadow color="error" auto
-                            onClick={() => {
-                                const dataBooking = new DataBooking()
-                                dataBooking.maLichChieu = props.match.params.id;
-                                dataBooking.danhSachVe = listBookingChair
 
-                                dispatch(bookingAction(dataBooking))
-                            }}
-                    >
-                        Đặt vé
-                    </Button>
                 </div>
             </div>
         </div>
@@ -245,14 +256,14 @@ export default function Checkout(props) {
         {!_.isEmpty(userLogin) ?
             <Fragment>
                 <div className='flex flex-row items-center mb-4'>
-                    <div>Xin chào, {userLogin.hoTen} </div>
+                    <div className='hidden xl:block'>Xin chào, {userLogin.hoTen} </div>
                     <Avatar style={{marginLeft: 15, marginRight: 35, cursor: 'pointer'}} squared
                             text={userLogin.hoTen?.substr(0, 1)}
                             onClick={() => {
                                 history.push(`/setting/profile/${userLogin.taiKhoan}`)
                             }}
                     />
-                    <button
+                    <button className='transition duration-500 ease-in-out text-black hover:text-blue-300'
                         onClick={() => {
                             localStorage.removeItem(USER_LOGIN);
                             localStorage.removeItem(ACCESS_TOKEN);
@@ -266,15 +277,17 @@ export default function Checkout(props) {
 
     </Fragment>
 
-    return <div className='px-20 pt-8'>
-        <Tabs tabBarExtraContent={operations}
-              activeKey={tabActive} defaultActiveKey="2"
-              onChange={(key) => {
-                  dispatch({
-                      type: SWITCH_TAB,
-                      numTab: key
-                  })
-              }}>
+    return <div className='px-4 xl:px-20 pt-8'>
+        <Tabs
+            tabBarExtraContent={operations}
+            type='line'
+            activeKey={tabActive} defaultActiveKey="2"
+            onChange={(key) => {
+                dispatch({
+                    type: SWITCH_TAB,
+                    numTab: key
+                })
+            }}>
             <TabPane tab={
                 <div className='text-center flex justify-center items-center'>
                     <NavLink to='/home'><i className="fas fa-arrow-left"/></NavLink>
@@ -309,9 +322,6 @@ function ResultBooking(props) {
 
             return <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
                 <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
-                    {/*<img alt="team"*/}
-                    {/*     className="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4"*/}
-                    {/*     src="https://dummyimage.com/80x80"/>*/}
                     <div className="flex-grow">
                         <h2 className="text-gray-900 title-font font-medium">{ticket.tenPhim}</h2>
                         <p className="text-gray-500">
@@ -319,12 +329,15 @@ function ResultBooking(props) {
                             Chiếu: {moment(ticket.ngayDat).format('DD-MM-YYYY'
                         )}</p>
                         <p className="text-gray-500">Địa điểm: {chairs.tenHeThongRap}</p>
-                        <p className="text-gray-500">Tên rạp: {chairs.tenCumRap} -
-                            <span className="font-bold">Ghế:</span> {ticket.danhSachGhe.map((chair, index) =>
-                                // { return <span className="text-blue-500 text-xl" key={index}>{chair.tenGhe}</span>
-                            {return <span className="chair bookingChair p-2" key={index}>  {chair.tenGhe}  </span>
+                        <p className="text-gray-500">Tên rạp: {chairs.tenCumRap}</p>
+                        <p>Tất cả ghế bạn đã đặt:</p>
+                        <div className='grid grid-cols-7'>
+                            {ticket.danhSachGhe.map((chair, index) => {
+                                return <>
+                                    <div className="chair bookingChair p-2" key={index}>  {chair.tenGhe}  </div>
+                                </>
                             })}
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>

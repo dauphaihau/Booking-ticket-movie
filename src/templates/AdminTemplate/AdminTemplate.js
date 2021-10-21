@@ -52,7 +52,7 @@ export const AdminTemplate = (props) => {
                            console.log(collapsed, type);
                        }}
                 >
-                    <div className=" bg-white logo text-center flex justify-center py-6">
+                    <div className="bg-white logo text-center flex justify-center py-6">
                         <div className="flex flex-col items-center mt-6 -mx-2">
                             <img
                                 className="h-8 w-8 rounded-full"

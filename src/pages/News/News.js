@@ -10,7 +10,7 @@ function News(props) {
 
     return <>
         <section className="text-gray-600 body-font">
-            <div className="container px-5 py-24 mx-auto">
+            <div className="container px-5 pt-24 mx-auto">
                 <div className="flex flex-col">
                     <div className="h-1 bg-gray-200 rounded overflow-hidden">
                         <div className="w-24 h-full bg-blue-500"/>

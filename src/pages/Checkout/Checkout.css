@@ -11,6 +11,18 @@
     color: white;
 }
 
+.chairMini {
+    font-size: 10px;
+    width: 25px;
+    height: 25px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    background-color: #a5a7ab;
+    color: white;
+}
+
 .vipChair {
     /*background-color: #d5a443;*/
     border-radius: 30px;

@@ -1,12 +1,10 @@
 import React, {Fragment, useEffect, useState} from 'react';
-import {Form, Input,Button, Checkbox, Select, DatePicker, Space, InputNumber} from 'antd';
+import {Form, Input, Button, Checkbox, Select, DatePicker, Space, InputNumber} from 'antd';
 import moment from "moment";
 import {history, http} from "../../../util/settings";
 import {useFormik} from "formik";
 import {getListFilmsAction} from "../../../store/actions/FilmsAction";
 import {useDispatch} from "react-redux";
-
-const {RangePicker} = DatePicker;
 
 function Showtime(props) {
 
@@ -44,6 +42,8 @@ function Showtime(props) {
         arrMiniCinema: [],
     })
 
+    const [componentSize, setComponentSize] = useState('default');
+
     useEffect(async () => {
         try {
             const result = await http.get(`/api/QuanLyRap/LayThongTinHeThongRap`)
@@ -55,6 +55,10 @@ function Showtime(props) {
             console.log('error', error)
         }
     }, [])
+
+    const onFormLayoutChange = ({size}) => {
+        setComponentSize(size);
+    };
 
     const handleChangeCinema = async (values) => {
         try {
@@ -103,62 +107,67 @@ function Showtime(props) {
     };
 
 
-    return <div className='container flex flex-row justify-evenly mt-20'>
+    return <>
+        <div className='container flex flex-row mt-20'>
 
-        <figure className='hidden md:block'>
-            <img src={film.hinhAnh} alt='...' width={250} height={200} className='rounded-xl'/>
-        </figure>
-        <Form
-            name="basic"
-            labelCol={{span: 8,}}
-            wrapperCol={{span: 16,}}
-            initialValues={{remember: true,}}
-            onSubmitCapture={formik.handleSubmit}
-            validateMessages={validateMessages}
-        >
-            <Form.Item label='Tạo lịch chiếu phim'>
-                <span className="ant-form-text font-bold" style={{marginLeft: 5}}>{props.match.params.tenphim}</span>
-            </Form.Item>
-
-            <Form.Item label="Hệ thống rạp" name={['heThongRap']} rules={[{required: true}]}>
-                <Select options={optionCinemas()} style={{width: 300}} onChange={handleChangeCinema}
-                        placeholder="Chọn hệ thống rạp"/>
-            </Form.Item>
-
-            <Form.Item label="Cụm rạp" name={['cumRap']} rules={[{required: true}]}>
-                <Select
-                    style={{width: 300}}
-                    options={state.arrMiniCinema.map((cinema, i) => ({
-                        label: cinema.tenCumRap,
-                        value: cinema.maCumRap
-                    }))}
-                    onChange={handleChangeMiniCinema} placeholder="Chọn cụm rạp"/>
-            </Form.Item>
-
-
-            <Form.Item label="Ngày khởi chiếu" name="date-picker" rules={[{required: true}]}>
-                <DatePicker
-                    showTime onOk={onOk} format='DD/MM/YYYY hh:mm:ss' placeholder='Chọn Ngày khởi chiếu'
-                />
-            </Form.Item>
-
-            <Form.Item label="Giá vé" name={['giaVe']}
-                       rules={[{required: true, type: 'number', min: 75000, max: 150000}]}>
-                <InputNumber onChange={onChangeNumber}/>
-            </Form.Item>
-            <Form.Item
-                wrapperCol={{
-                    xs: { span: 24, offset: 0 },
-                    sm: { span: 16, offset: 8 },
-                }}
+            <Form
+                name="basic"
+                labelCol={{span: 8,}}
+                wrapperCol={{span: 16,}}
+                initialValues={{remember: true, size: componentSize}}
+                onSubmitCapture={formik.handleSubmit}
+                layout="horizontal"
+                validateMessages={validateMessages}
+                size={componentSize}
+                onValuesChange={onFormLayoutChange}
             >
-                <Button type="primary" htmlType="submit">
-                    Tạo lịch
-                </Button>
-            </Form.Item>
-        </Form>
-    </div>
+                <Form.Item label='Tạo lịch chiếu phim'>
+                    <span className="ant-form-text font-bold"
+                          style={{marginLeft: 5}}>{props.match.params.tenphim}</span>
+                </Form.Item>
 
+                <Form.Item label="Hệ thống rạp" name={['heThongRap']} rules={[{required: true}]}>
+                    <Select options={optionCinemas()} style={{width: 200}} onChange={handleChangeCinema}
+                            placeholder="Chọn hệ thống rạp"/>
+                </Form.Item>
+
+                <Form.Item label="Cụm rạp" name={['cumRap']} rules={[{required: true}]}>
+                    <Select
+                        style={{width: 200}}
+                        options={state.arrMiniCinema.map((cinema, i) => ({
+                            label: cinema.tenCumRap,
+                            value: cinema.maCumRap
+                        }))}
+                        onChange={handleChangeMiniCinema} placeholder="Chọn cụm rạp"/>
+                </Form.Item>
+
+
+                <Form.Item label="Ngày khởi chiếu" name="date-picker" rules={[{required: true}]}>
+                    <DatePicker
+                        showTime onOk={onOk} format='DD/MM/YYYY hh:mm:ss' placeholder='Chọn Ngày khởi chiếu'
+                    />
+                </Form.Item>
+
+                <Form.Item label="Giá vé" name={['giaVe']}
+                           rules={[{required: true, type: 'number', min: 75000, max: 150000}]}>
+                    <InputNumber onChange={onChangeNumber}/>
+                </Form.Item>
+                <Form.Item
+                    wrapperCol={{
+                        xs: {span: 24, offset: 0},
+                        sm: {span: 16, offset: 8},
+                    }}
+                >
+                    <Button type="primary" htmlType="submit">
+                        Tạo lịch
+                    </Button>
+                </Form.Item>
+            </Form>
+            <figure className='hidden md:block ml-4'>
+                <img src={film.hinhAnh} alt='...' width={250} height={250} className='rounded-xl'/>
+            </figure>
+        </div>
+    </>
 }
 
 export default Showtime;

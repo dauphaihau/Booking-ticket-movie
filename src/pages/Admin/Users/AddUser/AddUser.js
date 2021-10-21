@@ -65,8 +65,8 @@ function AddUser(props) {
                 wrapperCol={{span: 16}}
                 layout="horizontal"
                 initialValues={{size: componentSize}}
-                onValuesChange={onFormLayoutChange}
                 size={componentSize}
+                onValuesChange={onFormLayoutChange}
             >
                 <Form.Item label="Form Size" name="size">
                     <Radio.Group>

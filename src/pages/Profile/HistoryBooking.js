@@ -27,12 +27,15 @@ export default function HistoryBooking(props) {
                             Chiếu: {moment(ticket.ngayDat).format('DD-MM-YYYY'
                         )}</p>
                         <p className="text-gray-500">Địa điểm: {chairs.tenHeThongRap}</p>
-                        <p className="text-gray-500">Tên rạp: {chairs.tenCumRap} -
-                            <span className="font-bold">Ghế:</span> {ticket.danhSachGhe.map((chair, index) => {
-                                return <span className="chair bookingChair p-2"
-                                             key={index}>  {chair.tenGhe}  </span>
+                        <p className="text-gray-500">Tên rạp: {chairs.tenCumRap}</p>
+                        <p>Tất cả ghế bạn đã đặt:</p>
+                        <div className='grid grid-cols-7'>
+                            {ticket.danhSachGhe.map((chair, index) => {
+                                return <>
+                                    <div className="chair bookingChair p-2" key={index}>  {chair.tenGhe}  </div>
+                                </>
                             })}
-                        </p>
+                        </div>
                     </div>
                 </div>
             </div>
