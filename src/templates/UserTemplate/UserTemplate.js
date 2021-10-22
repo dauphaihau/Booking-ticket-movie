@@ -1,11 +1,9 @@
 import {Redirect, Route} from "react-router-dom";
-import {Fragment, useEffect} from "react";
+import {Fragment} from "react";
 
 export const UserTemplate = (props) => {
 
-    if (localStorage.getItem('accessToken')) {
-        return <Redirect to="/"/>
-    }
+    if (localStorage.getItem('accessToken')) return <Redirect to="/"/>
 
     const {Component, ...restProps} = props;
 
@@ -14,6 +12,8 @@ export const UserTemplate = (props) => {
         return <Fragment>
             <div className="lg:flex">
                 <Component {...propsRoute}/>
+
+                {/*img on right*/}
                 <div className="hidden lg:flex items-center justify-center bg-indigo-100 flex-1 h-screen">
                     <div className="max-w-xs transform duration-200 hover:scale-110 cursor-pointer">
                         <svg

@@ -2,7 +2,7 @@ import React from "react";
 import Slider from "react-slick";
 import Film from "../Film/Film";
 import styleSlick from './MultipleRowSlick.module.css'
-import {useDispatch, useSelector} from "react-redux";
+import {useDispatch} from "react-redux";
 import {SET_FILM_COMING_SOON, SET_FILM_NEW_IN} from "../../store/types/Type";
 
 function SamplePrevArrow(props) {

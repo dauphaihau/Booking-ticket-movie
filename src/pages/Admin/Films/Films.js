@@ -1,5 +1,5 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import {Table, Button, Space} from 'antd';
+import React, {Fragment, useEffect} from 'react';
+import {Table, Button} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import {deleteFilmsAction, getListFilmsAction} from "../../../store/actions/FilmsAction";
 import {CalendarOutlined, CloseOutlined, EditOutlined} from "@ant-design/icons";
@@ -61,7 +61,7 @@ function Films(props) {
         {
             title: 'Mô tả',
             dataIndex: 'moTa',
-            render: (item, film, index) => {
+            render: (item, film) => {
                 return <Fragment>
                     {film.moTa.length > 50 ? film.moTa.substr(0, 50) + '...' : film.moTa}
                 </Fragment>
@@ -73,7 +73,7 @@ function Films(props) {
         {
             title: 'Hành động',
             dataIndex: 'hanhDong',
-            render: (item, film, index) => {
+            render: (item, film) => {
                 return <Fragment>
                     <NavLink to={`/admin/films/edit/${film.maPhim}`}>
                         <Button type="primary" icon={<EditOutlined/>}/>
@@ -118,15 +118,10 @@ function Films(props) {
         })
     };
 
-    return (
-        <div>
-            <Search
-                placeholder="input search text"
-                size='large' className='mb-5' allowClear onSearch={onSearch}
-            />
-            <Table columns={columns} dataSource={arrFilmDefault} onChange={onChange} rowKey={"maPhim"}/>
-        </div>
-    );
+    return <>
+        <Search onSearch={onSearch} placeholder="input search text" size='large' className='mb-5' allowClear/>
+        <Table columns={columns} dataSource={arrFilmDefault} onChange={onChange} rowKey={"maPhim"}/>
+    </>
 }
 
 

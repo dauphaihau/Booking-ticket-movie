@@ -28,7 +28,6 @@ function HomeMenu(props) {
 
     const [state, setState] = useState({
         tabPosition: 'left',
-        // tabPosition: 'top',
         width: window.innerWidth,
         height: window.innerHeight
     })
@@ -45,7 +44,6 @@ function HomeMenu(props) {
         return arrCinema.map((cinema, index) => {
             return <TabPane tab={<img src={cinema.logo} className='rounded-full' width={50}/>} key={index}>
                 <Tabs tabPosition={tabPosition}>
-
                     {cinema.lstCumRap.slice(0, 6).map((cumRap, index) => {
                         return (
                             <TabPane
@@ -59,14 +57,12 @@ function HomeMenu(props) {
                                     </div>
                                 }
                                 key={index}>
-
                                 {cumRap.danhSachPhim?.slice(0, 4).map((film, index) => {
                                     return <Fragment key={index}>
                                         <div className="my-5 ">
                                             <div className="flex h-full">
                                                 <img src={film.hinhAnh} alt={film.tenPhim} className='rounded-md'
                                                      width={90} height={90}
-                                                     // style={{height: 104, width: 104}}
                                                      onError={(e) => {
                                                          e.target.onerror = null;
                                                          e.target.src = "https://picsum.photos/200/200"
@@ -98,7 +94,6 @@ function HomeMenu(props) {
                         )
                     })}
                 </Tabs>
-
             </TabPane>
         })
     }

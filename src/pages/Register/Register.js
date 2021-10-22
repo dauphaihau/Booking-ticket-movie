@@ -1,13 +1,13 @@
-import React, {useMemo} from 'react';
+import React from 'react';
 import {GROUP_ID, history, http} from "../../util/settings";
 import {useFormik} from "formik";
-import {NavLink, Redirect} from "react-router-dom";
+import {NavLink} from "react-router-dom";
 import {Button, Input, useInput} from "@nextui-org/react";
 import * as Yup from "yup";
 
 function Register(props) {
 
-    const { reset } = useInput('');
+    const {reset} = useInput('');
     const formik = useFormik({
         initialValues: {
             taiKhoan: "",
@@ -37,9 +37,6 @@ function Register(props) {
         }
     })
 
-    if (localStorage.getItem('accessToken')) {
-        return <Redirect to='/'/>
-    }
     const handleColor = () => {
         return formik.touched.email && formik.errors.email ? 'error' : ''
     }

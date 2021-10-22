@@ -4,32 +4,21 @@ import {
     Form,
     Input,
     Radio,
-    Select,
-    Cascader,
     DatePicker,
-    InputNumber,
     Button,
-    Switch,
+    Switch, Rate,
 } from 'antd';
 import {useFormik} from "formik";
-import {GROUP_ID, http} from "../../../../util/settings";
+import {GROUP_ID} from "../../../../util/settings";
 import {getInfoFilmsAction, updateFilmsAction} from "../../../../store/actions/FilmsAction";
 import {useDispatch, useSelector} from "react-redux";
+import * as Yup from "yup";
 
-
-const validateMessages = {
-    required: '${label} không được bỏ trống',
-    types: {
-        email: '${label} không hợp lệ!',
-        number: '${label} không hợp lệ!',
-    },
-    number: {
-        range: '${label} phải từ 1 - 5',
-    },
-};
+const desc = ['quá dở', 'dở', 'bình thường', 'tốt', 'tuyệt vời'];
 
 function EditFilms(props) {
 
+    const [star, setStar] = useState(3);
     const {infoFilm} = useSelector(state => state.FilmsReducer)
     const dispatch = useDispatch();
 
@@ -57,6 +46,12 @@ function EditFilms(props) {
             danhGia: infoFilm.danhGia,
             hinhAnh: null
         },
+        validationSchema: Yup.object({
+            tenPhim: Yup.string().required('Tên phim không được bỏ trống'),
+            moTa: Yup.string().required('Mô tả không được để trống'),
+            trailer: Yup.string().required('trailer không được để trống'),
+            ngayKhoiChieu: Yup.string().required('Ngày khởi chiếu không được để trống'),
+        }),
         onSubmit: (values) => {
             console.log(values)
             values.maNhom = GROUP_ID
@@ -76,7 +71,6 @@ function EditFilms(props) {
         }
     })
 
-
     const onFormLayoutChange = ({size}) => {
         setComponentSize(size);
     };
@@ -95,11 +89,9 @@ function EditFilms(props) {
 
         if (file.type === 'image/jpeg' || file.type === 'image/jpg' || file.type === 'image/gif' || file.type === 'image/png') {
             await formik.setFieldValue('hinhAnh', file)
-            // console.log('file', file);
             let reader = new FileReader();
             reader.readAsDataURL(file)
             reader.onload = (e) => {
-                // console.log(e.target.result)
                 setImgSrc(e.target.result)
             }
         }
@@ -116,7 +108,6 @@ function EditFilms(props) {
                 initialValues={{size: componentSize}}
                 onValuesChange={onFormLayoutChange}
                 size={componentSize}
-                validateMessages={validateMessages}
             >
                 <Form.Item label="Form Size" name="size">
                     <Radio.Group>
@@ -130,18 +121,28 @@ function EditFilms(props) {
                     <span className="ant-form-text font-bold">CHỈNH SỬA PHIM</span>
                 </Form.Item>
 
-                {/*<Form.Item label="Tên phim">*/}
-                <Form.Item label="Tên phim" rules={[{required: true}]}>
+                <Form.Item label="Tên phim" required validateStatus='validating'
+                           help={formik.touched.tenPhim && formik.errors.tenPhim ? `${formik.errors.tenPhim}` : null}
+                >
                     <Input onChange={formik.handleChange} name='tenPhim' value={formik.values.tenPhim}/>
                 </Form.Item>
-                <Form.Item label="Mô tả">
+                <Form.Item label="Mô tả"
+                           required validateStatus='error'
+                           help={formik.touched.moTa && formik.errors.moTa ? `${formik.errors.moTa}` : null}
+                >
                     <Input onChange={formik.handleChange} name='moTa' value={formik.values.moTa}/>
                 </Form.Item>
-                <Form.Item label="Trailer">
+                <Form.Item label="Trailer"
+                           required validateStatus='error'
+                           help={formik.touched.trailer && formik.errors.trailer ? `${formik.errors.trailer}` : null}
+                >
                     <Input onChange={formik.handleChange} name='trailer' value={formik.values.trailer}/>
                 </Form.Item>
 
-                <Form.Item label="Ngày khởi chiếu">
+                <Form.Item label="Ngày khởi chiếu"
+                           required validateStatus='error'
+                           help={formik.touched.ngayKhoiChieu && formik.errors.ngayKhoiChieu ? `${formik.errors.ngayKhoiChieu}` : null}
+                >
                     <DatePicker onChange={handleChangeDataPicker} format='DD/MM/YYYY' name='ngayKhoiChieu'
                                 value={moment(formik.values.ngayKhoiChieu)}
                     />
@@ -175,17 +176,20 @@ function EditFilms(props) {
                     />
                 </Form.Item>
 
-                <Form.Item label="Đánh giá">
-                    <InputNumber
-                        onChange={(value) => {
-                            formik.setFieldValue('danhGia', value)
-                        }}
-                        name='danhGia'
-                        value={formik.values.danhGia}
+                <Form.Item label="Đánh giá" name={['danhGia']}>
+                    <Rate tooltips={desc} value={star} onChange={(value) => {
+                        setStar(value);
+                        formik.setFieldValue('danhGia', value)
+                    }} name='danhGia'
                     />
+                    {star ? <span className="ant-rate-text">{desc[star - 1]}</span> : ''}
                 </Form.Item>
 
-                <Form.Item label="Hình ảnh">
+
+                <Form.Item label="Hình ảnh"
+                           required validateStatus='error'
+                           help={formik.touched.hinhAnh && formik.errors.hinhAnh ? `${formik.errors.hinhAnh}` : null}
+                >
                     <input onChange={handleChangeFile}
                            accept='image/png, image/jpq, image/jpeg, image/gif' type='file'
                            name='hinhAnh'/>
@@ -197,9 +201,9 @@ function EditFilms(props) {
 
                 <Form.Item
                     wrapperCol={{
-                        xs: { span: 24, offset: 0 },
-                        sm: { span: 16, offset: 6 },
-                        lg: { span: 16, offset: 6 },
+                        xs: {span: 24, offset: 0},
+                        sm: {span: 16, offset: 6},
+                        lg: {span: 16, offset: 6},
                     }}
                 >
                     <Button type="primary" htmlType="submit">

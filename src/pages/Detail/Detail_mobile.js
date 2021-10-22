@@ -1,8 +1,7 @@
 import React, {useEffect} from 'react';
-import {Disclosure, Transition} from '@headlessui/react'
+import {Disclosure} from '@headlessui/react'
 import {CustomCard} from "@tsamantanis/react-glassmorphism";
-import '../../assets/styles/circle.css'
-import {Tabs, Radio, Space, Rate} from 'antd';
+import {Rate} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import {getDetailFilmsAction} from "../../store/actions/FilmsAction";
 import moment from "moment";
@@ -35,7 +34,8 @@ function Detail_mobile(props) {
             >
                 <div className='mx-auto container py-5 rounded-lg'>
                     <div className=' gap-x-8'>
-                        <img width={300} height={300} className='col-span-1 rounded-lg' src={detailFilm.hinhAnh} alt={detailFilm.tenPhim}/>
+                        <img width={300} height={300} className='col-span-1 rounded-lg' src={detailFilm.hinhAnh}
+                             alt={detailFilm.tenPhim}/>
                         <div className='col-span-2 text-white mt-8'>
                             <p className='text-2xl font-bold mb-4'>{detailFilm.tenPhim}</p>
                             <p>{detailFilm.moTa}</p>
@@ -58,7 +58,7 @@ function Detail_mobile(props) {
                         </span>
                         <div className="w-full max-w-md p-2 mx-auto bg-white rounded-2xl">
                             {detailFilm.heThongRapChieu?.map((cinema, index) => {
-                                return <Disclosure as='div' className='mb-2'>
+                                return <Disclosure as='div' className='mb-2' key={index}>
                                     {({open}) => (
                                         <>
                                             <Disclosure.Button
@@ -109,9 +109,9 @@ function Detail_mobile(props) {
                         </div>
                     </div>
                 </div>
-
             </CustomCard>
-        </div>);
+        </div>
+    )
 }
 
 export default Detail_mobile;

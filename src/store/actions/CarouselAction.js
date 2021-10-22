@@ -1,5 +1,5 @@
 import {GET_CAROUSEL} from "../types/Type";
-import { http } from  '../../util/settings'
+import {http} from '../../util/settings'
 
 
 export const getCarouselAction = () => {
@@ -10,9 +10,8 @@ export const getCarouselAction = () => {
                 type: GET_CAROUSEL,
                 arrCarousel: result.data.content
             })
-
         } catch (error) {
-            console.log('error', error)
+            console.log({error})
         }
     }
 }

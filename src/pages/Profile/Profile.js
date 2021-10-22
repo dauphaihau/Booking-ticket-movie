@@ -7,21 +7,9 @@ import {
     Button,
 } from 'antd';
 import {useDispatch, useSelector} from "react-redux";
-import {getInfoProfileAction,} from "../../store/actions/UserAction";
-import {GROUP_ID, http} from "../../util/settings";
-import {notifiFuntion} from "../../util/Notification";
-
-
-const validateMessages = {
-    required: '${label} không được bỏ trống',
-    types: {
-        email: '${label} không hợp lệ!',
-        number: '${label} không hợp lệ!',
-    },
-    number: {
-        range: '${label} phải từ 9 - 12 số ',
-    },
-};
+import {getInfoProfileAction, updateInfoUserAction,} from "../../store/actions/UserAction";
+import {useFormik} from "formik";
+import * as Yup from "yup";
 
 function Profile(props) {
 
@@ -35,46 +23,47 @@ function Profile(props) {
 
     // change key
     const OLD_KEY = 'soDT';
-    const NEW_KEY = 'soDt'
+    const NEW_KEY = 'soDt';
     const {[OLD_KEY]: replaceByKey, ...rest} = infoUser
     const new_obj = {
         ...rest,
         [NEW_KEY]: replaceByKey
     }
 
+    const formik = useFormik({
+        enableReinitialize: true,
+        initialValues: {
+            taiKhoan: new_obj.taiKhoan,
+            email: new_obj.email,
+            soDt: new_obj.soDt,
+            hoTen: new_obj.hoTen,
+            matKhau: new_obj.matKhau,
+            maLoaiNguoiDung: new_obj.maLoaiNguoiDung,
+            maNhom: new_obj.maNhom,
+        },
+        validationSchema: Yup.object({
+            taiKhoan: Yup.string().required('Tài khoản không được bỏ trống'),
+            matKhau: Yup.string().required('Mật khẩu không được để trống').min(6, 'Mật khẩu ít nhất phải 6 ký tự').max(32, 'Mật khẩu không được quá 32 ký tự'),
+            email: Yup.string().required('Email không được để trống').email('Email không hợp lệ'),
+            hoTen: Yup.string().required('Họ tên không được để trống').matches(/^[A-Z a-z]+$/, 'Tên không được chứa số, ký tự đặc biệt !'),
+            soDt: Yup.string().required('Số điện thoại không được để trống').matches(/^[0-9]*$/, 'Số điện thoại không được chứa chữ').min(9, 'Số điện thoại ít nhất phải 9 số').max(12, 'Số điện thoại không được quá 12 số'),
+        }),
+        onSubmit: (newData) => {
+            console.log('newData', newData)
+            dispatch(updateInfoUserAction(newData, props.match.params.tentaikhoan))
+        }
+    })
+
     const onFormLayoutChange = ({size}) => {
         setComponentSize(size);
     };
 
-    const onFinish = (newData) => {
-        console.log('Received values of form: ', newData);
-
-        http.put(`/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung`, newData).then((response) => {
-            console.log('response: ' + response);
-            notifiFuntion('success', 'Thông tin của bạn đã được cập nhật')
-        }).catch(error => {
-            console.log({error});
-        })
-    };
-
     return <Form
-        validateMessages={validateMessages}
-        // labelCol={{span: 4}}
-        // wrapperCol={{span: 14}}
+        className='lg:mt-8'
         labelCol={{span: 8}}
         wrapperCol={{span: 16}}
         layout="horizontal"
-        onFinish={onFinish}
-        initialValues={{
-            size: componentSize,
-            'email': new_obj.email,
-            'hoTen': new_obj.hoTen,
-            'taiKhoan': new_obj.taiKhoan,
-            'matKhau': new_obj.matKhau,
-            'soDt': new_obj.soDt,
-            'maLoaiNguoiDung': new_obj.maLoaiNguoiDung,
-            'maNhom': GROUP_ID,
-        }}
+        onSubmitCapture={formik.handleSubmit}
         onValuesChange={onFormLayoutChange}
         size={componentSize}
     >
@@ -86,34 +75,42 @@ function Profile(props) {
             </Radio.Group>
         </Form.Item>
 
-        <Form.Item label="Tài khoản" name='taiKhoan'>
-            <Input style={{width: 300}} disabled/>
+        <Form.Item label="Tài khoản">
+            <Input onChange={formik.handleChange}
+                   name='taiKhoan'
+                   style={{width: 300}} value={formik.values.taiKhoan} disabled/>
         </Form.Item>
 
-        <Form.Item label="Mật khẩu" name={['matKhau']} rules={[{required: true}]}>
-            <Input style={{width: 300}}/>
+        <Form.Item label="Mật khẩu" required validateStatus='error'
+                   help={formik.touched.matKhau && formik.errors.matKhau ? `${formik.errors.matKhau}` : null}
+        >
+            <Input style={{width: 300}} name='matKhau' onChange={formik.handleChange}
+                   value={formik.values.matKhau}/>
         </Form.Item>
 
-        <Form.Item label="Họ tên" name={['hoTen']} rules={[{required: true}]}>
-            <Input style={{width: 300}}/>
+        <Form.Item label="Họ tên" required validateStatus='error'
+                   help={formik.touched.hoTen && formik.errors.hoTen ? `${formik.errors.hoTen}` : null}
+        >
+            <Input style={{width: 300}} name='hoTen' onChange={formik.handleChange}
+                   value={formik.values.hoTen}/>
         </Form.Item>
 
-        <Form.Item label="Email" required name={['email']} rules={[{required: true, type: 'email'}]}>
-            <Input style={{width: 300}}/>
+        <Form.Item label="Email" required validateStatus='error'
+                   help={formik.touched.email && formik.errors.email ? `${formik.errors.email}` : null}
+        >
+            <Input style={{width: 300}} name='email' onChange={formik.handleChange}
+                   value={formik.values.email}/>
         </Form.Item>
 
-        <Form.Item label="Số điện thoại" name={['soDt']}
-                   rules={[{required: true, type: 'number', min: 100000000, max: 999999999999}]}>
-            <InputNumber style={{width: 300}}/>
+        <Form.Item label="Số điện thoại" required validateStatus='error'
+                   help={formik.touched.soDt && formik.errors.soDt ? `${formik.errors.soDt}` : null}
+        >
+            <InputNumber style={{width: 300}} name='soDt' onChange={(e) => {
+                formik.setFieldValue('soDt', e)
+            }} value={formik.values.soDt}/>
         </Form.Item>
-
-        <Form.Item hidden name={['maLoaiNguoiDung']}/>
-        <Form.Item hidden name={['maNhom']}/>
 
         <Form.Item wrapperCol={{
-            // xs: {span: 24, offset: 0},
-            // sm: {span: 16, offset: 4},
-            // lg: {span: 10, offset: 4},
             xs: {span: 24, offset: 0},
             sm: {span: 16, offset: 8},
         }}

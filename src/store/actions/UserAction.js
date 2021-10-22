@@ -84,7 +84,7 @@ export const deleteUserAction = (account) => {
 
             dispatch(getListUserAction())
             dispatch(hideLoadingAction)
-            notifiFuntion('success', 'Bạn đã xóa người dùng thành công')
+            notifiFuntion( 'Bạn đã xóa người dùng thành công')
 
         } catch (error) {
             dispatch(hideLoadingAction)
@@ -102,14 +102,16 @@ export const getInfoUserAction = (account) => {
             const result = await http.post(`/api/QuanLyNguoiDung/LayThongTinNguoiDung?taiKhoan=${account}`)
             console.log('result', result)
 
-            dispatch({
-                type: SET_INFO_USER,
-                infoUser: result.data.content
-            })
+            if (result.data.statusCode === 200) {
+                dispatch({
+                    type: SET_INFO_USER,
+                    infoUser: result.data.content
+                })
+                dispatch(hideLoadingAction)
+            }
 
-            dispatch(hideLoadingAction)
         } catch (error) {
-            console.log('error', error)
+            console.log({error})
             alert('Bạn không đủ quyền chỉnh sửa người dùng này')
             history.push('/admin/users')
             dispatch(hideLoadingAction)
@@ -127,22 +129,22 @@ export const getAllTypeUserAction = (account) => {
             })
 
         } catch (error) {
-            console.log('error', error)
+            console.log({error})
         }
     }
 }
 
-export const updateInfoUserAction = (newData) => {
+export const updateInfoUserAction = (newData, id) => {
     return async (dispatch) => {
         try {
             const result = await http.post(`/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung`, newData)
             if (result.data.statusCode === 200) {
-                dispatch(getListUserAction())
-                history.push('/admin/users')
+                dispatch(getInfoUserAction(id))
+                notifiFuntion( 'Thay đổi thông tin thành công')
             }
 
         } catch (error) {
-            console.log('error', error)
+            console.log({error})
         }
     }
 }

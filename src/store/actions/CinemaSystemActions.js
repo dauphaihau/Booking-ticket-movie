@@ -1,15 +1,10 @@
-
-
-
 import {SET_CINEMA} from "../types/Type";
 import {GROUP_ID, http} from '../../util/settings'
-
 
 export const CinemaSystemActions = () => {
     return async dispatch => {
         try {
             const result = await http.get(`/api/QuanLyRap/LayThongTinLichChieuHeThongRap?maNhom=${GROUP_ID}`)
-
             if (result.status === 200) {
                 dispatch({
                     type: SET_CINEMA,
@@ -17,7 +12,7 @@ export const CinemaSystemActions = () => {
                 })
             }
         } catch (error) {
-            console.log('error', error)
+            console.log({error})
         }
     }
 }

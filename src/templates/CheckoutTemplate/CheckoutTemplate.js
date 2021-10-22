@@ -30,9 +30,7 @@ const CheckoutTemplate = (props) => {
         }
     }, [])
 
-    if (!localStorage.getItem(USER_LOGIN))   {
-        return <Redirect to='/login'/>
-    }
+    if (!localStorage.getItem(USER_LOGIN)) return <Redirect to='/login'/>
 
     const renderComponent = (propsRoute) => {
         if (state.width <= 414) {
@@ -43,7 +41,6 @@ const CheckoutTemplate = (props) => {
         }
         return <Component {...propsRoute} />
     }
-
 
     return <Route {...restProps} render={(propsRoute) => {
 

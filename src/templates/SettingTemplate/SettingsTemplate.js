@@ -59,7 +59,6 @@ export const SettingTemplate = (props) => {
                     <Menu
                         mode="inline"
                         defaultSelectedKeys={['2']}
-                        // defaultOpenKeys={['1']}
                         style={{height: '100%', borderRight: 0}}
                     >
 

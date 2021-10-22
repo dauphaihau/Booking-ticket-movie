@@ -1,7 +1,6 @@
 import React, {useEffect} from 'react';
 import {CustomCard} from "@tsamantanis/react-glassmorphism";
-import '../../assets/styles/circle.css'
-import {Tabs, Radio, Space, Rate} from 'antd';
+import {Tabs, Rate} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import {getDetailFilmsAction} from "../../store/actions/FilmsAction";
 import moment from "moment";
@@ -14,8 +13,6 @@ function Detail_mobile(props) {
 
     const dispatch = useDispatch();
     const {detailFilm} = useSelector(state => state.FilmsReducer)
-
-    console.log('detail-film', detailFilm)
 
     useEffect(() => {
         let {id} = props.match.params;
@@ -36,7 +33,7 @@ function Detail_mobile(props) {
                         blur={50} // default blur value is 10px
                         borderRadius={1}
             >
-                <div className='mx-auto px-8 container lg:max-w-screen-xl'>
+                <div className='mx-auto lg:px-8 md:px-0 container lg:max-w-screen-xl'>
                     <div className='py-5 rounded-lg'>
                         <div className='grid grid-cols-3 gap-x-8 '>
                             <img className='col-span-1 rounded-lg' width={280} height={280} src={detailFilm.hinhAnh}
@@ -80,7 +77,6 @@ function Detail_mobile(props) {
                                                                  alt={cumRap.tenCumRap}/>
                                                             <div className='ml-5'>
                                                                 <p className='text-xl font-bold
-                                                                {/*leading-3*/}
                                                                 '>{cumRap.tenCumRap}</p>
                                                                 <p style={{marginBottom: 21}}>{cumRap.diaChi}</p>
                                                                 <div className='flex flex-row'>

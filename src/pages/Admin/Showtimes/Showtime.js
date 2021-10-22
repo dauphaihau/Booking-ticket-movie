@@ -1,10 +1,21 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import {Form, Input, Button, Checkbox, Select, DatePicker, Space, InputNumber} from 'antd';
+import React, {useEffect, useState} from 'react';
+import {Form, Button, Select, DatePicker, InputNumber} from 'antd';
 import moment from "moment";
 import {history, http} from "../../../util/settings";
 import {useFormik} from "formik";
 import {getListFilmsAction} from "../../../store/actions/FilmsAction";
 import {useDispatch} from "react-redux";
+
+
+const validateMessages = {
+    required: '${label} không được bỏ trống',
+    types: {
+        number: '${label} không hợp lệ!',
+    },
+    number: {
+        range: '${label} phải từ 75000 - 150000',
+    },
+};
 
 function Showtime(props) {
 
@@ -52,7 +63,7 @@ function Showtime(props) {
                 arrCinema: result.data.content
             })
         } catch (error) {
-            console.log('error', error)
+            console.log({error});
         }
     }, [])
 
@@ -68,7 +79,7 @@ function Showtime(props) {
                 arrMiniCinema: result.data.content
             })
         } catch (error) {
-            console.log('error', error)
+            console.log({error});
         }
     }
 
@@ -96,20 +107,8 @@ function Showtime(props) {
     }
 
 
-    const validateMessages = {
-        required: '${label} không được bỏ trống',
-        types: {
-            number: '${label} không hợp lệ!',
-        },
-        number: {
-            range: '${label} phải từ 75000 - 150000',
-        },
-    };
-
-
     return <>
         <div className='container flex flex-row mt-20'>
-
             <Form
                 name="basic"
                 labelCol={{span: 8,}}
@@ -121,9 +120,11 @@ function Showtime(props) {
                 size={componentSize}
                 onValuesChange={onFormLayoutChange}
             >
-                <Form.Item label='Tạo lịch chiếu phim'>
-                    <span className="ant-form-text font-bold"
-                          style={{marginLeft: 5}}>{props.match.params.tenphim}</span>
+                <Form.Item label='Chức năng'>
+                    <span className="font-bold ant-form-text">TẠO LỊCH CHIẾU PHIM</span>
+                </Form.Item>
+                <Form.Item label='Tên phim'>
+                    <span className="ant-form-text">{props.match.params.tenphim}</span>
                 </Form.Item>
 
                 <Form.Item label="Hệ thống rạp" name={['heThongRap']} rules={[{required: true}]}>
@@ -141,7 +142,6 @@ function Showtime(props) {
                         onChange={handleChangeMiniCinema} placeholder="Chọn cụm rạp"/>
                 </Form.Item>
 
-
                 <Form.Item label="Ngày khởi chiếu" name="date-picker" rules={[{required: true}]}>
                     <DatePicker
                         showTime onOk={onOk} format='DD/MM/YYYY hh:mm:ss' placeholder='Chọn Ngày khởi chiếu'
@@ -152,6 +152,7 @@ function Showtime(props) {
                            rules={[{required: true, type: 'number', min: 75000, max: 150000}]}>
                     <InputNumber onChange={onChangeNumber}/>
                 </Form.Item>
+
                 <Form.Item
                     wrapperCol={{
                         xs: {span: 24, offset: 0},

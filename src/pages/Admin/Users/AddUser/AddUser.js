@@ -101,7 +101,7 @@ function AddUser(props) {
                     <InputNumber style={{width: 300}}/>
                 </Form.Item>
 
-                <Form.Item label="Loại người dùng" name={['maLoaiNguoiDung']} rules={[{ required: true, type: 'array' }]}>
+                <Form.Item label="Loại người dùng" name={['maLoaiNguoiDung']} rules={[{ required: true }]}>
                     <Select style={{width: 300}} placeholder="Select a category">
                         {typeUser.map((type, index) => {
                             return <Option key={index} value={type.maLoaiNguoiDung}>{type.tenLoai}</Option>

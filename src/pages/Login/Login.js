@@ -69,7 +69,6 @@ function Login(props) {
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.taiKhoan && formik.errors.taiKhoan ? `${formik.errors.taiKhoan}` : null}
                             clearable name='taiKhoan'
-                            // helperText="Please enter your name"
                             labelPlaceholder="Tài khoản"
                             size='large' width='100%'
                         />

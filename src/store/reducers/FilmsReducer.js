@@ -35,7 +35,6 @@ export const FilmsReducer = (state = initialState, action) => {
         case SET_FILMS: {
             state.arrFilms = action.arrFilms
             state.arrFilmDefault = state.arrFilms;
-            console.log('arr-film-default', state.arrFilmDefault)
             return {...state}
         }
 

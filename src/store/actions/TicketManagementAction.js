@@ -4,9 +4,10 @@ import {DataBooking} from "../../_core/models/dataBooking";
 import {displayLoadingAction, hideLoadingAction} from "./LoadingAction";
 import {TicketManagementReducer} from "../reducers/TicketManagementReducer";
 import {connection} from "../../index";
+import {notifiFuntion} from "../../util/Notification";
 
 export const getListTicketRoomAction = (idShowtimes) => {
-    return async (dispatch) => {
+    return async dispatch => {
         try {
             dispatch(displayLoadingAction)
             const result = await http.get(`/api/QuanLyDatVe/LayDanhSachPhongVe?MaLichChieu=${idShowtimes}`)
@@ -15,34 +16,27 @@ export const getListTicketRoomAction = (idShowtimes) => {
                     type: SET_LIST_TICKET_ROOM,
                     detailTicketRoom: result.data.content
                 })
+                dispatch(hideLoadingAction)
             }
-            dispatch(hideLoadingAction)
-
         } catch (error) {
-            console.log('error', error.response.data)
+            console.log({error})
         }
     }
 }
 
 export const bookingAction = (dataBooking = new DataBooking()) => {
-    return async ( dispatch, getState ) => {
+    return async dispatch => {
         try {
             dispatch(displayLoadingAction)
-
-            const result = await http.post('/api/QuanLyDatVe/DatVe', dataBooking)
-            console.log('resultBooking', result)
-
-            // auto refresh after booking success
+            await http.post('/api/QuanLyDatVe/DatVe', dataBooking)
             await dispatch(getListTicketRoomAction(dataBooking.maLichChieu))
-
-            // clear
-            await dispatch({type: BOOKING_SUCCESS})
-
+            await dispatch({type: BOOKING_SUCCESS}) // renew the seat you ordered
             await dispatch(hideLoadingAction)
+            notifiFuntion( 'bạn đã đặt ghế thành công')
 
             // let userLogin = getState().UserReducer.userLogin;
             // connection.invoke('datGheThanhCong', userLogin.taiKhoan, dataBooking.maLichChieu)
-            
+
             dispatch({type: AUTO_SWITCH_TAB})
 
         } catch (error) {

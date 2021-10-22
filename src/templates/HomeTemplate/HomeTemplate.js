@@ -3,8 +3,7 @@ import React, {Fragment, useEffect, useState} from "react";
 import Header from "./Layout/Header/Header";
 import Footer from "./Layout/Footer/Footer";
 
-
-export const HomeTemplate = (props) => { // props: path, exact, Component
+export const HomeTemplate = (props) => {
 
   const {Component, MobileComponent, ...restProps} = props;
 
@@ -47,10 +46,7 @@ export const HomeTemplate = (props) => { // props: path, exact, Component
 
     return <Fragment>
       <Header {...propsRoute} />
-
-      {/*<Component {...propsRoute}/>*/}
       {renderComponent(propsRoute)}
-
       <Footer {...propsRoute}/>
     </Fragment>
   }}/>

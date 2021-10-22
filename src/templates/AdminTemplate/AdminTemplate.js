@@ -1,7 +1,7 @@
 import {NavLink, Redirect, Route} from "react-router-dom";
 import React, {useEffect} from "react";
 import {Layout, Menu} from 'antd';
-import {Fragment, useState} from "react";
+import {Fragment} from "react";
 import {
     UserOutlined,
     VideoCameraOutlined,
@@ -15,28 +15,17 @@ const {SubMenu} = Menu;
 
 export const AdminTemplate = (props) => {
 
+    const {Component, ...restProps} = props;
     const {userLogin} = useSelector(state => state.UserReducer)
-    const [state, setState] = useState({
-        collapsed: false,
-    })
 
     useEffect(() => {
         window.scrollTo(0, 0)
     },)
 
-    const {Component, ...restProps} = props;
-
     if (!localStorage.getItem(USER_LOGIN)) {
         alert('Bạn không đủ quyền truy cập trang này !')
         return <Redirect to='/login'/>
     }
-
-    const toggle = () => {
-        setState({
-            collapsed: !state.collapsed,
-        });
-    };
-
 
     return <Route {...restProps} render={(propsRoute) => {
 
@@ -69,7 +58,7 @@ export const AdminTemplate = (props) => {
                     <Menu
                         mode="inline"
                         defaultSelectedKeys={['1']}
-                        defaultOpenKeys={['1']}
+                        defaultOpenKeys={['sub1']}
                         style={{height: '100%', borderRight: 0}}
                     >
                         <SubMenu key="sub1" icon={<VideoCameraOutlined/>} title="Quản lý phim">
@@ -102,9 +91,7 @@ export const AdminTemplate = (props) => {
 
                 <Layout className="site-layout ">
                     <Content
-                        className="site-layout-background
-                        {/*lg:m-auto*/}
-                        "
+                        className="site-layout-background"
                         style={{
                             margin: '24px 16px',
                             padding: 24,

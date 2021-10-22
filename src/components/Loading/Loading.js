@@ -6,7 +6,6 @@ function Loading(props) {
 
     const {isLoading} = useSelector(state => state.LoadingReducer)
 
-
     return <Fragment>
         {
             isLoading ?

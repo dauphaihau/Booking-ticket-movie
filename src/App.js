@@ -1,6 +1,6 @@
 import './App.css';
 import {history} from "./util/settings";
-import {Route, Router, Switch} from "react-router-dom";
+import {Router, Switch} from "react-router-dom";
 import {HomeTemplate} from "./templates/HomeTemplate/HomeTemplate";
 import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact/Contact";

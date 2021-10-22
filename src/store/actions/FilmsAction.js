@@ -1,5 +1,6 @@
 import {SET_FILMS, SET_DETAIL_FILM, SET_INFO_FILM} from "../types/Type";
 import {GROUP_ID, history, http} from '../../util/settings'
+import {notifiFuntion} from "../../util/Notification";
 
 
 export const getListFilmsAction = () => {
@@ -11,7 +12,7 @@ export const getListFilmsAction = () => {
                 arrFilms: result.data.content
             })
         } catch (error) {
-            console.log('error', error)
+            console.log({error})
         }
     }
 }
@@ -24,9 +25,8 @@ export const getDetailFilmsAction = (id) => {
                 type: SET_DETAIL_FILM,
                 detailFilm: result.data.content
             })
-
         } catch (error) {
-            console.log('error', error)
+            console.log({error})
         }
     }
 }
@@ -41,7 +41,7 @@ export const getInfoFilmsAction = (id) => {
             })
 
         } catch (error) {
-            console.log('error', error)
+            console.log({error})
         }
     }
 }
@@ -51,8 +51,7 @@ export const updateFilmsAction = (filmEdited) => {
     return async (dispatch) => {
         try {
             const result = await http.post(`/api/QuanLyPhim/CapNhatPhimUpload`, filmEdited)
-            alert('sửa phim thành công')
-            console.log('result', result)
+            notifiFuntion('sửa phim thành công')
             dispatch(getListFilmsAction())
             history.push('/admin/films')
         } catch (error) {
@@ -68,11 +67,11 @@ export const deleteFilmsAction = (idFilm) => {
     return async (dispatch) => {
         try {
             const result = await http.delete(`/api/QuanLyPhim/XoaPhim?MaPhim=${idFilm}`)
-            console.log('resultdelete', result)
-            alert('Xóa phim thành công')
+            console.log('result', result)
+            notifiFuntion('Xóa phim thành công')
             dispatch(getListFilmsAction())
         } catch (error) {
-            console.log('error', error)
+            console.log({error})
         }
     }
 }

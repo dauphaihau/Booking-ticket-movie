@@ -6,12 +6,7 @@ import {CinemaSystemActions} from "../../store/actions/CinemaSystemActions";
 import {getCarouselAction} from "../../store/actions/CarouselAction";
 import {Carousel} from "antd";
 import '../../templates/HomeTemplate/Layout/HomeCarousel/HomeCarousel.css'
-import Slider from "react-slick";
-import styleSlick from '../../components/RSslick/MultipleRowSlick.module.css'
-import {SET_FILM_COMING_SOON, SET_FILM_NEW_IN} from "../../store/types/Type";
-import Film from "../../components/Film/Film";
 import MultipleRowSlick from "../../components/RSslick/MultipleRowSlick";
-import bgStyle from './HomeMenu/HomeCarousel.module.css'
 
 
 export default function Home_mobile(props) {
@@ -44,7 +39,6 @@ export default function Home_mobile(props) {
 
 const contentStyle = {
     height: '600px',
-    // height: '800px',
     color: '#fff',
     lineHeight: '160px',
     textAlign: 'center',

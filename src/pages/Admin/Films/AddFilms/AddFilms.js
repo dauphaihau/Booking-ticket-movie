@@ -1,6 +1,5 @@
 import React, {Fragment, useState} from 'react';
 import moment from "moment";
-
 import {
     Form,
     Input,
@@ -13,6 +12,7 @@ import {useFormik} from "formik";
 import {GROUP_ID, history, http} from "../../../../util/settings";
 import {getListFilmsAction} from "../../../../store/actions/FilmsAction";
 import {useDispatch} from "react-redux";
+import {notifiFuntion} from "../../../../util/Notification";
 
 const validateMessages = {
     required: '${label} không được bỏ trống',
@@ -64,7 +64,7 @@ function AddFilms(props) {
 
             http.post('/api/QuanLyPhim/ThemPhimUploadHinh', fromData).then((response) => {
                 console.log('response: ' + response);
-                alert('Thêm phim thành công')
+                notifiFuntion('Thêm phim thành công')
                 dispatch(getListFilmsAction())
                 history.push('/admin/films')
             }).catch(error => {

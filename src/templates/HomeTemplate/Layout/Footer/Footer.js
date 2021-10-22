@@ -2,7 +2,7 @@ import React from 'react';
 
 function Footer(props) {
     return (
-        <div className="px-8 pt-16 mx-auto sm:max-w-45rem md:max-w-full lg:max-w-screen-xl md:px-16 lg:px-10">
+        <div className="px-8 pt-16 mx-auto sm:max-w-45rem md:max-w-full lg:max-w-screen-xl md:px-12 lg:px-10">
             <div className="grid gap-10 row-gap-6 mb-8 sm:grid-cols-2 lg:grid-cols-4">
                 <div className="sm:col-span-2">
                     <a
