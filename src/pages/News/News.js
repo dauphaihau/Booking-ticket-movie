@@ -2,7 +2,7 @@ import React from 'react';
 import dataNews from "../../assets/data/dataNews.json";
 
 function News(props) {
-    return <section className="text-gray-600 body-font">
+    return <section id='news' className="text-gray-600 body-font">
         <div className="container px-5 pt-24 mx-auto">
             <div className="flex flex-col">
                 <div className="h-1 bg-gray-200 rounded overflow-hidden">

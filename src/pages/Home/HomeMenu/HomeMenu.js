@@ -57,7 +57,7 @@ function HomeMenu(props) {
                                     </div>
                                 }
                                 key={index}>
-                                {cumRap.danhSachPhim?.slice(0, 4).map((film, index) => {
+                                {cumRap.danhSachPhim?.slice(0,10).map((film, index) => {
                                     return <Fragment key={index}>
                                         <div className="my-5 ">
                                             <div className="flex h-full">
@@ -100,7 +100,7 @@ function HomeMenu(props) {
 
     return (
         <>
-            <Tabs tabPosition={tabPosition}>
+            <Tabs tabPosition={tabPosition} >
                 {renderCinemaSystem()}
             </Tabs>
         </>

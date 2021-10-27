@@ -27,7 +27,7 @@ function Home(props) {
             </div>
             <div className='mx-0 px-0'>
                 <HomeMenu arrCinema={arrCinema}/>
-                <News/>
+                <News className='rounded-full overflow-scroll h-[-550px]'/>
             </div>
         </section>
     </div>

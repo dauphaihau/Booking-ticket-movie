@@ -1,12 +1,11 @@
-import React, {Fragment, useEffect, useState} from 'react';
-import {Table, Button, Space} from 'antd';
+import React, {Fragment, useEffect} from 'react';
+import {Table, Button, Tag} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
-import {deleteFilmsAction, getDetailFilmsAction, getListFilmsAction} from "../../../store/actions/FilmsAction";
-import {CalendarOutlined, CloseOutlined, EditOutlined} from "@ant-design/icons";
+import {CloseOutlined, EditOutlined} from "@ant-design/icons";
 import {NavLink} from "react-router-dom";
 import Search from "antd/es/input/Search";
-import {GROUP_ID, history, http} from "../../../util/settings";
-import {SET_FILMS, SET_LIST_USER} from "../../../store/types/Type";
+import {GROUP_ID, http} from "../../../util/settings";
+import {SET_LIST_USER} from "../../../store/types/Type";
 import {deleteUserAction, getListUserAction} from "../../../store/actions/UserAction";
 
 
@@ -14,6 +13,8 @@ function Users(props) {
 
     const {listUser} = useSelector(state => state.UserReducer)
     const dispatch = useDispatch();
+
+    console.log('list-user', listUser)
 
     useEffect(() => {
         dispatch(getListUserAction())
@@ -55,6 +56,8 @@ function Users(props) {
             sortDirections: ['descend', 'ascend'],
             width: '10%',
             responsive: ['md'],
+            render: (item, user, index) => user.maLoaiNguoiDung === 'QuanTri' ?
+                <Tag color="warning">{user.maLoaiNguoiDung}</Tag> : <Tag color="processing">{user.maLoaiNguoiDung}</Tag>
         },
         {
             title: 'Email',

@@ -1,15 +1,14 @@
-/* This example requires Tailwind CSS v2.0+ */
-import React, {Fragment, useState} from 'react'
+import React, {Fragment} from 'react'
 import {Disclosure, Menu, Transition} from '@headlessui/react'
-import {BellIcon, MenuIcon, XIcon} from '@heroicons/react/outline'
+import {MenuIcon, XIcon} from '@heroicons/react/outline'
 import {ACCESS_TOKEN, history, USER_LOGIN} from "../../../../util/settings";
 import _ from "lodash";
 import {useSelector} from "react-redux";
 
 const navigation = [
     {name: 'Trang chủ', href: '/', current: true},
-    {name: 'Liên hệ', href: '/contact', current: false},
-    {name: 'Tin tức', href: '/news', current: false},
+    {name: 'Liên hệ', href: '#footer', current: false},
+    {name: 'Tin tức', href: '#news', current: false},
 ]
 
 function classNames(...classes) {
