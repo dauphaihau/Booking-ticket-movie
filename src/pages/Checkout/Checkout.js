@@ -9,8 +9,6 @@ import {BOOKING_CHAIR, SWITCH_TAB} from "../../store/types/Type";
 import _ from "lodash";
 import {DataBooking} from "../../_core/models/dataBooking";
 import {Tabs} from 'antd';
-import {getDataUserAction} from "../../store/actions/UserAction";
-import {connection} from "../../index";
 import {ACCESS_TOKEN, history, USER_LOGIN} from "../../util/settings";
 import {Avatar, Button} from "@nextui-org/react";
 
@@ -35,50 +33,7 @@ function Booking(props) {
 
     useEffect(() => {
         dispatch(getListTicketRoomAction(props.match.params.id))
-
-        // Any user who has successfully booked tickets will reload the page
-        // connection.on('datVeThanhCong', () => {
-        //     dispatch(getListTicketRoomAction(props.match.params.id))
-        // })
-
-        // load immediately all chair of other user booking
-        // connection.on('loadDanhSachGhe', props.match.params.id)
-
-        // load list chair from server
-        // connection.on('loadDanhSachGheDaDat', (listChairUserBook) => {
-        //     console.log('listChairUserBook', listChairUserBook)
-        //
-        //     listChairUserBook = listChairUserBook.filter(chair => chair.taiKhoan !== userLogin.taiKhoan)
-        //
-        //     console.log('list-chair-user-book', listChairUserBook)
-        //
-        //     // combine all chairs of another user to Arr
-        //     let arrListChairOtherUserBook = listChairUserBook.reduce((result, item, index) => {
-        //         let arrChair = JSON.parse(item.danhSachGhe);
-        //         return [...result, ...arrChair]
-        //     }, [])
-        //
-        //     // del chairs have same name props
-        //     arrListChairOtherUserBook = _.uniqBy(arrListChairOtherUserBook, 'maGhe')
-        //
-        //     dispatch({
-        //         type: SET_LIST_CHAIR_OTHER_USER_BOOKING,
-        //         arrListChairOtherUserBook
-        //     })
-        // })
-
-        // window.addEventListener('beforeunload', clearChair);
-        //
-        // return () => {
-        //     clearChair();
-        //     window.removeEventListener('beforeunload', clearChair)
-        // }
-
     }, [])
-
-    // const clearChair = (event) => {
-    //   connection.invoke('huyDat', userLogin.taiKhoan, props.match.params.id)
-    // }
 
     const {danhSachGhe, thongTinPhim} = detailTicketRoom;
 
@@ -125,7 +80,6 @@ function Booking(props) {
                                         ${classBookedChairByUser} ${classBookingChairByOtherUser}
                                         `}
                                         onClick={() => {
-                                            // dispatch(bookingChairAction(chair, props.match.params.id))
                                             dispatch({
                                                 type: BOOKING_CHAIR,
                                                 bookingChair: chair
@@ -185,7 +139,7 @@ function Booking(props) {
                 </div>
                 <div className='xl:col-span-3 min-h-screen mx-6 lg:mx-0 xl:ml-12 mt-6'>
                     <div className='flex flex-row xl:block'>
-                        <figure>
+                        <figure className='md:w-1/2'>
                             <img className='rounded-xl w-full' src={thongTinPhim.hinhAnh} alt={thongTinPhim.tenPhim}/>
                         </figure>
                         <div className='ml-8 xl:ml-0'>
@@ -199,13 +153,13 @@ function Booking(props) {
                                     <div className='flex flex-row'>
                                         <div
                                             className={`lg:chair chairMini bookingChair vipChair flex justify-center items-center p-2`}/>
-                                        {_.filter(listBookingChair, ['loaiGhe', 'Vip']).reduce((sumBill, chair, index) => {
-                                            return sumBill += chair.giaVe
+                                        {_.filter(listBookingChair, ['loaiGhe', 'Vip']).reduce((sumBill, chair ) => {
+                                            return sumBill + chair.giaVe
                                         }, 0).toLocaleString()}đ
                                         <div
                                             className={`lg:chair chairMini bookingChair flex justify-center items-center p-2 ml-8`}/>
-                                        {_.filter(listBookingChair, ['loaiGhe', 'Thuong']).reduce((sumBill, chair, index) => {
-                                            return sumBill += chair.giaVe
+                                        {_.filter(listBookingChair, ['loaiGhe', 'Thuong']).reduce((sumBill, chair) => {
+                                            return sumBill + chair.giaVe
                                         }, 0).toLocaleString()}đ
                                     </div>
                                 </div>
@@ -213,8 +167,8 @@ function Booking(props) {
                                     <div className='flex flex-row justify-between'>
                                         <span className='text-xl'>Tổng tiền: </span>
                                         <span className='text-xl font-bold'>
-                                            {listBookingChair.reduce((sumBill, chair, index) => {
-                                                return sumBill += chair.giaVe
+                                            {listBookingChair.reduce((sumBill, chair) => {
+                                                return sumBill + chair.giaVe
                                             }, 0).toLocaleString()}đ
                                         </span>
                                     </div>

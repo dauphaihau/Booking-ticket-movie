@@ -17,14 +17,14 @@ export const HomeTemplate = (props) => {
   })
 
   useEffect(() => {
-    window.onload = () => { // run when window load first time ( in case user change size before load screen )
+    window.onload = () => {
       setState({
         width: window.innerWidth,
         height: window.innerHeight
       })
     }
 
-    window.onresize = () => { // run when window resize
+    window.onresize = () => {
       setState({
         width: window.innerWidth,
         height: window.innerHeight

@@ -1,5 +1,5 @@
 import React, {Fragment, memo, useEffect, useState} from 'react';
-import {Tabs, Radio, Space} from 'antd';
+import {Tabs} from 'antd';
 import moment from "moment";
 import {Button} from "@nextui-org/react";
 import {history} from "../../../util/settings";
@@ -18,12 +18,12 @@ function HomeMenu(props) {
             })
         }
 
-        // window.onresize = () => { // run when window resize
-        //     setState({
-        //         width: window.innerWidth,
-        //         height: window.innerHeight
-        //     })
-        // }
+        window.onresize = () => { // run when window resize
+            setState({
+                width: window.innerWidth,
+                height: window.innerHeight
+            })
+        }
     }, [])
 
     const [state, setState] = useState({
@@ -42,7 +42,7 @@ function HomeMenu(props) {
 
     const renderCinemaSystem = () => {
         return arrCinema.map((cinema, index) => {
-            return <TabPane tab={<img src={cinema.logo} className='rounded-full' width={50}/>} key={index}>
+            return <TabPane tab={<img alt='cinema' src={cinema.logo} className='rounded-full' width={50}/>} key={index}>
                 <Tabs tabPosition={tabPosition}>
                     {cinema.lstCumRap.slice(0, 6).map((cumRap, index) => {
                         return (
@@ -57,7 +57,7 @@ function HomeMenu(props) {
                                     </div>
                                 }
                                 key={index}>
-                                {cumRap.danhSachPhim?.slice(0,10).map((film, index) => {
+                                {cumRap.danhSachPhim?.slice(0,4).map((film, index) => {
                                     return <Fragment key={index}>
                                         <div className="my-5 ">
                                             <div className="flex h-full">

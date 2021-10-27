@@ -9,7 +9,7 @@ import '../../templates/HomeTemplate/Layout/HomeCarousel/HomeCarousel.css'
 import MultipleRowSlick from "../../components/RSslick/MultipleRowSlick";
 
 
-export default function Home_mobile(props) {
+export default function Home_mobile() {
 
     const dispatch = useDispatch();
     const {arrFilms} = useSelector(state => state.FilmsReducer)
@@ -47,7 +47,7 @@ const contentStyle = {
     backgroundRepeat: 'no-repeat'
 };
 
-function HomeCarouselMobile(props) {
+function HomeCarouselMobile() {
 
     const {arrCarousel} = useSelector(state => state.CarouselReducer)
     const dispatch = useDispatch();

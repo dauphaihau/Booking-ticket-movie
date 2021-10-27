@@ -1,7 +1,7 @@
 import {NavLink, Redirect, Route} from "react-router-dom";
 import React from "react";
 import {Layout, Menu} from 'antd';
-import {Fragment, useState} from "react";
+import {Fragment} from "react";
 import {
     UserOutlined,
     HistoryOutlined, PoweroffOutlined, HomeOutlined,
@@ -14,9 +14,6 @@ const {Sider, Content} = Layout;
 export const SettingTemplate = (props) => {
 
     const {userLogin} = useSelector(state => state.UserReducer)
-    const [state, setState] = useState({
-        collapsed: false,
-    })
 
     const {Component, ...restProps} = props;
 
@@ -25,13 +22,6 @@ export const SettingTemplate = (props) => {
         return <Redirect to='/login'/>
     }
 
-    const toggle = () => {
-        setState({
-            collapsed: !state.collapsed,
-        });
-    };
-
-
     return <Route {...restProps} render={(propsRoute) => {
 
         return <Fragment>
@@ -39,12 +29,6 @@ export const SettingTemplate = (props) => {
                 <Sider width={200} className="site-layout-background"
                        breakpoint="lg"
                        collapsedWidth="0"
-                       onBreakpoint={broken => {
-                           // console.log(broken);
-                       }}
-                       onCollapse={(collapsed, type) => {
-                           // console.log(collapsed, type);
-                       }}
                 >
                     <div className=" bg-white logo text-center flex justify-center py-6">
                         <div className="flex flex-col items-center mt-6 -mx-2">

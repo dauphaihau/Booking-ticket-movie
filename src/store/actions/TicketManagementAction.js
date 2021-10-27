@@ -1,9 +1,7 @@
-import {ACCESS_TOKEN, http} from "../../util/settings";
-import {AUTO_SWITCH_TAB, BOOKING_CHAIR, BOOKING_SUCCESS, SET_LIST_TICKET_ROOM} from "../types/Type";
+import {http} from "../../util/settings";
+import {AUTO_SWITCH_TAB, BOOKING_SUCCESS, SET_LIST_TICKET_ROOM} from "../types/Type";
 import {DataBooking} from "../../_core/models/dataBooking";
 import {displayLoadingAction, hideLoadingAction} from "./LoadingAction";
-import {TicketManagementReducer} from "../reducers/TicketManagementReducer";
-import {connection} from "../../index";
 import {notifiFuntion} from "../../util/Notification";
 
 export const getListTicketRoomAction = (idShowtimes) => {
@@ -34,9 +32,6 @@ export const bookingAction = (dataBooking = new DataBooking()) => {
             await dispatch(hideLoadingAction)
             notifiFuntion( 'bạn đã đặt ghế thành công')
 
-            // let userLogin = getState().UserReducer.userLogin;
-            // connection.invoke('datGheThanhCong', userLogin.taiKhoan, dataBooking.maLichChieu)
-
             dispatch({type: AUTO_SWITCH_TAB})
 
         } catch (error) {
@@ -45,23 +40,3 @@ export const bookingAction = (dataBooking = new DataBooking()) => {
         }
     }
 }
-
-// export const bookingChairAction = (chair, idShowtime) => {
-//     return async (dispatch, getState) => {
-//         await dispatch({
-//             type: BOOKING_CHAIR,
-//             bookingChair: chair
-//         })
-//
-//         let listBookingChair = getState().TicketManagementReducer.listBookingChair;
-//         let accountUser = getState().UserReducer.userLogin.taiKhoan;
-//         console.log('list-booking-chair', listBookingChair)
-//         console.log('account-user', accountUser)
-//         console.log('id-showtime', idShowtime)
-//
-//         listBookingChair = JSON.stringify(listBookingChair)
-//
-//         connection.invoke('datGhe', listBookingChair, accountUser, idShowtime)
-//
-//     }
-// }

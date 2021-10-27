@@ -5,7 +5,7 @@ import {NavLink} from "react-router-dom";
 import {Button, Input, useInput} from "@nextui-org/react";
 import * as Yup from "yup";
 
-function Register(props) {
+function Register() {
 
     const {reset} = useInput('');
     const formik = useFormik({

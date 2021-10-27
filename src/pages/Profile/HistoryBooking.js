@@ -4,7 +4,7 @@ import {getDataUserAction} from "../../store/actions/UserAction";
 import _ from "lodash";
 import moment from "moment";
 
-export default function HistoryBooking(props) {
+export default function HistoryBooking() {
 
     const {dataUser} = useSelector(state => state.UserReducer)
     const dispatch = useDispatch();

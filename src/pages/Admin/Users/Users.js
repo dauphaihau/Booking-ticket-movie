@@ -9,7 +9,7 @@ import {SET_LIST_USER} from "../../../store/types/Type";
 import {deleteUserAction, getListUserAction} from "../../../store/actions/UserAction";
 
 
-function Users(props) {
+function Users() {
 
     const {listUser} = useSelector(state => state.UserReducer)
     const dispatch = useDispatch();
@@ -54,16 +54,16 @@ function Users(props) {
             title: 'Mã loại người dùng',
             dataIndex: 'maLoaiNguoiDung',
             sortDirections: ['descend', 'ascend'],
-            width: '10%',
+            width: '15%',
             responsive: ['md'],
-            render: (item, user, index) => user.maLoaiNguoiDung === 'QuanTri' ?
+            render: (item, user) => user.maLoaiNguoiDung === 'QuanTri' ?
                 <Tag color="warning">{user.maLoaiNguoiDung}</Tag> : <Tag color="processing">{user.maLoaiNguoiDung}</Tag>
         },
         {
             title: 'Email',
             dataIndex: 'email',
             sortDirections: ['descend', 'ascend'],
-            width: '25%',
+            width: '20%',
             responsive: ['lg'],
         },
         {

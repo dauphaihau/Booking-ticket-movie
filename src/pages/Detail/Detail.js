@@ -33,7 +33,7 @@ function Detail_mobile(props) {
                         blur={50} // default blur value is 10px
                         borderRadius={1}
             >
-                <div className='mx-auto lg:px-8 md:px-0 container lg:max-w-screen-xl'>
+                <div className='lg:mx-auto lg:px-8 md:px-0 lg:container lg:max-w-screen-xl'>
                     <div className='py-5 rounded-lg'>
                         <div className='grid grid-cols-3 gap-x-8 '>
                             <img className='col-span-1 rounded-lg' width={280} height={280} src={detailFilm.hinhAnh}

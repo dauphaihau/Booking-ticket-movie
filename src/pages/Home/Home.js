@@ -7,7 +7,7 @@ import {CinemaSystemActions} from "../../store/actions/CinemaSystemActions";
 import HomeCarousel from "../../templates/HomeTemplate/Layout/HomeCarousel/HomeCarousel";
 import News from "../News/News";
 
-function Home(props) {
+function Home() {
 
     const dispatch = useDispatch();
     const {arrFilms} = useSelector(state => state.FilmsReducer)
@@ -21,7 +21,7 @@ function Home(props) {
     return <div>
         <HomeCarousel className='hidden lg:block'/>
 
-        <section className='container lg:mx-auto my-0 lg:px-4 xl:px-36 px-7 mb-32'>
+        <section className='lg:container lg:mx-auto my-0 lg:px-4 xl:px-36 px-7 mb-32'>
             <div className="px-0 lg:px-5 py-24 mx-auto text-gray-600 body-font mx-0">
                 <MultipleRowSlick arrFilms={arrFilms}/>
             </div>

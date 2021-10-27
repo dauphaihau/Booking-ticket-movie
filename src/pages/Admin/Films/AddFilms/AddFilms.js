@@ -28,7 +28,7 @@ const validateMessages = {
 const desc = ['quá tệ', 'tệ', 'bình thường', 'tốt', 'tuyệt vời'];
 
 
-function AddFilms(props) {
+function AddFilms() {
 
     const dispatch = useDispatch();
     const [componentSize, setComponentSize] = useState('default');
@@ -79,7 +79,7 @@ function AddFilms(props) {
         setComponentSize(size);
     };
 
-    const handleChangeDataPicker = (date, dataString) => {
+    const handleChangeDataPicker = (date ) => {
         const dateLocal = moment(date).format('DD/MM/YYYY')
         formik.setFieldValue('ngayKhoiChieu', dateLocal)
     }

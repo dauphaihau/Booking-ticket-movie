@@ -50,7 +50,7 @@ export const getInfoFilmsAction = (id) => {
 export const updateFilmsAction = (filmEdited) => {
     return async (dispatch) => {
         try {
-            const result = await http.post(`/api/QuanLyPhim/CapNhatPhimUpload`, filmEdited)
+            await http.post(`/api/QuanLyPhim/CapNhatPhimUpload`, filmEdited)
             notifiFuntion('sửa phim thành công')
             dispatch(getListFilmsAction())
             history.push('/admin/films')
@@ -66,8 +66,7 @@ export const updateFilmsAction = (filmEdited) => {
 export const deleteFilmsAction = (idFilm) => {
     return async (dispatch) => {
         try {
-            const result = await http.delete(`/api/QuanLyPhim/XoaPhim?MaPhim=${idFilm}`)
-            console.log('result', result)
+            await http.delete(`/api/QuanLyPhim/XoaPhim?MaPhim=${idFilm}`)
             notifiFuntion('Xóa phim thành công')
             dispatch(getListFilmsAction())
         } catch (error) {

@@ -6,7 +6,7 @@ import {LoginAction} from "../../store/actions/UserAction";
 import * as Yup from "yup";
 import {Button, Input} from "@nextui-org/react";
 
-function Login(props) {
+function Login() {
 
     const dispatch = useDispatch();
 

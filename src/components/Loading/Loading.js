@@ -2,7 +2,7 @@ import React, {Fragment} from 'react';
 import {useSelector} from "react-redux";
 import loadingGif from '../../assets/img/dynamic point.gif'
 
-function Loading(props) {
+function Loading() {
 
     const {isLoading} = useSelector(state => state.LoadingReducer)
 

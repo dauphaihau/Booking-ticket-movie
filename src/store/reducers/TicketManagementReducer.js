@@ -39,10 +39,6 @@ export const TicketManagementReducer = (state = initialState, action) => {
         case SWITCH_TAB: {
             return {...state, tabActive: action.numTab}
         }
-        // case SET_LIST_CHAIR_OTHER_USER_BOOKING: {
-        //     return {...state, bookingChairByOtherUser: action.bookingChairByOtherUser}
-        // }
-
         default:
             return state
     }

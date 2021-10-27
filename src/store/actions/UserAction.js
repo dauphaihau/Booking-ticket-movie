@@ -1,4 +1,4 @@
-import {ACCESS_TOKEN, GROUP_ID, history, http, TOKEN_CYBERSOFT, USER_LOGIN} from "../../util/settings";
+import {GROUP_ID, history, http} from "../../util/settings";
 import {
     SET_ALL_TYPE_USER,
     SET_DATA_LOGIN,
@@ -13,7 +13,6 @@ export const LoginAction = (dataLogin) => {
     return async (dispatch) => {
         try {
             const result = await http.post('/api/QuanLyNguoiDung/DangNhap', dataLogin)
-            console.log('result-api', result)
 
             if (result.data.statusCode === 200) {
                 dispatch({
@@ -84,7 +83,7 @@ export const deleteUserAction = (account) => {
 
             dispatch(getListUserAction())
             dispatch(hideLoadingAction)
-            notifiFuntion( 'Bạn đã xóa người dùng thành công')
+            notifiFuntion('Bạn đã xóa người dùng thành công')
 
         } catch (error) {
             dispatch(hideLoadingAction)
@@ -100,7 +99,6 @@ export const getInfoUserAction = (account) => {
         try {
             dispatch(displayLoadingAction)
             const result = await http.post(`/api/QuanLyNguoiDung/LayThongTinNguoiDung?taiKhoan=${account}`)
-            console.log('result', result)
 
             if (result.data.statusCode === 200) {
                 dispatch({
@@ -119,7 +117,7 @@ export const getInfoUserAction = (account) => {
     }
 }
 
-export const getAllTypeUserAction = (account) => {
+export const getAllTypeUserAction = () => {
     return async (dispatch) => {
         try {
             const result = await http.get(`/api/QuanLyNguoiDung/LayDanhSachLoaiNguoiDung`)
@@ -140,7 +138,7 @@ export const updateInfoUserAction = (newData, id) => {
             const result = await http.post(`/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung`, newData)
             if (result.data.statusCode === 200) {
                 dispatch(getInfoUserAction(id))
-                notifiFuntion( 'Thay đổi thông tin thành công')
+                notifiFuntion('Thay đổi thông tin thành công')
             }
 
         } catch (error) {
@@ -154,7 +152,6 @@ export const getInfoProfileAction = (account) => {
         try {
             dispatch(displayLoadingAction)
             const result = await http.post(`/api/QuanLyNguoiDung/ThongTinTaiKhoan`)
-            console.log('result', result)
             if (result.status === 200) {
                 dispatch(hideLoadingAction)
                 dispatch({

@@ -6,6 +6,7 @@ import {getCarouselAction} from "../../../../store/actions/CarouselAction";
 
 const contentStyle = {
     height: '850px',
+    width: '100%',
     color: '#fff',
     lineHeight: '160px',
     textAlign: 'center',
@@ -14,7 +15,7 @@ const contentStyle = {
     backgroundRepeat: 'no-repeat'
 };
 
-function HomeCarousel(props) {
+function HomeCarousel() {
 
     const {arrCarousel} = useSelector(state => state.CarouselReducer)
     const dispatch = useDispatch();
@@ -25,8 +26,8 @@ function HomeCarousel(props) {
 
     const renderCarousel = () => {
         return arrCarousel.map((banner, index) => {
-            return <div className='hidden lg:block' key={index}>
-                <div style={{...contentStyle, backgroundSize: 'unset', backgroundImage: `url(${banner.hinhAnh}`}}>
+            return <div className='hidden sm:block' key={index}>
+                <div className='' style={{...contentStyle, backgroundSize: 'unset', backgroundImage: `url(${banner.hinhAnh}`}}>
                     <img src={banner.hinhAnh} className='opacity-0' alt={banner.hinhAnh}/>
                 </div>
             </div>

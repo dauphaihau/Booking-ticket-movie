@@ -5,8 +5,8 @@ import {NavLink} from "react-router-dom";
 
 function Film({film}) {
 
-    return <div className="movie-poster relative mr-2 mb-2">
-        <img src={film.hinhAnh} className="w-full inline" alt={film.tenPhim}/>
+    return <div className="movie-poster relative mr-2 mb-2" >
+        <img src={film.hinhAnh} className="inline w-[17rem] h-[17rem]" alt={film.tenPhim} />
         <div className="absolute text-white text-center flex flex-col  justify-center items-center">
             <a href={film.trailer} className='hidden md:block'>
                 <i className="text-white text-6xl fa fa-play-circle" aria-hidden="true"/>

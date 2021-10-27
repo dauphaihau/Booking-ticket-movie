@@ -9,7 +9,7 @@ import {GROUP_ID, http} from "../../../util/settings";
 import {SET_FILMS} from "../../../store/types/Type";
 
 
-function Films(props) {
+function Films() {
 
     const {arrFilmDefault} = useSelector(state => state.FilmsReducer)
     const dispatch = useDispatch();

@@ -26,7 +26,7 @@ const validateMessages = {
     },
 }
 
-function AddUser(props) {
+function AddUser() {
 
     const {typeUser} = useSelector(state => state.UserReducer)
     const dispatch = useDispatch();
