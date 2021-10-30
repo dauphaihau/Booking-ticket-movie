@@ -1,4 +1,4 @@
-import React, {Fragment} from 'react'
+import React, {Fragment, useEffect, useState} from 'react'
 import {Disclosure, Menu, Transition} from '@headlessui/react'
 import {MenuIcon, XIcon} from '@heroicons/react/outline'
 import {ACCESS_TOKEN, history, USER_LOGIN} from "../../../../util/settings";
@@ -6,7 +6,7 @@ import _ from "lodash";
 import {useSelector} from "react-redux";
 
 const navigation = [
-    {name: 'Trang chủ', href: '/', current: true},
+    {name: 'Trang chủ', href: '/', current: false},
     {name: 'Liên hệ', href: '#footer', current: false},
     {name: 'Tin tức', href: '#news', current: false},
 ]
@@ -17,20 +17,37 @@ function classNames(...classes) {
 
 export default function Header() {
 
+    const [shadowHeader, setShadowHeader] = useState(false)
+    useEffect(() => {
+        const scrollListener = () => {
+            if (window.scrollY > 10) {
+                setShadowHeader(true)
+            } else {
+                setShadowHeader(false)
+            }
+        }
+
+        window.addEventListener('scroll', scrollListener)
+
+        return () => {
+            window.removeEventListener("scroll", scrollListener)
+        }
+    }, [])
+
     const {userLogin} = useSelector(state => state.UserReducer)
 
-    const renderLogin = () => {
+    const renderProfile = () => {
         if (_.isEmpty(userLogin)) {
             return <>
                 <button
-                    className='text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
+                    className='text-black hover:bg-black hover:text-white px-3 py-2 rounded-md text-sm font-medium'
                     onClick={() => {
                         history.push('/login')
                     }}
                 >Đăng nhập
                 </button>
                 <button
-                    className='hidden md:block text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium'
+                    className='hidden md:block text-black hover:bg-black hover:text-white px-3 py-2 rounded-md text-sm font-medium'
                     onClick={() => {
                         history.push('/register')
                     }}
@@ -96,15 +113,19 @@ export default function Header() {
     }
 
     return (
-        <Disclosure as="nav" className="z-10 bg-black fixed w-full bg-gray-100 opacity-70">
+        <Disclosure as="nav" className={`z-10 bg-white
+        ${shadowHeader ? 'shadow-2xl' : ''} 
+         fixed w-full
+         `}>
             {({open}) => (
                 <>
-                    <div className="max-w-7xl mx-auto px-2 sm:px-6 lg:px-8">
+                    <div className=" max-w-8xl mx-auto px-2 sm:px-6 lg:px-8">
                         <div className="relative flex items-center justify-between h-16">
                             <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                                 {/* Mobile menu button*/}
                                 <Disclosure.Button
-                                    className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                                    className={` ${shadowHeader ? 'shadow-2xl' : ''} 
+                                     inline-flex items-center justify-center p-2 rounded-md text-black hover:text-white hover:bg-black focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white `}>
                                     <span className="sr-only">Open main menu</span>
                                     {open ? (
                                         <XIcon className="block h-6 w-6" aria-hidden="true"/>
@@ -137,7 +158,7 @@ export default function Header() {
                                                 key={item.name}
                                                 href={item.href}
                                                 className={classNames(
-                                                    item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                                    item.current ? ' text-black' : 'text-black hover:bg-black hover:text-white',
                                                     'px-3 py-2 rounded-md text-sm font-medium'
                                                 )}
                                                 aria-current={item.current ? 'page' : undefined}
@@ -151,7 +172,7 @@ export default function Header() {
                             <div
                                 className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                                 {/* Profile dropdown */}
-                                {renderLogin()}
+                                {renderProfile()}
                             </div>
                         </div>
                     </div>
@@ -163,7 +184,7 @@ export default function Header() {
                                     key={item.name}
                                     href={item.href}
                                     className={classNames(
-                                        item.current ? 'bg-gray-900 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white',
+                                        item.current ? 'bg-black text-white' : 'text-black hover:bg-black hover:text-white',
                                         'block px-3 py-2 rounded-md text-base font-medium'
                                     )}
                                     aria-current={item.current ? 'page' : undefined}

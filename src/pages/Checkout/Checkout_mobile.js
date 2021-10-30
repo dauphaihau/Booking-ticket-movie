@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useEffect } from 'react';
 import {UserOutlined, HomeOutlined, TeamOutlined} from '@ant-design/icons'
 import screen from '../../assets/img/screen.jpg'
 import {bookingAction, getListTicketRoomAction} from "../../store/actions/TicketManagementAction";
@@ -9,7 +9,6 @@ import {BOOKING_CHAIR, SWITCH_TAB} from "../../store/types/Type";
 import _ from "lodash";
 import {DataBooking} from "../../_core/models/dataBooking";
 import {Tabs, Tooltip} from 'antd';
-import {connection} from "../../index";
 import {history} from "../../util/settings";
 import {Avatar, Button} from "@nextui-org/react";
 
@@ -22,6 +21,7 @@ const {TabPane} = Tabs;
 function Booking(props) {
 
     const dispatch = useDispatch();
+    const {isLoadingBtn} = useSelector(state => state.LoadingReducer)
 
     const {userLogin} = useSelector(state => state.UserReducer)
     const {
@@ -45,8 +45,8 @@ function Booking(props) {
                 <div className=''>
                     <div className='flex flex-col'>
                         <img width={2000} src={screen} alt={screen}/>
-                        <div className='mt-12'>
-                            {danhSachGhe.slice(0, 60).map((chair, index) => {
+                        <div className='mt-8 ml-4 ip8:ml-8'>
+                            {danhSachGhe.slice(0, 63).map((chair, index) => {
                                 let classVipChair = chair.loaiGhe === 'Vip' ? 'vipChair' : '';
                                 let classBookedChair = chair.daDat === true ? 'bookedChair' : '';
                                 let classBookingChair = '';
@@ -63,7 +63,6 @@ function Booking(props) {
                                     classBookingChairByOtherUser = 'bookingChairByOtherUser'
                                 }
 
-
                                 let indexBookingChair = listBookingChair.findIndex(bchair => bchair.maGhe === chair.maGhe);
                                 if (indexBookingChair !== -1) {
                                     classBookedChair = 'bookingChair'
@@ -77,7 +76,6 @@ function Booking(props) {
                                         ${classBookedChairByUser} ${classBookingChairByOtherUser}
                                         `}
                                         onClick={() => {
-                                            // dispatch(bookingChairAction(chair, props.match.params.id))
                                             dispatch({
                                                 type: BOOKING_CHAIR,
                                                 bookingChair: chair
@@ -89,7 +87,7 @@ function Booking(props) {
                                             : classBookingChairByOtherUser !== '' ? <HomeOutlined/>
                                                 : chair.stt}
                                     </button>
-                                    {(index + 1) % 10 === 0 ? <br/> : ''}
+                                    {(index + 1) % 9 === 0 ? <br/> : ''}
                                 </Fragment>
                             })}
                         </div>
@@ -133,12 +131,13 @@ function Booking(props) {
                     </div>
                     <Button
                         style={{width: '100%'}}
-                        shadow color="error" auto
+                        color="error" auto
+                        loading={isLoadingBtn}
+                        loaderType="default"
                         onClick={() => {
                             const dataBooking = new DataBooking()
                             dataBooking.maLichChieu = props.match.params.id;
                             dataBooking.danhSachVe = listBookingChair
-
                             dispatch(bookingAction(dataBooking))
                         }}
                     >
@@ -186,7 +185,10 @@ export default function Checkout_mobile(props) {
 
     </Fragment>
 
-    return <div className='pt-8 mx-8'>
+    return <div className='
+    pt-8
+     mx-4
+    '>
         <Tabs tabBarExtraContent={operations}
               activeKey={tabActive} defaultActiveKey="2"
               onChange={(key) => {

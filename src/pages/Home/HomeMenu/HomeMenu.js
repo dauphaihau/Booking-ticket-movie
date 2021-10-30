@@ -6,19 +6,17 @@ import {history} from "../../../util/settings";
 
 const {TabPane} = Tabs;
 
-function HomeMenu(props) {
-
-    const {arrCinema} = props;
+function HomeMenu({arrCinema}) {
 
     useEffect(() => {
-        window.onload = () => { // run when window load first time ( in case user change size before render )
+        window.onload = () => {
             setState({
                 width: window.innerWidth,
                 height: window.innerHeight
             })
         }
 
-        window.onresize = () => { // run when window resize
+        window.onresize = () => {
             setState({
                 width: window.innerWidth,
                 height: window.innerHeight
@@ -38,6 +36,7 @@ function HomeMenu(props) {
         })
     }
 
+
     const {tabPosition} = state;
 
     const renderCinemaSystem = () => {
@@ -48,21 +47,26 @@ function HomeMenu(props) {
                         return (
                             <TabPane
                                 tab={
-                                    <div style={{width: 300, display: 'flex'}}>
+                                    <div style={{width: 300, display: 'flex'}} className='text-left'>
                                         <img src={cumRap.hinhAnh} alt={cumRap.tenCumRap} width={50}
                                              className='rounded-md'/> <br/>
-                                        <div className='ml-3'>{cumRap.tenCumRap};
-                                            {/*<p>View detail</p>*/}
+                                        <div>
+                                            <div className='ml-3'>{cumRap.tenCumRap.length > 35 ?
+                                                <span className='font-bold'>{cumRap.tenCumRap.slice(0, 30)}...</span> :
+                                                <span className='font-bold'>{cumRap.tenCumRap}</span>}
+                                                {cumRap.diaChi.length > 35 ? <p>{cumRap.diaChi.slice(0, 30)}...</p> :
+                                                    <p>{cumRap.diaChi}</p>}
+                                            </div>
                                         </div>
                                     </div>
                                 }
                                 key={index}>
-                                {cumRap.danhSachPhim?.slice(0,4).map((film, index) => {
+                                {cumRap.danhSachPhim?.slice(0, 4).map((film, index) => {
                                     return <Fragment key={index}>
                                         <div className="my-5 ">
-                                            <div className="flex h-full">
-                                                <img src={film.hinhAnh} alt={film.tenPhim} className='rounded-md'
-                                                     width={90} height={90}
+                                            <div className="flex ">
+                                                <img src={film.hinhAnh} alt={film.tenPhim}
+                                                     className='rounded-md md:w-[111px] w-[8.6rem] md:h-[111px] h-[8.6rem]'
                                                      onError={(e) => {
                                                          e.target.onerror = null;
                                                          e.target.src = "https://picsum.photos/200/200"
@@ -70,7 +74,7 @@ function HomeMenu(props) {
                                                 />
                                                 <div className="ml-3">
                                                     <h1 className="text-lg lg:text-2xl font-bold">{film.tenPhim}</h1>
-                                                    <p>{cumRap.diaChi}</p>
+                                                    <p>Lịch chiếu hiện có: </p>
                                                     <div className='flex flex-row flex-wrap'>
 
                                                         {film.lstLichChieuTheoPhim.slice(0, 4).map((showtime, index) => {
@@ -100,7 +104,7 @@ function HomeMenu(props) {
 
     return (
         <>
-            <Tabs tabPosition={tabPosition} >
+            <Tabs tabPosition={tabPosition}>
                 {renderCinemaSystem()}
             </Tabs>
         </>

@@ -8,20 +8,13 @@ import store from "./store/configStore";
 import 'antd/dist/antd.css';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import {DOMAIN} from "./util/settings";
-import * as signalR from "@aspnet/signalr";
 
-export const connection = new signalR.HubConnectionBuilder().withUrl(`${DOMAIN}/DatVeHub`).configureLogging(signalR.LogLevel.Information).build();
 
-connection.start().then(function () {
-    ReactDOM.render(
-        <Provider store={store}>
-            <App/>
-        </Provider>,
-        document.getElementById('root')
-    );
-}).catch(errors => {
-    console.log('errors', errors)
-})
+ReactDOM.render(
+    <Provider store={store}>
+        <App/>
+    </Provider>,
+    document.getElementById('root')
+);
 
 reportWebVitals();

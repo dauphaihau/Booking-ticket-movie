@@ -26,7 +26,6 @@ import {SettingTemplate} from "./templates/SettingTemplate/SettingsTemplate";
 import HistoryBooking from "./pages/Profile/HistoryBooking";
 import Detail_mobile from "./pages/Detail/Detail_mobile";
 import Checkout_mobile from "./pages/Checkout/Checkout_mobile";
-import Home_mobile from "./pages/Home/Home_mobile";
 
 function App() {
     return (
@@ -38,7 +37,7 @@ function App() {
                 <SettingTemplate exact path='/setting/profile/:tentaikhoan' Component={Profile}/>
                 <SettingTemplate exact path='/setting/history/:tentaikhoan' Component={HistoryBooking}/>
 
-                <HomeTemplate exact path='/home' Component={Home} MobileComponent={Home_mobile}/>
+                <HomeTemplate exact path='/home' Component={Home}/>
                 <HomeTemplate exact path='/contact' Component={Contact}/>
                 <HomeTemplate exact path='/news' Component={News}/>
                 <HomeTemplate exact path='/detail/:id' Component={Detail} MobileComponent={Detail_mobile}/>

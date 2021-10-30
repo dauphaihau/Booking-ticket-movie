@@ -19,7 +19,6 @@ export const LoginAction = (dataLogin) => {
                     type: SET_DATA_LOGIN,
                     dataLogin: result.data.content
                 })
-
                 history.goBack()
             }
 

@@ -1,4 +1,16 @@
-.slick-dots-bottom{
+.slick-dots-bottom {
     margin: 0 !important;
     padding: 0 !important;
+}
+
+.gradientColor::after{
+    content: "";
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top right, rgba(0, 0, 0, .7), hsla(0, 0%, 100%, 0));
 }

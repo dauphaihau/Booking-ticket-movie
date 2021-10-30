@@ -1,16 +1,17 @@
 import React from "react";
 import Slider from "react-slick";
 import Film from "../Film/Film";
-import styleSlick from './MultipleRowSlick.module.css'
 import {useDispatch} from "react-redux";
 import {SET_FILM_COMING_SOON, SET_FILM_NEW_IN} from "../../store/types/Type";
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 function SamplePrevArrow(props) {
     const {className, style, onClick} = props;
     return (
-        <div
-            className={`${className} ${styleSlick['slick-prev']}`}
-            style={{...style, display: "block", left: '-50px'}}
+        <ArrowBackIosNewIcon
+            className={`${className} block text-black h-[65px] w-[65px]`}
+            style={{...style, left: '-4.5rem',}}
             onClick={onClick}
         />
     );
@@ -19,9 +20,9 @@ function SamplePrevArrow(props) {
 function SampleNextArrow(props) {
     const {className, style, onClick} = props;
     return (
-        <div
-            className={`${className} ${styleSlick['slick-prev']}`}
-            style={{...style, display: "block"}}
+        <ArrowForwardIosIcon
+            className={`${className} block text-black h-[65px] w-[65px]`}
+            style={{...style, right: '-4.5rem'}}
             onClick={onClick}
         />
     );
@@ -49,13 +50,8 @@ function MultipleRowSlick({arrFilms}) {
         slidesToScroll: 3,
 
         className: "center variable-width",
-        // centerMode: true,
-        // centerPadding: "60px",
         rows: 1,
         slidesPerRow: 2,
-        autoplay: true,
-        pauseOnHover: true,
-        // variableWidth: true,
         nextArrow: <SampleNextArrow/>,
         prevArrow: <SamplePrevArrow/>,
         responsive: [
@@ -90,7 +86,7 @@ function MultipleRowSlick({arrFilms}) {
                 }
             },
             {
-                breakpoint: 480,
+                breakpoint: 414,
                 settings: {
                     // centerMode: true,
                     // centerPadding: "60px",
@@ -103,6 +99,7 @@ function MultipleRowSlick({arrFilms}) {
                     slidesPerRow: 2
                 }
             }
+
         ]
     };
 

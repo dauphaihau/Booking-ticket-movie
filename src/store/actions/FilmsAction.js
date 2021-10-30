@@ -18,6 +18,7 @@ export const getListFilmsAction = () => {
 }
 
 export const getDetailFilmsAction = (id) => {
+    console.log('id', id)
     return async (dispatch) => {
         try {
             const result = await http.get(`/api/QuanLyRap/LayThongTinLichChieuPhim?MaPhim=${id}`)

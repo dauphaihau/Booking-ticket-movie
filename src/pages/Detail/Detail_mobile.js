@@ -26,7 +26,7 @@ function Detail_mobile(props) {
             backgroundPosition: 'center',
             minHeight: '100vh'
         }}>
-            <CustomCard style={{paddingTop: 150, minHeight: '100vh'}}
+            <CustomCard style={{paddingTop: 120, minHeight: '100vh'}}
                         effectColor="#fff" // required
                         color="#000000" // default color is white
                         blur={50} // default blur value is 10px

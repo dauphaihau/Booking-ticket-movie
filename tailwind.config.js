@@ -8,6 +8,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     screens: {
+      ip8: '414px',
       sm: '640px',
       md: '768px',
       lg: '1024px',
@@ -149,6 +150,7 @@ module.exports = {
       xl: '0.75rem',
       '2xl': '1rem',
       '3xl': '1.5rem',
+      '4xl': '2.5rem', // we set
       full: '9999px',
     },
     borderWidth: {
@@ -533,6 +535,7 @@ module.exports = {
       '5xl': '64rem',
       '6xl': '72rem',
       '7xl': '80rem',
+      '8xl': '101rem', // we set
       full: '100%',
       min: 'min-content',
       max: 'max-content',

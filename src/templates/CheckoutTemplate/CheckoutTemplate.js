@@ -1,6 +1,7 @@
 import {Redirect, Route} from "react-router-dom";
 import React, {Fragment, useEffect, useState} from "react";
 import {USER_LOGIN} from "../../util/settings";
+import Header from "../HomeTemplate/Layout/Header/Header";
 
 const CheckoutTemplate = (props) => {
 
@@ -45,6 +46,7 @@ const CheckoutTemplate = (props) => {
     return <Route {...restProps} render={(propsRoute) => {
 
         return <Fragment>
+            {/*<Header/>*/}
             {renderComponent(propsRoute)}
         </Fragment>
     }}/>

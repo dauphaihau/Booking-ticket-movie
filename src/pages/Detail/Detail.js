@@ -1,24 +1,28 @@
 import React, {useEffect} from 'react';
 import {CustomCard} from "@tsamantanis/react-glassmorphism";
-import {Tabs, Rate} from 'antd';
+import {Rate} from 'antd';
 import {useDispatch, useSelector} from "react-redux";
 import {getDetailFilmsAction} from "../../store/actions/FilmsAction";
 import moment from "moment";
 import {Button} from "@nextui-org/react";
 import {history} from "../../util/settings";
+import {Tab} from '@headlessui/react'
+import _ from "lodash";
 
-const {TabPane} = Tabs;
+function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
 
-function Detail_mobile(props) {
+function Detail(props) {
 
     const dispatch = useDispatch();
     const {detailFilm} = useSelector(state => state.FilmsReducer)
 
     useEffect(() => {
-        let {id} = props.match.params;
-
-        dispatch(getDetailFilmsAction(id))
+        dispatch(getDetailFilmsAction(props.match.params.id))
     }, [])
+
+    let objDetailFilm = _.keyBy(detailFilm.heThongRapChieu, 'maHeThongRap');
 
     return (
         <div style={{
@@ -35,15 +39,33 @@ function Detail_mobile(props) {
             >
                 <div className='lg:mx-auto lg:px-8 md:px-0 lg:container lg:max-w-screen-xl'>
                     <div className='py-5 rounded-lg'>
-                        <div className='grid grid-cols-3 gap-x-8 '>
-                            <img className='col-span-1 rounded-lg' width={280} height={280} src={detailFilm.hinhAnh}
-                                 alt={detailFilm.tenPhim}
-                            />
+                        <div className='grid grid-cols-3 gap-x-8 mb-8'>
+                            <figure className='col-span-1'>
+                                <img className='rounded-2xl h-[23.6rem] w-[280px]  shadow-2xl'
+                                     // height={378}
+                                     src={detailFilm.hinhAnh} alt={detailFilm.tenPhim}/>
+                            </figure>
                             <div className='col-span-2 text-white xl:-ml-24'>
                                 <p className='text-4xl mb-4'>{detailFilm.tenPhim}</p>
-                                <p>{detailFilm.moTa}</p>
-                                <p className='text-sm'>Ngày khởi
-                                    chiếu: {moment(detailFilm.ngayKhoiChieu).format('DD.MM.YY')}</p>
+                                {/*<p className='pr-[24rem]'>{detailFilm.moTa}</p>*/}
+
+                                {detailFilm.moTa?.length > 290 ? <p className='lg:pr-[24rem]'>{detailFilm.moTa.slice(0, 280)}...</p> :
+                                    <p className='lg:pr-[24rem]'>{detailFilm.moTa}</p>}
+                                <div className='flex'>
+                                    <div>
+                                        <p className='text-sm'>Ngày khởi chiếu</p>
+                                        <p className='text-sm'>Các ngôi sao</p>
+                                        <p className='text-sm'>Đạo diễn</p>
+                                        <p className='text-sm'>Thời lượng phim</p>
+                                    </div>
+                                    <div className='ml-8'>
+                                        <p className='text-sm'>{moment(detailFilm.ngayKhoiChieu).format('DD.MM.YY')}</p>
+                                        <p className='text-sm'>Fred Berger, Brian Kavanaugh</p>
+                                        <p className='text-sm'>John Doe</p>
+                                        <p className='text-sm'>120 phút</p>
+                                    </div>
+                                </div>
+
                                 <div style={{marginBottom: 18}}>
                                     <Rate style={{fontSize: 16}} allowHalf value={detailFilm.danhGia / 2}/>
                                 </div>
@@ -53,67 +75,79 @@ function Detail_mobile(props) {
                             </div>
                         </div>
                     </div>
-                    <div className='my-20 bg-white px-0 py-5 rounded-lg'>
-                        <Tabs defaultActiveKey='1' centered className=''>
-                            <TabPane tab="Lịch chiếu" key="1">
-                                <div>
-                                    <Tabs tabPosition={'left'}>
-                                        {detailFilm.heThongRapChieu?.map((cinema, index) => {
-                                            return <TabPane key={index}
-                                                            tab={
-                                                                <div
-                                                                    className='flex flex-row justify-center items-center mr-4'>
-                                                                    <img src={cinema.logo} width={50} height={50}
-                                                                         alt={cinema.logo}/>
-                                                                    <div className='text-center ml-2'>
-                                                                        {cinema.tenHeThongRap}
-                                                                    </div>
-                                                                </div>
-                                                            }>
-                                                {cinema.cumRapChieu.slice(0, 5).map((cumRap, index) => {
-                                                    return <div className='mt-5' key={index}>
-                                                        <div className='flex flex-row  mt-2'>
-                                                            <img width={100} height={100} src={cumRap.hinhAnh}
-                                                                 alt={cumRap.tenCumRap}/>
-                                                            <div className='ml-5'>
-                                                                <p className='text-xl font-bold
-                                                                '>{cumRap.tenCumRap}</p>
-                                                                <p style={{marginBottom: 21}}>{cumRap.diaChi}</p>
-                                                                <div className='flex flex-row'>
-                                                                    {cumRap.lichChieuPhim.slice(0, 4).map((showtime, index) => {
-                                                                        return <Button className='mr-4' size='mini'
-                                                                                       shadow
-                                                                                       key={index}
-                                                                                       color="primary" auto
-                                                                                       onClick={() => {
-                                                                                           history.push(`/checkout/${showtime.maLichChieu}`)
-                                                                                       }}
-                                                                        >
-                                                                            {moment(showtime.ngayKhoiChieu).format('hh:mm A')}
-                                                                        </Button>
-                                                                    })}
-                                                                </div>
+
+                    <div className="w-full
+                    {/*max-w-md*/}
+                     px-2 py-16 sm:px-0">
+                        <Tab.Group>
+                            <Tab.List className="flex p-1 space-x-1 bg-blue-900/20 rounded-xl">
+                                {Object.keys(objDetailFilm).map((category) => (
+                                    <Tab
+                                        key={category}
+                                        className={({selected}) =>
+                                            classNames(
+                                                'w-full py-2.5 text-sm leading-5 font-medium text-blue-700 rounded-lg',
+                                                'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60',
+                                                selected
+                                                    ? 'bg-white shadow'
+                                                    : 'text-blue-100 hover:bg-white/[0.12] hover:text-white'
+                                            )
+                                        }
+                                    >
+                                        {category}
+                                    </Tab>
+                                ))}
+                            </Tab.List>
+                            <Tab.Panels className="mt-2">
+                                {Object.values(objDetailFilm).map((posts, idx) => (
+                                    <Tab.Panel
+                                        key={idx}
+                                        className={classNames(
+                                            'bg-white rounded-xl p-3',
+                                            'focus:outline-none focus:ring-2 ring-offset-2 ring-offset-blue-400 ring-white ring-opacity-60'
+                                        )}
+                                    >
+                                        <ul>
+                                            {posts.cumRapChieu.map((cumRap, idx) => (
+                                                <li
+                                                    key={idx}
+                                                    className="relative p-3 rounded-md hover:bg-gray-100"
+                                                >
+                                                    <div className='flex flex-row'>
+                                                        <img width={100} height={100} className='rounded-lg'
+                                                             src={cumRap.hinhAnh}
+                                                             alt={cumRap.tenCumRap}/>
+                                                        <div className='ml-5'>
+                                                            <p className='text-xl font-bold
+                                                            '>{cumRap.tenCumRap}</p>
+                                                            <p style={{marginBottom: 21}}>{cumRap.diaChi}</p>
+                                                            <div className='flex flex-row'>
+                                                                {cumRap.lichChieuPhim.map((showtime, index) => {
+                                                                    return <Button className='mr-4' size='mini'
+                                                                                   shadow
+                                                                                   key={index}
+                                                                                   color="primary" auto
+                                                                                   onClick={() => {
+                                                                                       history.push(`/checkout/${showtime.maLichChieu}`)
+                                                                                   }}
+                                                                    >
+                                                                        {moment(showtime.ngayKhoiChieu).format('hh:mm A')}
+                                                                    </Button>
+                                                                })}
                                                             </div>
                                                         </div>
                                                     </div>
-                                                })}
-                                            </TabPane>
-                                        })}
-
-                                    </Tabs>
-                                </div>
-                            </TabPane>
-                            <TabPane tab="Thông tin" key="2" style={{minHeight: 300}}>
-
-                            </TabPane>
-                            <TabPane tab="Đánh giá" key="3" style={{minHeight: 300}}>
-
-                            </TabPane>
-                        </Tabs>
+                                                </li>
+                                            ))}
+                                        </ul>
+                                    </Tab.Panel>
+                                ))}
+                            </Tab.Panels>
+                        </Tab.Group>
                     </div>
                 </div>
             </CustomCard>
         </div>);
 }
 
-export default Detail_mobile;
+export default Detail;

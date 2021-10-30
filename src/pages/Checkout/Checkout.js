@@ -1,4 +1,4 @@
-import React, {Fragment, useEffect} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import {UserOutlined, HomeOutlined, TeamOutlined} from '@ant-design/icons'
 import screen from '../../assets/img/screen.jpg'
 import {bookingAction, getListTicketRoomAction} from "../../store/actions/TicketManagementAction";
@@ -28,6 +28,7 @@ function Booking(props) {
         listBookingChair,
         bookingChairByOtherUser
     } = useSelector(state => state.TicketManagementReducer)
+    const {isLoadingBtn} = useSelector(state => state.LoadingReducer)
 
     console.log('detail-ticket-room', detailTicketRoom)
 
@@ -38,12 +39,12 @@ function Booking(props) {
     const {danhSachGhe, thongTinPhim} = detailTicketRoom;
 
     return (
-        <div className='xl:container mx-auto min-h-screen mt-5'>
-            <div className='grid grid-cols-none xl:grid-cols-12'>
+        <div className='xl:container mx-auto  mt-5  overflow-y-auto overflow-y-hidden'>
+            <div className='grid grid-cols-none xl:grid-cols-12 lg:pb-8'>
                 <div className='xl:col-span-9 xl:mr-16'>
                     <div className='flex flex-col'>
                         <img width={1000} src={screen} alt={screen}/>
-                        <div className='mx-auto xl:ml-12 mt-20'>
+                        <div className='mx-auto xl:ml-12 lg:mt-20 md:mt-2'>
                             {danhSachGhe.map((chair, index) => {
                                 let classVipChair = chair.loaiGhe === 'Vip' ? 'vipChair' : '';
                                 let classBookedChair = chair.daDat === true ? 'bookedChair' : '';
@@ -137,12 +138,13 @@ function Booking(props) {
                         </div>
                     </div>
                 </div>
-                <div className='xl:col-span-3 min-h-screen mx-6 lg:mx-0 xl:ml-12 mt-6'>
-                    <div className='flex flex-row xl:block'>
-                        <figure className='md:w-1/2'>
-                            <img className='rounded-xl w-full' src={thongTinPhim.hinhAnh} alt={thongTinPhim.tenPhim}/>
+                <div className='xl:col-span-3 mx-6 lg:mx-8 mt-6'>
+                    <div className='flex flex-row xl:block shadow-xl rounded-lg py-4 px-4'>
+                        <figure className='md:w-1/2 lg:w-full mb-8'>
+                            <img className='rounded-xl w-[300px] h-80' src={thongTinPhim.hinhAnh}
+                                 alt={thongTinPhim.tenPhim}/>
                         </figure>
-                        <div className='ml-8 xl:ml-0'>
+                        <div className='mx-4 xl:ml-0 w-1/2 lg:w-full'>
                             <h3 className="text-xl xl:mt-5">{thongTinPhim.tenPhim}</h3>
                             <p>{thongTinPhim.diaChi} - {thongTinPhim.tenRap}</p>
                             <p>Ngày khởi chiếu: {moment(thongTinPhim.ngayKhoiChieu).format('L')}</p>
@@ -153,7 +155,7 @@ function Booking(props) {
                                     <div className='flex flex-row'>
                                         <div
                                             className={`lg:chair chairMini bookingChair vipChair flex justify-center items-center p-2`}/>
-                                        {_.filter(listBookingChair, ['loaiGhe', 'Vip']).reduce((sumBill, chair ) => {
+                                        {_.filter(listBookingChair, ['loaiGhe', 'Vip']).reduce((sumBill, chair) => {
                                             return sumBill + chair.giaVe
                                         }, 0).toLocaleString()}đ
                                         <div
@@ -175,14 +177,18 @@ function Booking(props) {
                                 </div>
                             </div>
                             <Button
+                                shadow
+                                loading={isLoadingBtn}
+                                loaderType="default"
                                 style={{width: '100%'}}
-                                shadow color="error" auto
+                                color="error" auto
                                 onClick={() => {
                                     const dataBooking = new DataBooking()
                                     dataBooking.maLichChieu = props.match.params.id;
                                     dataBooking.danhSachVe = listBookingChair
                                     dispatch(bookingAction(dataBooking))
                                 }}
+
                             >
                                 Đặt vé
                             </Button>
@@ -231,7 +237,7 @@ export default function Checkout(props) {
             </Fragment> : ''}
     </Fragment>
 
-    return <div className='px-4 xl:px-20 pt-8'>
+    return <div className='px-4 xl:px-20 pt-8 overflow-x-hidden'>
         <Tabs
             tabBarExtraContent={operations}
             type='line'

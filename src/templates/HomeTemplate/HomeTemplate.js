@@ -11,26 +11,10 @@ export const HomeTemplate = (props) => {
     window.scrollTo(0,0)
   },)
 
-  const [state, setState] = useState({
+  const [state] = useState({
     width: window.innerWidth,
     height: window.innerHeight
   })
-
-  useEffect(() => {
-    window.onload = () => {
-      setState({
-        width: window.innerWidth,
-        height: window.innerHeight
-      })
-    }
-
-    window.onresize = () => {
-      setState({
-        width: window.innerWidth,
-        height: window.innerHeight
-      })
-    }
-  }, [])
 
   const renderComponent = (propsRoute) => {
     if (state.width <= 414) {
@@ -45,7 +29,7 @@ export const HomeTemplate = (props) => {
   return <Route {...restProps} render={(propsRoute) => {
 
     return <Fragment>
-      <Header {...propsRoute} />
+      <Header {...propsRoute}  />
       {renderComponent(propsRoute)}
       <Footer {...propsRoute}/>
     </Fragment>

@@ -10,6 +10,8 @@
     "@fortawesome/free-solid-svg-icons": "^5.15.4",
     "@headlessui/react": "^1.4.1",
     "@heroicons/react": "^1.0.4",
+    "@mui/icons-material": "^5.0.5",
+    "@mui/material": "^5.0.6",
     "@nextui-org/react": "^1.0.1-alpha.47",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
@@ -18,7 +20,6 @@
     "antd": "^4.16.13",
     "axios": "^0.21.4",
     "formik": "^2.2.9",
-    "heroicons": "^1.0.4",
     "history": "4.10.0",
     "init": "^0.1.2",
     "lodash": "^4.17.21",
@@ -29,13 +30,16 @@
     "react-router-dom": "^5.3.0",
     "react-scripts": "4.0.3",
     "react-slick": "^0.28.1",
-    "react-transition-group": "^4.4.2",
     "redux": "^4.1.1",
     "redux-thunk": "^2.3.0",
     "slick-carousel": "^1.8.1",
     "tailwindcss-cli": "^0.1.2",
     "web-vitals": "^1.0.1",
-    "yup": "^0.32.9"
+    "yup": "^0.32.9",
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
+  },
+  "resolutions": {
+    "@mui/styled-engine": "npm:@mui/styled-engine-sc@latest"
   },
   "scripts": {
     "start": "craco start",
