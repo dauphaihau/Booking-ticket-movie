@@ -1,6 +1,6 @@
 import './App.css';
 import {history} from "./util/settings";
-import {Router, Switch} from "react-router-dom";
+import {Route, Router, Switch} from "react-router-dom";
 import {HomeTemplate} from "./templates/HomeTemplate/HomeTemplate";
 import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact/Contact";
@@ -26,10 +26,17 @@ import {SettingTemplate} from "./templates/SettingTemplate/SettingsTemplate";
 import HistoryBooking from "./pages/Profile/HistoryBooking";
 import Detail_mobile from "./pages/Detail/Detail_mobile";
 import Checkout_mobile from "./pages/Checkout/Checkout_mobile";
+import LoginModal from "./components/Modal/LoginModal";
+import CheckoutTemplateMobile from "./templates/CheckoutTemplate/CheckoutTemplateMobile";
+import BookingMobile from "./pages/Checkout/LayoutMobile/BookingMobile";
+import ResultBookingMobile from "./pages/Checkout/LayoutMobile/ResultBookingMobile";
+import ResultBooking from "./pages/Checkout/Layout/ResultBooking";
+import React from "react";
 
 function App() {
     return (
         <Router history={history}>
+            <LoginModal/>
             <Loading/>
             <Switch>
                 <UserTemplate exact path='/login' Component={Login}/>
@@ -42,7 +49,7 @@ function App() {
                 <HomeTemplate exact path='/news' Component={News}/>
                 <HomeTemplate exact path='/detail/:id' Component={Detail} MobileComponent={Detail_mobile}/>
 
-                <CheckoutTemplate exact path='/checkout/:id' Component={Checkout} MobileComponent={Checkout_mobile} />
+                <CheckoutTemplate exact path='/checkout/:id' Component={Checkout} MobileComponent={Checkout_mobile}/>
 
                 <AdminTemplate exact path='/admin' Component={Dashboard}/>
                 <AdminTemplate exact path='/admin/films' Component={Films}/>

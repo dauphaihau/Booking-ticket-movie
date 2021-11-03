@@ -1,13 +1,14 @@
 import React, {Fragment, memo, useEffect, useState} from 'react';
-import {Tabs} from 'antd';
+import {Rate, Tabs} from 'antd';
 import moment from "moment";
 import {Button} from "@nextui-org/react";
 import {history} from "../../../util/settings";
+import TimerIcon from '@mui/icons-material/Timer';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const {TabPane} = Tabs;
 
 function HomeMenu({arrCinema}) {
-
     useEffect(() => {
         window.onload = () => {
             setState({
@@ -36,7 +37,6 @@ function HomeMenu({arrCinema}) {
         })
     }
 
-
     const {tabPosition} = state;
 
     const renderCinemaSystem = () => {
@@ -62,6 +62,7 @@ function HomeMenu({arrCinema}) {
                                 }
                                 key={index}>
                                 {cumRap.danhSachPhim?.slice(0, 4).map((film, index) => {
+                                    console.log('film', film)
                                     return <Fragment key={index}>
                                         <div className="my-5 ">
                                             <div className="flex ">
@@ -73,19 +74,35 @@ function HomeMenu({arrCinema}) {
                                                      }}
                                                 />
                                                 <div className="ml-3">
-                                                    <h1 className="text-lg lg:text-2xl font-bold">{film.tenPhim}</h1>
-                                                    <p>Lịch chiếu hiện có: </p>
-                                                    <div className='flex flex-row flex-wrap'>
+                                                    <h1 className="text-lg lg:text-2xl font-sans">{film.tenPhim}</h1>
+                                                    <p className='text-xs flex items-center cursor-pointer transition-colors duration-300 hover:text-blue-400"
+                                                    ' onClick={() => {
+                                                        history.push(`detail/${film.maPhim}`)
+                                                    }}>FULL SYNOPSIS<ArrowForwardIosIcon
+                                                        className='ml-2 h-[12px] w-[12px]'/>
+                                                    </p>
 
+                                                    {/*Mobile*/}
+                                                    <div className='md:hidden'>
+                                                        <Rate disabled defaultValue={4}
+                                                              className='mr-4'/>
+                                                    </div>
+
+                                                    <div
+                                                        className='hidden md:block flex flex-row flex-wrap items-center'>
+                                                        <TimerIcon/> <span style={{fontSize: 12}}>VIEWING TIMES</span>
                                                         {film.lstLichChieuTheoPhim.slice(0, 4).map((showtime, index) => {
-                                                            return <Button className='mr-4 mt-2' size='mini' shadow
+                                                            return <Button className='
+                                                            {/*mr-4 mt-2*/}
+                                                            ml-4
+                                                            ' size='small' shadow
                                                                            key={index}
                                                                            color="primary" auto
                                                                            onClick={() => {
                                                                                history.push(`/checkout/${showtime.maLichChieu}`)
                                                                            }}
                                                             >
-                                                                {moment(showtime.ngayKhoiChieu).format('hh:mm A')}
+                                                                {moment(showtime.ngayChieuGioChieu).format('hh:mm A')}
                                                             </Button>
                                                         })}
                                                     </div>

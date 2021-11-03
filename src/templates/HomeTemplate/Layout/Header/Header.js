@@ -4,11 +4,11 @@ import {MenuIcon, XIcon} from '@heroicons/react/outline'
 import {ACCESS_TOKEN, history, USER_LOGIN} from "../../../../util/settings";
 import _ from "lodash";
 import {useSelector} from "react-redux";
+import { Link} from 'react-scroll'
 
 const navigation = [
-    {name: 'Trang chủ', href: '/', current: false},
-    {name: 'Liên hệ', href: '#footer', current: false},
-    {name: 'Tin tức', href: '#news', current: false},
+    {name: 'Contact', href: 'footer', current: false},
+    {name: 'News', href: 'news', current: false},
 ]
 
 function classNames(...classes) {
@@ -18,9 +18,11 @@ function classNames(...classes) {
 export default function Header() {
 
     const [shadowHeader, setShadowHeader] = useState(false)
+    const [current] = useState(false)
+
     useEffect(() => {
         const scrollListener = () => {
-            if (window.scrollY > 10) {
+            if (window.scrollY > 40) {
                 setShadowHeader(true)
             } else {
                 setShadowHeader(false)
@@ -43,15 +45,16 @@ export default function Header() {
                     className='text-black hover:bg-black hover:text-white px-3 py-2 rounded-md text-sm font-medium'
                     onClick={() => {
                         history.push('/login')
+                        // dispatch({type: OPEN_MODAL})
                     }}
-                >Đăng nhập
+                >Sign in
                 </button>
                 <button
                     className='hidden md:block text-black hover:bg-black hover:text-white px-3 py-2 rounded-md text-sm font-medium'
                     onClick={() => {
                         history.push('/register')
                     }}
-                >Đăng ký
+                >Sign up
                 </button>
             </>
         }
@@ -87,7 +90,7 @@ export default function Header() {
                                     history.push(`/setting/profile/${userLogin.taiKhoan}`)
                                 }}
                             >
-                                Trang cá nhân
+                                Profile
                             </a>
                         )}
                     </Menu.Item>
@@ -99,11 +102,10 @@ export default function Header() {
                                 onClick={() => {
                                     localStorage.removeItem(USER_LOGIN);
                                     localStorage.removeItem(ACCESS_TOKEN);
-                                    history.push('/home');
                                     window.location.reload();
                                 }}
                             >
-                                Đăng xuất
+                                Sign out
                             </a>
                         )}
                     </Menu.Item>
@@ -136,7 +138,10 @@ export default function Header() {
                             </div>
                             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
                                 <div className="flex-shrink-0 flex items-center">
-                                    <svg className="w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg"
+                                    <svg onClick={() => {
+                                      history.push('/')
+                                    }}
+                                        className="cursor-pointer w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg"
                                          xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px"
                                          y="0px"
                                          viewBox="0 0 225 225" style={{enableBackground: "new 0 0 225 225"}}
@@ -153,10 +158,21 @@ export default function Header() {
                                 </div>
                                 <div className="hidden sm:block sm:ml-6">
                                     <div className="flex space-x-4">
+                                        <a
+                                            key='Home' href='/'
+                                            className={classNames(
+                                                current ? ' text-black' : 'text-black hover:bg-black hover:text-white',
+                                                'px-3 py-2 rounded-md text-sm font-medium'
+                                            )}
+                                            aria-current={current ? 'page' : undefined}
+                                        >
+                                            Home
+                                        </a>
                                         {navigation.map((item) => (
-                                            <a
+                                            <Link
+                                                spy={true} smooth={true} offset={50} duration={500}
                                                 key={item.name}
-                                                href={item.href}
+                                                to={item.href}
                                                 className={classNames(
                                                     item.current ? ' text-black' : 'text-black hover:bg-black hover:text-white',
                                                     'px-3 py-2 rounded-md text-sm font-medium'
@@ -164,7 +180,7 @@ export default function Header() {
                                                 aria-current={item.current ? 'page' : undefined}
                                             >
                                                 {item.name}
-                                            </a>
+                                            </Link>
                                         ))}
                                     </div>
                                 </div>
@@ -179,10 +195,21 @@ export default function Header() {
 
                     <Disclosure.Panel className="sm:hidden">
                         <div className="px-2 pt-2 pb-3 space-y-1">
+                            <a
+                                key='Home' href='/'
+                                className={classNames(
+                                    current ? 'bg-black text-white' : 'text-black hover:bg-black hover:text-white',
+                                    'block px-3 py-2 rounded-md text-base font-medium'
+                                )}
+                                aria-current={current ? 'page' : undefined}
+                            >
+                                Home
+                            </a>
                             {navigation.map((item) => (
-                                <a
+                                <Link
+                                    spy={true} smooth={true} offset={50} duration={500}
                                     key={item.name}
-                                    href={item.href}
+                                    to={item.href}
                                     className={classNames(
                                         item.current ? 'bg-black text-white' : 'text-black hover:bg-black hover:text-white',
                                         'block px-3 py-2 rounded-md text-base font-medium'
@@ -190,7 +217,7 @@ export default function Header() {
                                     aria-current={item.current ? 'page' : undefined}
                                 >
                                     {item.name}
-                                </a>
+                                </Link>
                             ))}
                         </div>
                     </Disclosure.Panel>

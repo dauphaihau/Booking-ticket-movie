@@ -1,7 +1,7 @@
 import {
     AUTO_SWITCH_TAB,
     BOOKING_CHAIR,
-    BOOKING_SUCCESS,
+    CLEAR_BOOKING,
     SET_LIST_TICKET_ROOM,
     SWITCH_TAB
 } from "../types/Type";
@@ -30,11 +30,11 @@ export const TicketManagementReducer = (state = initialState, action) => {
             }
             return {...state, listBookingChair: updateListBookingChair}
         }
-        case BOOKING_SUCCESS: {
+        case CLEAR_BOOKING: {
             return {...state, listBookingChair: []}
         }
         case AUTO_SWITCH_TAB: {
-            return {...state, tabActive: '2'}
+            return {...state, tabActive: '3'}
         }
         case SWITCH_TAB: {
             return {...state, tabActive: action.numTab}

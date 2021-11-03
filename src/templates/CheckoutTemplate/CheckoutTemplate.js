@@ -1,10 +1,12 @@
-import {Redirect, Route} from "react-router-dom";
+import {Route} from "react-router-dom";
 import React, {Fragment, useEffect, useState} from "react";
 import {USER_LOGIN} from "../../util/settings";
-import Header from "../HomeTemplate/Layout/Header/Header";
+import {useDispatch} from "react-redux";
+import {OPEN_MODAL} from "../../store/types/Type";
 
 const CheckoutTemplate = (props) => {
 
+    const dispatch = useDispatch();
     const [state, setState] = useState({
         width: window.innerWidth,
         height: window.innerHeight
@@ -13,7 +15,10 @@ const CheckoutTemplate = (props) => {
 
     useEffect(() => {
         window.scrollTo(0, 0)
-    },)
+        if (!localStorage.getItem(USER_LOGIN)) {
+            dispatch({type: OPEN_MODAL})
+        }
+    }, [])
 
     useEffect(() => {
         window.onload = () => {
@@ -31,8 +36,6 @@ const CheckoutTemplate = (props) => {
         }
     }, [])
 
-    if (!localStorage.getItem(USER_LOGIN)) return <Redirect to='/login'/>
-
     const renderComponent = (propsRoute) => {
         if (state.width <= 414) {
             if (MobileComponent) {
@@ -46,7 +49,6 @@ const CheckoutTemplate = (props) => {
     return <Route {...restProps} render={(propsRoute) => {
 
         return <Fragment>
-            {/*<Header/>*/}
             {renderComponent(propsRoute)}
         </Fragment>
     }}/>

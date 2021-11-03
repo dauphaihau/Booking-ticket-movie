@@ -18,11 +18,11 @@ function Register() {
             maNhom: GROUP_ID,
         },
         validationSchema: Yup.object({
-            taiKhoan: Yup.string().required('Tài khoản không được bỏ trống').min(6, 'Tài khoản ít nhất phải 6 ký tự').max(32, 'Tài khoản không được quá 32 ký tự'),
-            matKhau: Yup.string().required('Mật khẩu không được để trống').min(6, 'Mật khẩu ít nhất phải 6 ký tự').max(32, 'Mật khẩu không được quá 32 ký tự'),
-            email: Yup.string().required('Email không được để trống').email('Email không hợp lệ'),
-            hoTen: Yup.string().required('Họ tên không được để trống').matches(/^[A-Z a-z]+$/, 'Tên không được chứa số !'),
-            soDt: Yup.string().required('Số điện thoại không được để trống').matches(/^[0-9]*$/, 'Số điện thoại không được chứa chữ').min(9, 'Số điện thoại ít nhất phải 9 số').max(12, 'Số điện thoại không được quá 12 số'),
+            taiKhoan: Yup.string().required('Username is required').required('Username is required').min(6, 'Username must be at least 6 characters.').max(20, 'Username have max 20 characters'),
+            email: Yup.string().required('Email is required').email('Email should be valid and contain @'),
+            matKhau: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters.').max(32, 'Password have max 32 characters'),
+            hoTen: Yup.string().required('Name is required').matches(/^[A-Z a-z]+$/, 'Names cannot contain numbers !'),
+            soDt: Yup.string().required('Phone Number is required').matches(/^[0-9]*$/, 'number phone must be a number').min(6, 'Phone Number must be at least 6 characters.').max(32, 'Phone Number have max 32 characters'),
         }),
         onSubmit: (values) => {
             console.log('values', values)
@@ -54,7 +54,7 @@ function Register() {
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.taiKhoan && formik.errors.taiKhoan ? `${formik.errors.taiKhoan}` : null}
                             clearable name='taiKhoan'
-                            label="Tài khoản" size='large' width='100%'
+                            label="Username" size='large' width='100%'
                         />
                     </div>
                     <div className='mb-8'>
@@ -63,7 +63,7 @@ function Register() {
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.matKhau && formik.errors.matKhau ? `${formik.errors.matKhau}` : null}
                             name='matKhau'
-                            label="Mật khẩu" size='large' type="password"
+                            label="Password" size='large' type="password"
                             width='100%'
                         />
                     </div>
@@ -87,7 +87,7 @@ function Register() {
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.hoTen && formik.errors.hoTen ? `${formik.errors.hoTen}` : null}
                             clearable name='hoTen'
-                            label="Họ tên" size='large' width='100%'
+                            label="Name" size='large' width='100%'
                         />
                     </div>
                     <div className='mb-16'>
@@ -96,20 +96,20 @@ function Register() {
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.soDt && formik.errors.soDt ? `${formik.errors.soDt}` : null}
                             clearable name='soDt'
-                            label="Số điện thoại" size='large' width='100%'
+                            label="Phone Number" size='large' width='100%'
                         />
                     </div>
                     <div>
                         <Button style={{width: '100%'}} shadow color="primary" auto
                                 type='submit' size='large'
                         >
-                            Đăng Ký
+                            Sign up
                         </Button>
                     </div>
                     <div className="mt-12 text-sm font-display font-semibold text-gray-700 text-center">
-                        Bạn đã có tài khoản ?{" "}
+                        have already an account ? {" "}
                         <NavLink to='/login' className="cursor-pointer text-blue-600 hover:text-blue-800">
-                            Đăng nhập
+                            Sign in
                         </NavLink>
                     </div>
                 </div>

@@ -8,6 +8,7 @@ import moment from "moment";
 import {Button} from "@nextui-org/react";
 import {history} from "../../util/settings";
 import {ChevronUpIcon} from "@heroicons/react/solid";
+import Comment from "./Comment/Comment";
 
 function Detail_mobile(props) {
 
@@ -34,18 +35,31 @@ function Detail_mobile(props) {
             >
                 <div className='mx-auto container py-5 rounded-lg'>
                     <div className=' gap-x-8'>
-                        <img width={300} height={300} className='col-span-1 rounded-lg' src={detailFilm.hinhAnh}
+                        <img height={300} className='w-60 col-span-1 rounded-lg' src={detailFilm.hinhAnh}
                              alt={detailFilm.tenPhim}/>
                         <div className='col-span-2 text-white mt-8'>
                             <p className='text-2xl font-bold mb-4'>{detailFilm.tenPhim}</p>
+
+                            <div className='flex'>
+                                <div>
+                                    <p className='text-sm font-bold'>RELEASED</p>
+                                    <p className='text-sm font-bold'>STARRING</p>
+                                    <p className='text-sm font-bold'>DIRECTOR</p>
+                                    <p className='text-sm font-bold'>RUNNING TIME</p>
+                                </div>
+                                <div className='ml-8'>
+                                    <p className='text-sm'>{moment(detailFilm.ngayKhoiChieu).format('LL')}</p>
+                                    <p className='text-sm'>Fred Berger, Brian Kavanaugh</p>
+                                    <p className='text-sm'>John Doe</p>
+                                    <p className='text-sm'>120 min</p>
+                                </div>
+                            </div>
                             <p>{detailFilm.moTa}</p>
-                            <p className='text-sm'>Ngày khởi
-                                chiếu: {moment(detailFilm.ngayKhoiChieu).format('DD.MM.YY')}</p>
                             <div style={{marginBottom: 18}}>
                                 <Rate style={{fontSize: 16}} allowHalf value={detailFilm.danhGia / 2}/>
                             </div>
                             <Button className='hover:bg-gray-100' shadow color="white" auto>
-                                <a href={detailFilm.trailer} style={{color: 'black'}}>XEM TRAILER</a>
+                                <a href={detailFilm.trailer} style={{color: 'black'}}>WATCH TRAILER</a>
                             </Button>
                         </div>
                     </div>
@@ -54,7 +68,7 @@ function Detail_mobile(props) {
                 <div className='my-20 mx-auto container bg-white px-0 py-5 rounded-lg'>
                     <div className="w-full px-4 pt-4 block md:hidden">
                         <span className="ml-2 text-xl font-bold tracking-wide text-gray-800 uppercase">
-                            Lịch chiếu
+                            Showtimes
                         </span>
                         <div className="w-full max-w-md p-2 mx-auto bg-white rounded-2xl">
                             {detailFilm.heThongRapChieu?.map((cinema, index) => {
@@ -91,6 +105,7 @@ function Detail_mobile(props) {
                                                                                        color="primary" auto
                                                                                        onClick={() => {
                                                                                            history.push(`/checkout/${showtime.maLichChieu}`)
+                                                                                           localStorage.setItem('maLichChieu', JSON.stringify(showtime.maLichChieu))
                                                                                        }}
                                                                         >
                                                                             {moment(showtime.ngayKhoiChieu).format('hh:mm A')}
@@ -109,6 +124,7 @@ function Detail_mobile(props) {
                         </div>
                     </div>
                 </div>
+                <Comment/>
             </CustomCard>
         </div>
     )

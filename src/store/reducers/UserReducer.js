@@ -1,4 +1,12 @@
-import {SET_ALL_TYPE_USER, SET_DATA_LOGIN, SET_DATA_USER, SET_INFO_USER, SET_LIST_USER} from "../types/Type";
+import {
+    CLOSE_MODAL,
+    OPEN_MODAL,
+    SET_ALL_TYPE_USER,
+    SET_DATA_LOGIN,
+    SET_DATA_USER,
+    SET_INFO_USER,
+    SET_LIST_USER
+} from "../types/Type";
 import {ACCESS_TOKEN, USER_LOGIN} from "../../util/settings";
 import {DataUser} from "../../_core/models/dataUser";
 
@@ -14,6 +22,7 @@ const initialState = {
     listUser: [],
     infoUser: {},
     typeUser: [],
+    visible: false
 }
 
 export const UserReducer = (state = initialState, action) => {
@@ -40,6 +49,12 @@ export const UserReducer = (state = initialState, action) => {
 
         case SET_ALL_TYPE_USER: {
             return {...state, typeUser: action.typeUser}
+        }
+        case OPEN_MODAL: {
+            return {...state, visible: true}
+        }
+        case CLOSE_MODAL: {
+            return {...state, visible: false}
         }
 
         default:

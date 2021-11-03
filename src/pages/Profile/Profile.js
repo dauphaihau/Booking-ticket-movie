@@ -42,11 +42,12 @@ function Profile(props) {
             maNhom: new_obj.maNhom,
         },
         validationSchema: Yup.object({
-            taiKhoan: Yup.string().required('Tài khoản không được bỏ trống'),
-            matKhau: Yup.string().required('Mật khẩu không được để trống').min(6, 'Mật khẩu ít nhất phải 6 ký tự').max(32, 'Mật khẩu không được quá 32 ký tự'),
-            email: Yup.string().required('Email không được để trống').email('Email không hợp lệ'),
-            hoTen: Yup.string().required('Họ tên không được để trống').matches(/^[A-Z a-z]+$/, 'Tên không được chứa số, ký tự đặc biệt !'),
-            soDt: Yup.string().required('Số điện thoại không được để trống').matches(/^[0-9]*$/, 'Số điện thoại không được chứa chữ').min(9, 'Số điện thoại ít nhất phải 9 số').max(12, 'Số điện thoại không được quá 12 số'),
+
+            taiKhoan: Yup.string().required('Username is required').required('Username is required').min(6, 'Username must be at least 6 characters.').max(20, 'Username have max 20 characters'),
+            email: Yup.string().required('Email is required').email('Email should be valid and contain @'),
+            matKhau: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters.').max(32, 'Password have max 32 characters'),
+            hoTen: Yup.string().required('Name is required').matches(/^[A-Z a-z]+$/, 'Names cannot contain numbers !'),
+            soDt: Yup.string().required('Phone Number is required').matches(/^[0-9]*$/, 'number phone must be a number').min(6, 'Phone Number must be at least 6 characters.').max(32, 'Phone Number have max 32 characters'),
         }),
         onSubmit: (newData) => {
             console.log('newData', newData)
@@ -75,20 +76,20 @@ function Profile(props) {
             </Radio.Group>
         </Form.Item>
 
-        <Form.Item label="Tài khoản">
+        <Form.Item label="Username">
             <Input onChange={formik.handleChange}
                    name='taiKhoan'
                    style={{width: 300}} value={formik.values.taiKhoan} disabled/>
         </Form.Item>
 
-        <Form.Item label="Mật khẩu" required validateStatus='error'
+        <Form.Item label="Password" required validateStatus='error'
                    help={formik.touched.matKhau && formik.errors.matKhau ? `${formik.errors.matKhau}` : null}
         >
             <Input style={{width: 300}} name='matKhau' onChange={formik.handleChange}
                    value={formik.values.matKhau}/>
         </Form.Item>
 
-        <Form.Item label="Họ tên" required validateStatus='error'
+        <Form.Item label="Name" required validateStatus='error'
                    help={formik.touched.hoTen && formik.errors.hoTen ? `${formik.errors.hoTen}` : null}
         >
             <Input style={{width: 300}} name='hoTen' onChange={formik.handleChange}
@@ -102,7 +103,7 @@ function Profile(props) {
                    value={formik.values.email}/>
         </Form.Item>
 
-        <Form.Item label="Số điện thoại" required validateStatus='error'
+        <Form.Item label="Phone Number" required validateStatus='error'
                    help={formik.touched.soDt && formik.errors.soDt ? `${formik.errors.soDt}` : null}
         >
             <InputNumber style={{width: 300}} name='soDt' onChange={(e) => {
@@ -116,7 +117,7 @@ function Profile(props) {
         }}
         >
             <Button type="primary" htmlType="submit">
-                Chỉnh sửa
+                Edit
             </Button>
         </Form.Item>
     </Form>

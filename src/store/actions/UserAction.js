@@ -1,5 +1,6 @@
 import {GROUP_ID, history, http} from "../../util/settings";
 import {
+    CLOSE_MODAL,
     SET_ALL_TYPE_USER,
     SET_DATA_LOGIN,
     SET_DATA_USER,
@@ -19,7 +20,29 @@ export const LoginAction = (dataLogin) => {
                     type: SET_DATA_LOGIN,
                     dataLogin: result.data.content
                 })
-                history.goBack()
+                await dispatch({type: CLOSE_MODAL})
+                history.goBack();
+            }
+
+        } catch (error) {
+            console.log({error})
+            if (error.response.status === 404) {
+                alert('Tài khoản hoặc mật khẩu không đúng')
+            }
+        }
+    }
+}
+export const LoginModalAction = (dataLogin) => {
+    return async (dispatch) => {
+        try {
+            const result = await http.post('/api/QuanLyNguoiDung/DangNhap', dataLogin)
+
+            if (result.data.statusCode === 200) {
+                dispatch({
+                    type: SET_DATA_LOGIN,
+                    dataLogin: result.data.content
+                })
+                await dispatch({type: CLOSE_MODAL})
             }
 
         } catch (error) {
@@ -48,7 +71,7 @@ export const getDataUserAction = () => {
 
         } catch (error) {
             dispatch(hideLoadingAction)
-            console.log('error', error.response.data)
+            console.log({error})
         }
     }
 }
@@ -69,7 +92,7 @@ export const getListUserAction = () => {
 
         } catch (error) {
             dispatch(hideLoadingAction)
-            console.log('error', error.response.data)
+            console.log({error})
         }
     }
 }
@@ -146,7 +169,7 @@ export const updateInfoUserAction = (newData, id) => {
     }
 }
 
-export const getInfoProfileAction = (account) => {
+export const getInfoProfileAction = () => {
     return async (dispatch) => {
         try {
             dispatch(displayLoadingAction)
@@ -160,7 +183,7 @@ export const getInfoProfileAction = (account) => {
             }
 
         } catch (error) {
-            console.log('error', error.response.status)
+            console.log({error})
             dispatch(hideLoadingAction)
         }
     }

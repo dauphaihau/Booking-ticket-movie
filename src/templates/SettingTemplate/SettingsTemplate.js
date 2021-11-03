@@ -18,7 +18,7 @@ export const SettingTemplate = (props) => {
     const {Component, ...restProps} = props;
 
     if (!localStorage.getItem(USER_LOGIN)) {
-        alert('Bạn không đủ quyền truy cập trang này !')
+        alert('You are not authorized to access this page !')
         return <Redirect to='/login'/>
     }
 
@@ -47,13 +47,13 @@ export const SettingTemplate = (props) => {
                     >
 
                         <Menu.Item key="1" icon={<HomeOutlined/>}>
-                            <NavLink to='/'>Trang chủ</NavLink>
+                            <NavLink to='/'>Home page</NavLink>
                         </Menu.Item>
                         <Menu.Item key="2" icon={<UserOutlined/>}>
-                            <NavLink to={`/setting/profile/${userLogin.taiKhoan}`}>Thông tin tài khoản</NavLink>
+                            <NavLink to={`/setting/profile/${userLogin.taiKhoan}`}>Profile</NavLink>
                         </Menu.Item>
                         <Menu.Item key="3" icon={<HistoryOutlined/>}>
-                            <NavLink to={`/setting/history/${userLogin.taiKhoan}`}>Lịch sử đặt vé</NavLink>
+                            <NavLink to={`/setting/history/${userLogin.taiKhoan}`}>History booking</NavLink>
                         </Menu.Item>
 
                         <Menu.Item key="5" icon={<PoweroffOutlined/>}
@@ -61,7 +61,7 @@ export const SettingTemplate = (props) => {
                                        localStorage.clear();
                                        window.location.href = '/login'
                                    }}>
-                            Đăng xuất
+                            Sign out
                         </Menu.Item>
                     </Menu>
                 </Sider>

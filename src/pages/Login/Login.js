@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {useFormik} from "formik";
 import {NavLink} from "react-router-dom";
 import {useDispatch} from "react-redux";
@@ -10,14 +10,14 @@ function Login() {
 
     const dispatch = useDispatch();
 
-    const formik = useFormik({
+     const formik = useFormik({
         initialValues: {
             taiKhoan: '',
             matKhau: '',
         },
         validationSchema: Yup.object({
-            taiKhoan: Yup.string().required('Tài khoản không được bỏ trống').min(6, 'Tài khoản ít nhất phải 6 ký tự').max(32, 'Tài khoản không được quá 32 ký tự'),
-            matKhau: Yup.string().required('Mật khẩu không được để trống').min(6, 'Mật khẩu ít nhất phải 6 ký tự').max(32, 'Mật khẩu không được quá 32 ký tự'),
+            taiKhoan: Yup.string().required('Username is required'),
+            matKhau: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters.').max(32, 'Password have max 32 characters'),
         }),
         onSubmit: values => {
             dispatch(LoginAction(values))
@@ -60,8 +60,7 @@ function Login() {
                 </div>
             </div>
             <div className="mt-10 px-12 sm:px-24 md:px-48 lg:px-12 lg:mt-16 xl:px-24 xl:max-w-2xl">
-                <h2 className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl xl:text-bold">Đăng
-                    Nhập</h2>
+                <h2 className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl xl:text-bold">Sign in</h2>
                 <div className="mt-12">
                     <div className='mt-6'>
                         <Input
@@ -69,7 +68,7 @@ function Login() {
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.taiKhoan && formik.errors.taiKhoan ? `${formik.errors.taiKhoan}` : null}
                             clearable name='taiKhoan'
-                            labelPlaceholder="Tài khoản"
+                            labelPlaceholder="Username"
                             size='large' width='100%'
                         />
                     </div>
@@ -79,7 +78,7 @@ function Login() {
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.matKhau && formik.errors.matKhau ? `${formik.errors.matKhau}` : null}
                             name='matKhau'
-                            labelPlaceholder="Mật khẩu"
+                            labelPlaceholder="Password"
                             size='large' type="password"
                             width='100%'
                         />
@@ -88,13 +87,13 @@ function Login() {
                         <Button style={{width: '100%'}} shadow color="primary" auto
                                 type='submit' size='large'
                         >
-                            Đăng Nhập
+                            Sign in
                         </Button>
                     </div>
                     <div className="mt-12 text-sm font-display font-semibold text-gray-700 text-center">
-                        Bạn chưa có tài khoản ?{" "}
+                        Don’t have an account?{" "}
                         <NavLink to='/register' className="cursor-pointer text-blue-600 hover:text-blue-800">
-                            Đăng ký
+                            Sign up
                         </NavLink>
                     </div>
                 </div>

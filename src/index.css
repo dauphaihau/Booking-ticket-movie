@@ -10,7 +10,9 @@
 /*    background-color: #38e26d !important;*/
 /*}*/
 
-a { color: inherit; }
+a {
+    color: inherit;
+}
 
 .border-color {
     border-bottom-color: red !important;
@@ -28,10 +30,33 @@ a { color: inherit; }
     background-color: black !important;
 }
 
+.ant-tabs-top > .ant-tabs-nav::before {
+    border-bottom: none !important;
+}
 
+.textarea-wrapper {
+    width: 100% !important;
+    height: 400px;
+}
 
+textarea {
+    height: 130px !important;
+}
+
+#next-ui-je3e3dcq {
+    height: 130px !important;
+}
+
+#next-ui-tmj57pch {
+    height: 130px !important;
+}
+
+#next-ui-4p4f9b08 {
+    height: 130px !important;
+}
+
+.jsx-982755100 textarea {
+    height: 130px;
+}
 /*-----------*/
-
-
-
 

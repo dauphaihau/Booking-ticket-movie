@@ -1,0 +1,33 @@
+[
+  {
+    "time": "17:30",
+    "price": "$77.54",
+    "date": "Tue, Nov 03"
+  },
+  {
+    "time": "19:30",
+    "price": "$37.45",
+    "date": "Wed, Nov 04"
+  },
+  {
+    "time": "21:30",
+    "price": "$39.56",
+    "date": "Thu, Nov 05"
+  },
+
+  {
+    "time": "22:00",
+    "price": "$19.66",
+    "date": "Fri, Nov 06"
+  },
+  {
+    "time": "6:06",
+    "price": "$8.32",
+    "date": "Sat, Nov 07"
+  },
+  {
+    "time": "15:03",
+    "price": "$48.95",
+    "date": "Sun, Nov 08"
+  }
+]

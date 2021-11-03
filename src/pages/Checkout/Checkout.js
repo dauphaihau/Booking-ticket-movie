@@ -1,36 +1,34 @@
-import React, {Fragment, useEffect, useState} from 'react';
+import React, {Fragment, useEffect} from 'react';
 import {UserOutlined, HomeOutlined, TeamOutlined} from '@ant-design/icons'
 import screen from '../../assets/img/screen.jpg'
-import {bookingAction, getListTicketRoomAction} from "../../store/actions/TicketManagementAction";
+import {getListTicketRoomAction} from "../../store/actions/TicketManagementAction";
 import {useDispatch, useSelector} from "react-redux";
-import moment from "moment";
 import './Checkout.css'
 import {BOOKING_CHAIR, SWITCH_TAB} from "../../store/types/Type";
 import _ from "lodash";
-import {DataBooking} from "../../_core/models/dataBooking";
 import {Tabs} from 'antd';
 import {ACCESS_TOKEN, history, USER_LOGIN} from "../../util/settings";
-import {Avatar, Button} from "@nextui-org/react";
-
-
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import {NavLink} from "react-router-dom";
-import ResultBooking from "./ResultBooking";
+import ResultBooking from "./Layout/ResultBooking";
+import CheckoutCard from "./Layout/CheckoutCard";
+import {Menu, Transition} from "@headlessui/react";
+
+export function classNames(...classes) {
+    return classes.filter(Boolean).join(' ')
+}
 
 const {TabPane} = Tabs;
 
 function Booking(props) {
 
     const dispatch = useDispatch();
-
     const {userLogin} = useSelector(state => state.UserReducer)
     const {
         detailTicketRoom,
         listBookingChair,
         bookingChairByOtherUser
     } = useSelector(state => state.TicketManagementReducer)
-    const {isLoadingBtn} = useSelector(state => state.LoadingReducer)
-
-    console.log('detail-ticket-room', detailTicketRoom)
 
     useEffect(() => {
         dispatch(getListTicketRoomAction(props.match.params.id))
@@ -41,10 +39,10 @@ function Booking(props) {
     return (
         <div className='xl:container mx-auto  mt-5  overflow-y-auto overflow-y-hidden'>
             <div className='grid grid-cols-none xl:grid-cols-12 lg:pb-8'>
-                <div className='xl:col-span-9 xl:mr-16'>
+                <div className='lg:col-span-8 lg:mr-16'>
                     <div className='flex flex-col'>
                         <img width={1000} src={screen} alt={screen}/>
-                        <div className='mx-auto xl:ml-12 lg:mt-20 md:mt-2'>
+                        <div className='mx-auto lg:mt-12 md:mt-2'>
                             {danhSachGhe.map((chair, index) => {
                                 let classVipChair = chair.loaiGhe === 'Vip' ? 'vipChair' : '';
                                 let classBookedChair = chair.daDat === true ? 'bookedChair' : '';
@@ -96,19 +94,26 @@ function Booking(props) {
                                 </Fragment>
                             })}
                         </div>
-                        <div className="mt-4 xl:mt-20 mx-6 xl:ml-12">
-                            <table className="divide-y divide-gray-200 lg:w-11/12">
+                        <div className="mt-4 lg:mt-12 mx-6
+                        {/*xl:ml-12*/}
+                        ">
+                            <table className="
+                            {/*divide-y divide-gray-200 */}
+
+                            lg:w-full">
                                 <thead className='bg-gray-50 p-5'>
                                 <tr>
-                                    <th>Ghế chưa đặt</th>
-                                    <th>Ghế vip</th>
-                                    <th>Ghế đang đặt</th>
-                                    <th>Ghế người dùng khác đang đặt</th>
-                                    <th>Ghế người dùng đã đặt</th>
-                                    <th>Ghế người dùng khác đã đặt</th>
+                                    <th>Available</th>
+                                    <th>VIP</th>
+                                    <th>Selected</th>
+                                    <th>Select by others</th>
+                                    <th>Booked</th>
+                                    <th>Booked by others</th>
                                 </tr>
                                 </thead>
-                                <tbody className="bg-white divide-y divide-gray-200">
+                                <tbody className="bg-white
+                                {/*divide-y divide-gray-200*/}
+                                ">
                                 <tr className='text-center'>
                                     <td>
                                         <button className='lg:w-[35px] lg:h-[35px] chairMini'/>
@@ -138,62 +143,9 @@ function Booking(props) {
                         </div>
                     </div>
                 </div>
-                <div className='xl:col-span-3 mx-6 lg:mx-8 mt-6'>
-                    <div className='flex flex-row xl:block shadow-xl rounded-lg py-4 px-4'>
-                        <figure className='md:w-1/2 lg:w-full mb-8'>
-                            <img className='rounded-xl w-[300px] h-80' src={thongTinPhim.hinhAnh}
-                                 alt={thongTinPhim.tenPhim}/>
-                        </figure>
-                        <div className='mx-4 xl:ml-0 w-1/2 lg:w-full'>
-                            <h3 className="text-xl xl:mt-5">{thongTinPhim.tenPhim}</h3>
-                            <p>{thongTinPhim.diaChi} - {thongTinPhim.tenRap}</p>
-                            <p>Ngày khởi chiếu: {moment(thongTinPhim.ngayKhoiChieu).format('L')}</p>
-                            <hr/>
-                            <div className='my-5'>
-                                <div className='w-full'>
-                                    <p className='text-xl md:mb-[13px]'>Ghế bạn chọn</p>
-                                    <div className='flex flex-row'>
-                                        <div
-                                            className={`lg:chair chairMini bookingChair vipChair flex justify-center items-center p-2`}/>
-                                        {_.filter(listBookingChair, ['loaiGhe', 'Vip']).reduce((sumBill, chair) => {
-                                            return sumBill + chair.giaVe
-                                        }, 0).toLocaleString()}đ
-                                        <div
-                                            className={`lg:chair chairMini bookingChair flex justify-center items-center p-2 ml-8`}/>
-                                        {_.filter(listBookingChair, ['loaiGhe', 'Thuong']).reduce((sumBill, chair) => {
-                                            return sumBill + chair.giaVe
-                                        }, 0).toLocaleString()}đ
-                                    </div>
-                                </div>
-                                <div className='col-span-1 mt-5'>
-                                    <div className='flex flex-row justify-between'>
-                                        <span className='text-xl'>Tổng tiền: </span>
-                                        <span className='text-xl font-bold'>
-                                            {listBookingChair.reduce((sumBill, chair) => {
-                                                return sumBill + chair.giaVe
-                                            }, 0).toLocaleString()}đ
-                                        </span>
-                                    </div>
-                                </div>
-                            </div>
-                            <Button
-                                shadow
-                                loading={isLoadingBtn}
-                                loaderType="default"
-                                style={{width: '100%'}}
-                                color="error" auto
-                                onClick={() => {
-                                    const dataBooking = new DataBooking()
-                                    dataBooking.maLichChieu = props.match.params.id;
-                                    dataBooking.danhSachVe = listBookingChair
-                                    dispatch(bookingAction(dataBooking))
-                                }}
-
-                            >
-                                Đặt vé
-                            </Button>
-                        </div>
-                    </div>
+                <div className='lg:col-span-4 mx-6 lg:mx-0 mt-6 flex justify-end'>
+                    {/*Card*/}
+                    <CheckoutCard props={props} infoMovie={thongTinPhim} listBookingSeats={listBookingChair}/>
                 </div>
             </div>
         </div>
@@ -203,7 +155,6 @@ function Booking(props) {
 export default function Checkout(props) {
 
     const dispatch = useDispatch();
-    const {tabActive} = useSelector(state => state.TicketManagementReducer)
     const {userLogin} = useSelector(state => state.UserReducer)
 
     useEffect(() => {
@@ -216,52 +167,101 @@ export default function Checkout(props) {
     const operations = <Fragment>
         {!_.isEmpty(userLogin) ?
             <Fragment>
-                <div className='flex flex-row items-center mb-4'>
-                    <div className='hidden xl:block'>Xin chào, {userLogin.hoTen} </div>
-                    <Avatar style={{marginLeft: 15, marginRight: 35, cursor: 'pointer'}} squared
-                            text={userLogin.hoTen?.substr(0, 1)}
-                            onClick={() => {
-                                history.push(`/setting/profile/${userLogin.taiKhoan}`)
-                            }}
-                    />
-                    <button className='transition duration-500 ease-in-out text-black hover:text-blue-300'
-                            onClick={() => {
-                                localStorage.removeItem(USER_LOGIN);
-                                localStorage.removeItem(ACCESS_TOKEN);
-                                history.push('/home');
-                                window.location.reload();
-                            }}
-                    > Đăng xuất
-                    </button>
+                <div className='flex flex-row items-center mb-4 lg:mb-0'>
+                    <div className='hidden xl:block'>Hi, {userLogin.hoTen} </div>
+                    <div className="relative flex items-center justify-between h-16">
+                        <div
+                            className="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 lg:ml-0 sm:pr-0 mr-[2px]">
+                            {/* Profile dropdown */}
+                            <Menu as="div" className="ml-3 relative">
+                                <div>
+                                    <Menu.Button
+                                        className="bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white">
+                                        <span className="sr-only">Open user menu</span>
+                                        <img
+                                            className="h-8 w-8 rounded-full"
+                                            src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                                            alt=""
+                                        />
+                                    </Menu.Button>
+                                </div>
+                                <Transition
+                                    as={Fragment}
+                                    enter="transition ease-out duration-100"
+                                    enterFrom="transform opacity-0 scale-95"
+                                    enterTo="transform opacity-100 scale-100"
+                                    leave="transition ease-in duration-75"
+                                    leaveFrom="transform opacity-100 scale-100"
+                                    leaveTo="transform opacity-0 scale-95"
+                                >
+                                    <Menu.Items
+                                        className="z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
+                                        <Menu.Item>
+                                            {({active}) => (
+                                                <a
+                                                    href="#"
+                                                    className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                                    onClick={() => {
+                                                        history.push(`/setting/profile/${userLogin.taiKhoan}`)
+                                                    }}
+                                                >
+                                                    Profile
+                                                </a>
+                                            )}
+                                        </Menu.Item>
+                                        <Menu.Item>
+                                            {({active}) => (
+                                                <a
+                                                    href="#"
+                                                    className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
+                                                    onClick={() => {
+                                                        localStorage.removeItem(USER_LOGIN);
+                                                        localStorage.removeItem(ACCESS_TOKEN);
+                                                        history.push('/');
+                                                        window.location.reload();
+                                                    }}
+                                                >
+                                                    Sign out
+                                                </a>
+                                            )}
+                                        </Menu.Item>
+                                    </Menu.Items>
+                                </Transition>
+                            </Menu>
+                        </div>
+                    </div>
                 </div>
             </Fragment> : ''}
     </Fragment>
 
-    return <div className='px-4 xl:px-20 pt-8 overflow-x-hidden'>
-        <Tabs
-            tabBarExtraContent={operations}
-            type='line'
-            activeKey={tabActive} defaultActiveKey="2"
-            onChange={(key) => {
-                dispatch({
-                    type: SWITCH_TAB,
-                    numTab: key
-                })
-            }}>
-            <TabPane tab={
-                <div className='text-center flex justify-center items-center'>
-                    <NavLink to='/home'><i className="fas fa-arrow-left"/></NavLink>
-                </div>
-            } key="1">
-            </TabPane>
+    // return <div className='px-4 xl:px-20 pt-8 overflow-x-hidden'>
+    return <>
+        <div className='hidden md:block lg:container lg:mx-auto my-0 lg:px-4 xl:px-0 px-7 mb-32'>
+            <Tabs
+                tabBarExtraContent={operations}
+                type='line'
+                defaultActiveKey="2"
+            >
+                <TabPane tab={
+                    <div className='
+                {/*text-center flex justify-center items-center*/}
+                '>
+                        <NavLink
+                            to='/home'
+                            className='mr-20 transition-colors duration-300 text-black hover:text-blue-400'
+                        ><ArrowBackIosNewIcon className='h-8 w-8 mr-2'/>HOME</NavLink>
+                    </div>
+                } key="1">
+                </TabPane>
 
-            <TabPane tab="01 CHỌN GHẾ VÀ THANH TOÁN" key="2">
-                <Booking {...props}/>
-            </TabPane>
+                <TabPane tab="01 CHOOSE SEATS & PURCHASE" key="2">
+                    <Booking {...props}/>
+                </TabPane>
 
-            <TabPane tab="02 KẾT QUẢ ĐẶT VÉ" key="3">
-                <ResultBooking {...props}/>
-            </TabPane>
-        </Tabs>
-    </div>
+                <TabPane tab="02 COMPLETE" key="3">
+                    <ResultBooking {...props}/>
+                </TabPane>
+            </Tabs>
+        </div>
+    </>
 };

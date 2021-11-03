@@ -5,6 +5,7 @@ import {useDispatch} from "react-redux";
 import {SET_FILM_COMING_SOON, SET_FILM_NEW_IN} from "../../store/types/Type";
 import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+import _ from "lodash";
 
 function SamplePrevArrow(props) {
     const {className, style, onClick} = props;
@@ -35,7 +36,15 @@ function MultipleRowSlick({arrFilms}) {
     console.log('arrFilms', arrFilms)
 
     const renderListFilms = () => {
-        return arrFilms.slice(0, 12).map((film, index) => {
+        return arrFilms.map((film, index) => {
+            return <div key={index}>
+                <Film film={film}/>
+            </div>
+        })
+    }
+
+    const renderListFilmsComing = () => {
+        return _.filter(arrFilms, (o) => !o.dangChieu).map((film, index) => {
             return <div key={index}>
                 <Film film={film}/>
             </div>
@@ -49,7 +58,7 @@ function MultipleRowSlick({arrFilms}) {
         slidesToShow: 3,
         slidesToScroll: 3,
 
-        className: "center variable-width",
+        // className: "center variable-width",
         rows: 1,
         slidesPerRow: 2,
         nextArrow: <SampleNextArrow/>,
@@ -65,17 +74,6 @@ function MultipleRowSlick({arrFilms}) {
                 }
             },
             {
-                breakpoint: 1024,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                    infinite: true,
-                    dots: false,
-                    prevArrow: false,
-                    nextArrow: false,
-                }
-            },
-            {
                 breakpoint: 768,
                 settings: {
                     slidesToShow: 2,
@@ -85,18 +83,37 @@ function MultipleRowSlick({arrFilms}) {
                     nextArrow: false,
                 }
             },
+        ]
+    };
+
+    const settingsMobile = {
+        infinite: true,
+        speed: 1500,
+        // slidesToShow: 1,
+        // slidesToScroll: 1,
+
+        className: "center",
+        // centerMode: true,
+        // centerPadding: "60px",
+        // className: "center variable-width",
+        rows: 1,
+        slidesPerRow: 3,
+        responsive: [
             {
                 breakpoint: 414,
                 settings: {
                     // centerMode: true,
                     // centerPadding: "60px",
-                    dots: true,
-                    slidesToShow: 1,
-                    slidesToScroll: 1,
-                    prevArrow: false,
-                    nextArrow: false,
-                    rows: 2,
-                    slidesPerRow: 2
+                    rows: 1,
+                    // rows: 2,
+                }
+            },
+            {
+                breakpoint: 375,
+                settings: {
+                    // centerMode: true,
+                    rows: 1,
+                    // rows: 2,
                 }
             }
 
@@ -104,25 +121,48 @@ function MultipleRowSlick({arrFilms}) {
     };
 
     return <>
-        <div className='flex mb-4'>
-            <button
-                className="bg-white mr-4 hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                onClick={() => {
-                    dispatch({type: SET_FILM_NEW_IN})
-                }}>
-                ĐANG CHIẾU
-            </button>
-            <button
-                className="bg-white hover:bg-gray-100 text-gray-800 font-semibold py-2 px-4 border border-gray-400 rounded shadow"
-                onClick={() => {
-                    dispatch({type: SET_FILM_COMING_SOON})
-                }}>
-                SẮP CHIẾU
-            </button>
+        <div className='hidden md:block overflow-x-hidden overflow-y-hidden mb-12'>
+            <div className='flex mb-4'>
+                <button
+                    className="bg-white mr-4 hover:bg-[#eaeaea] hover:text-black text-[#666666]
+                    transition-colors ease-in-out duration-150
+                    font-semibold py-2 px-4 rounded
+                    "
+                    onClick={() => {
+                        dispatch({type: SET_FILM_NEW_IN})
+                    }}>
+                    NEW IN
+                </button>
+                <button
+                    className="bg-white hover:bg-[#eaeaea] hover:text-black text-[#666666]
+                    transition-colors ease-in-out duration-300
+                    font-semibold py-2 px-4 rounded
+                    "
+                    onClick={() => {
+                        dispatch({type: SET_FILM_COMING_SOON})
+                    }}>
+                    COMING SOON
+                </button>
+            </div>
+            <Slider {...settings}>
+                {renderListFilms()}
+            </Slider>
         </div>
-        <Slider {...settings}>
-            {renderListFilms()}
-        </Slider>
+
+        {/*Mobile*/}
+        <div className='md:hidden overflow-x-hidden overflow-y-hidden'>
+            <div className='mb-8'>
+                <h1>NEW IN</h1>
+                <Slider {...settingsMobile}>
+                    {renderListFilms()}
+                </Slider>
+            </div>
+
+            <h1>COMING SOON</h1>
+            <Slider {...settingsMobile}>
+                {renderListFilmsComing()}
+            </Slider>
+        </div>
     </>
 }
 

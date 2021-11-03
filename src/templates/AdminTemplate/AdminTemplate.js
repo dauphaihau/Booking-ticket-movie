@@ -1,4 +1,4 @@
-import {NavLink, Redirect, Route} from "react-router-dom";
+import {NavLink, Route} from "react-router-dom";
 import React, {useEffect} from "react";
 import {Layout, Menu} from 'antd';
 import {Fragment} from "react";
@@ -8,7 +8,8 @@ import {
     PoweroffOutlined,
 } from '@ant-design/icons';
 import {history, USER_LOGIN} from "../../util/settings";
-import {useSelector} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
+import {OPEN_MODAL} from "../../store/types/Type";
 
 const {Sider, Content} = Layout;
 const {SubMenu} = Menu;
@@ -17,15 +18,14 @@ export const AdminTemplate = (props) => {
 
     const {Component, ...restProps} = props;
     const {userLogin} = useSelector(state => state.UserReducer)
+    const dispatch = useDispatch();
 
     useEffect(() => {
-        window.scrollTo(0, 0)
-    },)
-
-    if (!localStorage.getItem(USER_LOGIN)) {
-        alert('Bạn không đủ quyền truy cập trang này !')
-        return <Redirect to='/login'/>
-    }
+        window.scrollTo(0, 0);
+        if (!localStorage.getItem(USER_LOGIN)) {
+            dispatch({type: OPEN_MODAL})
+        }
+    }, [])
 
     return <Route {...restProps} render={(propsRoute) => {
 

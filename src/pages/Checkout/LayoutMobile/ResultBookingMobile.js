@@ -1,10 +1,12 @@
 import {useDispatch, useSelector} from "react-redux";
 import React, {useEffect} from "react";
-import {getDataUserAction} from "../../store/actions/UserAction";
+import {getDataUserAction} from "../../../store/actions/UserAction";
 import _ from "lodash";
 import moment from "moment";
+import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+import {SWITCH_TAB} from "../../../store/types/Type";
 
-function ResultBooking() {
+function ResultBookingMobile() {
 
     const {dataUser} = useSelector(state => state.UserReducer)
     const dispatch = useDispatch();
@@ -40,21 +42,35 @@ function ResultBooking() {
         })
     }
 
-    return <div>
+    return <>
+        <div className='flex justify-between bg-white w-[72%] items-center'>
+            <div>
+                <ArrowBackIosNewIcon
+                    className='bg-[#f7f7f7] p-[12px] cursor-pointer transition-colors duration-300 text-[#808089]
+                    hover:text-blue-400 h-[42px] w-12 mr-2 rounded-xl'
+                    onClick={() => {
+                        dispatch({
+                            type: SWITCH_TAB,
+                            tabActive: 2
+                        })
+                    }}
+                />
+            </div>
+            <p className='font-bold text-[1.2rem] mb-0'>
+                RESULT BOOKING
+            </p>
+        </div>
+
         <section className="text-gray-600 body-font">
-            <div className="container px-5 py-24 mx-auto">
-                <div className="flex flex-col text-center w-full mb-20">
-                    <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Lịch sử đặt vé
-                        khách </h1>
-                    <p className="lg:w-2/3 mx-auto leading-relaxed text-base">Thông tin địa điểm và thời gian xem
-                        phim</p>
-                </div>
+            <div className="container
+            {/*px-5*/}
+             py-16 lg:py-16 mx-auto">
                 <div className="flex flex-wrap -m-2">
                     {renderTicketItem()}
                 </div>
             </div>
         </section>
-    </div>
+    </>
 }
 
-export default ResultBooking
+export default ResultBookingMobile

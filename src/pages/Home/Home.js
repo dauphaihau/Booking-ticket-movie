@@ -19,12 +19,14 @@ function Home() {
     }, [])
 
     return <div>
-
-        <div className='overflow-x-hidden'>
+        <div className='overflow-x-hidden' id='home'>
             <HomeCarousel/>
         </div>
-        <section className='lg:container lg:mx-auto my-0 lg:px-4 xl:px-0 px-7 mb-32'>
-            <div className="px-0 lg:px-0 py-24 mx-auto text-gray-600 body-font mx-0">
+        <section className='lg:container lg:mx-auto my-0 lg:px-4 xl:px-0 px-3 mb-32'>
+            <div className="px-0 lg:px-0
+            {/*py-24*/}
+            py-4
+             mx-auto text-gray-600 body-font mx-0">
                 <MultipleRowSlick arrFilms={arrFilms}/>
             </div>
             <div className='mx-0 px-0'>
