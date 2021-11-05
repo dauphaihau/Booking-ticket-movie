@@ -58,5 +58,7 @@ textarea {
 .jsx-982755100 textarea {
     height: 130px;
 }
-/*-----------*/
 
+.ant-form-item-explain {
+    color: red !important;
+}

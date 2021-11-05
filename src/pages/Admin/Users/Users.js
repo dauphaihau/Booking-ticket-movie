@@ -14,29 +14,28 @@ function Users() {
     const {listUser} = useSelector(state => state.UserReducer)
     const dispatch = useDispatch();
 
-    console.log('list-user', listUser)
-
     useEffect(() => {
         dispatch(getListUserAction())
     }, [])
 
     const columns = [
         {
-            title: 'Tài khoản',
+            title: 'Username',
             dataIndex: 'taiKhoan',
+            defaultSortOrder :'descend',
             width: '15%',
             sorter: (a, b) => a.taiKhoan - b.taiKhoan,
-            sortDirections: ['descend', 'ascend'],
+            // sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Mật khẩu',
+            title: 'Password',
             dataIndex: 'matKhau',
             defaultSortOrder: 'descend',
             width: '10%',
             responsive: ['md'],
         },
         {
-            title: 'Họ tên',
+            title: 'Name',
             dataIndex: 'hoTen',
             width: '15%',
             sorter: (a, b) => {
@@ -51,7 +50,7 @@ function Users() {
             responsive: ['lg'],
         },
         {
-            title: 'Mã loại người dùng',
+            title: 'Type user',
             dataIndex: 'maLoaiNguoiDung',
             sortDirections: ['descend', 'ascend'],
             width: '15%',
@@ -67,24 +66,24 @@ function Users() {
             responsive: ['lg'],
         },
         {
-            title: 'Số điện thoại',
+            title: 'Phone Number',
             dataIndex: 'soDt',
             sortDirections: ['descend', 'ascend'],
             width: '15%',
             responsive: ['xxl'],
         },
         {
-            title: 'Hành động',
+            title: 'Actions',
             dataIndex: 'hanhDong',
             render: (item, user, index) => {
                 return <Fragment>
-                    <NavLink to={`/admin/users/edit/${index}/${user.taiKhoan}`}>
+                    <NavLink to={`/admin/users/edit/${user.taiKhoan}`}>
                         <Button type="primary" icon={<EditOutlined/>}/>
                     </NavLink>
                     <Button type="primary" danger icon={<CloseOutlined/>}
                             className='mx-4'
                             onClick={() => {
-                                if (window.confirm('Bạn có chắc muốn xóa tài khoản ' + user.taiKhoan)) {
+                                if (window.confirm('Are you sure you want to delete account ' + user.taiKhoan)) {
                                     dispatch(deleteUserAction(user.taiKhoan))
                                 }
                             }}
@@ -114,13 +113,10 @@ function Users() {
 
     return (
         <div>
-            <Search
-                placeholder="input search text"
-                size='large' className='mb-5' allowClear onSearch={onSearch}
+            <Search placeholder="input search text" size='large' className='mb-5'
+                    allowClear onSearch={onSearch}
             />
-            <Table columns={columns} dataSource={listUser} onChange={onChange}
-                // rowKey={"maPhim"}
-            />
+            <Table columns={columns} dataSource={listUser} onChange={onChange}/>
         </div>
     );
 }

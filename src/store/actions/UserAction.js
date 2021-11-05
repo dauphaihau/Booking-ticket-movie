@@ -3,12 +3,11 @@ import {
     CLOSE_MODAL,
     SET_ALL_TYPE_USER,
     SET_DATA_LOGIN,
-    SET_DATA_USER,
     SET_INFO_USER,
     SET_LIST_USER
 } from "../types/Type";
 import {displayLoadingAction, hideLoadingAction} from "./LoadingAction";
-import {notifiFuntion} from "../../util/Notification";
+import {toast} from "react-hot-toast";
 
 export const LoginAction = (dataLogin) => {
     return async (dispatch) => {
@@ -27,7 +26,7 @@ export const LoginAction = (dataLogin) => {
         } catch (error) {
             console.log({error})
             if (error.response.status === 404) {
-                alert('Tài khoản hoặc mật khẩu không đúng')
+                toast.error('Incorrect account or password')
             }
         }
     }
@@ -48,7 +47,7 @@ export const LoginModalAction = (dataLogin) => {
         } catch (error) {
             console.log({error})
             if (error.response.status === 404) {
-                alert('Tài khoản hoặc mật khẩu không đúng')
+                toast.error('Incorrect account or password')
             }
         }
     }
@@ -59,15 +58,16 @@ export const getDataUserAction = () => {
     return async dispatch => {
         try {
             dispatch(displayLoadingAction)
-            const result = await http.post('/api/QuanLyNguoiDung/ThongTinTaiKhoan')
+            const {data, content} = await http.post('/api/QuanLyNguoiDung/ThongTinTaiKhoan')
+            console.log('data', data, content)
 
-            if (result.data.statusCode === 200) {
-                dispatch({
-                    type: SET_DATA_USER,
-                    dataUser: result.data.content
-                })
-            }
-            dispatch(hideLoadingAction)
+            // if (result.data.statusCode === 200) {
+            //     dispatch({
+            //         type: SET_DATA_USER,
+            //         dataUser: result.data.content
+            //     })
+            //     dispatch(hideLoadingAction)
+            // }
 
         } catch (error) {
             dispatch(hideLoadingAction)
@@ -98,19 +98,23 @@ export const getListUserAction = () => {
 }
 
 export const deleteUserAction = (account) => {
+    console.log('account', account)
     return async dispatch => {
         try {
             dispatch(displayLoadingAction)
             await http.delete(`/api/QuanLyNguoiDung/XoaNguoiDung?TaiKhoan=${account}`)
-
             dispatch(getListUserAction())
             dispatch(hideLoadingAction)
-            notifiFuntion('Bạn đã xóa người dùng thành công')
+            toast.success('You have successfully deleted the user')
 
         } catch (error) {
             dispatch(hideLoadingAction)
-            console.log('error', error.response.status)
-            alert('Bạn không đủ quyền xóa người dùng này')
+            console.log({error})
+            if (error.response.status === 403) {
+                toast.error('You are not authorized to delete this user')
+            } else {
+                toast.error('This user has booked a movie ticket that cannot be deleted!')
+            }
         }
     }
 }
@@ -132,7 +136,7 @@ export const getInfoUserAction = (account) => {
 
         } catch (error) {
             console.log({error})
-            alert('Bạn không đủ quyền chỉnh sửa người dùng này')
+            toast.error('You are not authorized to edit this user')
             history.push('/admin/users')
             dispatch(hideLoadingAction)
         }
@@ -159,8 +163,8 @@ export const updateInfoUserAction = (newData, id) => {
         try {
             const result = await http.post(`/api/QuanLyNguoiDung/CapNhatThongTinNguoiDung`, newData)
             if (result.data.statusCode === 200) {
-                dispatch(getInfoUserAction(id))
-                notifiFuntion('Thay đổi thông tin thành công')
+                await dispatch(getInfoUserAction(id))
+                toast.success('Successfully changed information')
             }
 
         } catch (error) {
@@ -170,21 +174,22 @@ export const updateInfoUserAction = (newData, id) => {
 }
 
 export const getInfoProfileAction = () => {
+    console.log('ahihi')
     return async (dispatch) => {
         try {
-            dispatch(displayLoadingAction)
-            const result = await http.post(`/api/QuanLyNguoiDung/ThongTinTaiKhoan`)
-            if (result.status === 200) {
-                dispatch(hideLoadingAction)
+            // dispatch(displayLoadingAction)
+            const {content, status} = await http.post(`/api/QuanLyNguoiDung/ThongTinTaiKhoan`)
+            if (status === 200) {
+                // dispatch(hideLoadingAction)
                 dispatch({
                     type: SET_INFO_USER,
-                    infoUser: result.data.content
+                    infoUser: content
                 })
             }
 
         } catch (error) {
             console.log({error})
-            dispatch(hideLoadingAction)
+            // dispatch(hideLoadingAction)
         }
     }
 }

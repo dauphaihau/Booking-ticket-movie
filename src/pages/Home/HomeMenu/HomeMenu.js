@@ -1,41 +1,51 @@
-import React, {Fragment, memo, useEffect, useState} from 'react';
-import {Rate, Tabs} from 'antd';
+import React, {Fragment, useState} from 'react';
 import moment from "moment";
-import {Button} from "@nextui-org/react";
-import {history} from "../../../util/settings";
+
+// UI
+import {Rate, Tabs} from 'antd';
 import TimerIcon from '@mui/icons-material/Timer';
 import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
+
+// utils
+import {history} from "../../../util/settings";
+
+// const
+import {genreMovie} from "../../../components/Film/Film";
 
 const {TabPane} = Tabs;
 
 function HomeMenu({arrCinema}) {
-    useEffect(() => {
-        window.onload = () => {
-            setState({
-                width: window.innerWidth,
-                height: window.innerHeight
-            })
-        }
-
-        window.onresize = () => {
-            setState({
-                width: window.innerWidth,
-                height: window.innerHeight
-            })
-        }
-    }, [])
 
     const [state, setState] = useState({
         tabPosition: 'left',
-        width: window.innerWidth,
-        height: window.innerHeight
     })
 
-    if (state.width <= 768) {
-        setState({
-            tabPosition: 'top'
-        })
+    window.onload = () => {
+        let widthScreen = window.innerWidth;
+        if (widthScreen <= 768) {
+            setState({
+                tabPosition: 'top'
+            })
+        } else {
+            setState({
+                tabPosition: 'left'
+            })
+        }
     }
+
+    window.onresize = () => {
+        let widthScreen = window.innerWidth;
+        if (widthScreen <= 768) {
+            setState({
+                tabPosition: 'top'
+            })
+        } else {
+            setState({
+                tabPosition: 'left'
+            })
+        }
+    }
+
 
     const {tabPosition} = state;
 
@@ -62,7 +72,6 @@ function HomeMenu({arrCinema}) {
                                 }
                                 key={index}>
                                 {cumRap.danhSachPhim?.slice(0, 4).map((film, index) => {
-                                    console.log('film', film)
                                     return <Fragment key={index}>
                                         <div className="my-5 ">
                                             <div className="flex ">
@@ -73,9 +82,9 @@ function HomeMenu({arrCinema}) {
                                                          e.target.src = "https://picsum.photos/200/200"
                                                      }}
                                                 />
-                                                <div className="ml-3">
-                                                    <h1 className="text-lg lg:text-2xl font-sans">{film.tenPhim}</h1>
-                                                    <p className='text-xs flex items-center cursor-pointer transition-colors duration-300 hover:text-blue-400"
+                                                <div className="ml-3 w-[54%] md:w-full">
+                                                    <h1 className="text-lg lg:text-2xl font-sans mb-0 md:mb-4">{film.tenPhim}</h1>
+                                                    <p className='hidden md:block text-xs flex items-center cursor-pointer transition-colors duration-300 hover:text-blue-400"
                                                     ' onClick={() => {
                                                         history.push(`detail/${film.maPhim}`)
                                                     }}>FULL SYNOPSIS<ArrowForwardIosIcon
@@ -83,27 +92,30 @@ function HomeMenu({arrCinema}) {
                                                     </p>
 
                                                     {/*Mobile*/}
-                                                    <div className='md:hidden'>
-                                                        <Rate disabled defaultValue={4}
-                                                              className='mr-4'/>
+                                                    <div className='md:hidden '>
+                                                        <Rate disabled value={Math.floor(Math.random() * 5) + 1}
+                                                              className='mr-4 mb-[7px] text-xs'/>
+                                                        <p className='mb-[6px] '>{genreMovie[Math.floor(Math.random() * genreMovie.length)]}</p>
+                                                        <p className='text-xs text-black p-[8px] rounded-md bg-[#eaeaea] hover:bg-black hover:text-white w-[68%] ip8:w-[61%] flex items-center cursor-pointer transition-colors duration-300 hover:text-blue-100"'
+                                                           onClick={() => {
+                                                               history.push(`detail/${film.maPhim}`)
+                                                           }}>FULL SYNOPSIS<ArrowForwardIosIcon
+                                                            className='ml-2 mt-[-1px] h-[12px] w-[12px]'/>
+                                                        </p>
                                                     </div>
 
                                                     <div
                                                         className='hidden md:block flex flex-row flex-wrap items-center'>
                                                         <TimerIcon/> <span style={{fontSize: 12}}>VIEWING TIMES</span>
-                                                        {film.lstLichChieuTheoPhim.slice(0, 4).map((showtime, index) => {
-                                                            return <Button className='
-                                                            {/*mr-4 mt-2*/}
-                                                            ml-4
-                                                            ' size='small' shadow
-                                                                           key={index}
-                                                                           color="primary" auto
-                                                                           onClick={() => {
-                                                                               history.push(`/checkout/${showtime.maLichChieu}`)
-                                                                           }}
-                                                            >
+                                                        {film.lstLichChieuTheoPhim.slice(0, 4).map((showtime, i) => {
+                                                            return <span
+                                                                key={i}
+                                                                onClick={() => {
+                                                                    history.push(`/checkout/${showtime.maLichChieu}`)
+                                                                }}
+                                                                className='py-2 px-2 mx-2 cursor-pointer text-[12px] bg-[#d8d8d8] text-[#717171] rounded-md transition-colors duration-300 hover:bg-black hover:text-white w-[68%]'>
                                                                 {moment(showtime.ngayChieuGioChieu).format('hh:mm A')}
-                                                            </Button>
+                                                            </span>
                                                         })}
                                                     </div>
                                                 </div>
@@ -128,4 +140,4 @@ function HomeMenu({arrCinema}) {
     );
 }
 
-export default memo(HomeMenu);
+export default HomeMenu;

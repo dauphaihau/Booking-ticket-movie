@@ -21,8 +21,6 @@ export default function BookingMobile(props) {
         bookingChairByOtherUser
     } = useSelector(state => state.TicketManagementReducer)
 
-    console.log('detail-ticket-room', detailTicketRoom)
-
     useEffect(() => {
         dispatch(getListTicketRoomAction(props.match.params.id))
     }, [])

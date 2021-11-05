@@ -20,15 +20,16 @@ function Films() {
 
     const columns = [
         {
-            title: 'Mã phim',
+            title: 'Id',
             dataIndex: 'maPhim',
             width: '8%',
+            defaultSortOrder :'descend',
             sorter: (a, b) => a.maPhim - b.maPhim,
             sortDirections: ['descend', 'ascend'],
             responsive: ['md'],
         },
         {
-            title: 'Hình ảnh',
+            title: 'Image',
             dataIndex: 'hinhAnh',
             defaultSortOrder: 'descend',
             width: '12%',
@@ -45,7 +46,7 @@ function Films() {
             , responsive: ['lg'],
         },
         {
-            title: 'Tên phim',
+            title: 'Name Film',
             dataIndex: 'tenPhim',
             width: '30%',
             sorter: (a, b) => {
@@ -59,7 +60,7 @@ function Films() {
             sortDirections: ['descend', 'ascend'],
         },
         {
-            title: 'Mô tả',
+            title: 'Describe',
             dataIndex: 'moTa',
             render: (item, film) => {
                 return <Fragment>
@@ -71,7 +72,7 @@ function Films() {
             responsive: ['xxl'],
         },
         {
-            title: 'Hành động',
+            title: 'Actions',
             dataIndex: 'hanhDong',
             render: (item, film) => {
                 return <Fragment>
@@ -86,7 +87,7 @@ function Films() {
                                 }
                             }}
                     />
-                    <NavLink to={`/admin/films/showtime/${film.maPhim}/${film.tenPhim}`}
+                    <NavLink to={`/admin/films/showtime/${film.maPhim}`}
                              onClick={() => {
                                  localStorage.setItem('filmParams', JSON.stringify(film))
                              }}

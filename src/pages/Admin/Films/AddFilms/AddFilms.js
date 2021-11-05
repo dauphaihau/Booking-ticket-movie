@@ -3,7 +3,6 @@ import moment from "moment";
 import {
     Form,
     Input,
-    Radio,
     DatePicker,
     Button,
     Switch, Rate,
@@ -12,20 +11,35 @@ import {useFormik} from "formik";
 import {GROUP_ID, history, http} from "../../../../util/settings";
 import {getListFilmsAction} from "../../../../store/actions/FilmsAction";
 import {useDispatch} from "react-redux";
-import {notifiFuntion} from "../../../../util/Notification";
+import {toast} from "react-hot-toast";
 
 const validateMessages = {
-    required: '${label} không được bỏ trống',
+    required: '${label} is require',
     types: {
-        email: '${label} không hợp lệ!',
-        number: '${label} không hợp lệ!',
+        email: '${label} is invalid!',
+        number: '${label} is invalid!',
     },
     number: {
-        range: '${label} phải từ 1 - 5',
+        range: '${label} must be from 9 - 12 numbers',
     },
+    min: "'${name}' must be at least ${min} characters",
+    date: {
+        format: "'${name}' is invalid for format date",
+        parse: "'${name}' could not be parsed as date",
+        invalid: "'${name}' is invalid date",
+    },
+}
+const config = {
+    rules: [
+        {
+            type: 'object',
+            required: true,
+            message: 'Please select time!',
+        },
+    ],
 };
 
-const desc = ['quá tệ', 'tệ', 'bình thường', 'tốt', 'tuyệt vời'];
+const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
 
 function AddFilms() {
@@ -63,13 +77,12 @@ function AddFilms() {
             }
 
             http.post('/api/QuanLyPhim/ThemPhimUploadHinh', fromData).then((response) => {
-                console.log('response: ' + response);
-                notifiFuntion('Thêm phim thành công')
+                toast.success('add movie successfully')
                 dispatch(getListFilmsAction())
                 history.push('/admin/films')
             }).catch(error => {
                 console.log({error});
-                alert(error.response.data.content)
+                toast.error(error.response?.data.content)
             })
         }
     })
@@ -79,7 +92,7 @@ function AddFilms() {
         setComponentSize(size);
     };
 
-    const handleChangeDataPicker = (date ) => {
+    const handleChangeDataPicker = (date) => {
         const dateLocal = moment(date).format('DD/MM/YYYY')
         formik.setFieldValue('ngayKhoiChieu', dateLocal)
     }
@@ -104,7 +117,7 @@ function AddFilms() {
     return (
         <Fragment>
             <Form
-                onSubmitCapture={formik.handleSubmit}
+                onFinish={formik.handleSubmit}
                 labelCol={{span: 8}}
                 wrapperCol={{span: 16}}
                 layout="horizontal"
@@ -113,38 +126,31 @@ function AddFilms() {
                 size={componentSize}
                 validateMessages={validateMessages}
             >
-                <Form.Item label="Form Size" name="size">
-                    <Radio.Group>
-                        <Radio.Button value="small">Small</Radio.Button>
-                        <Radio.Button value="default">Default</Radio.Button>
-                        <Radio.Button value="large">Large</Radio.Button>
-                    </Radio.Group>
+
+                <Form.Item label='Form'>
+                    <span className="font-bold ant-form-text">ADD FILM</span>
                 </Form.Item>
 
-                <Form.Item label='Chức năng'>
-                    <span className="font-bold ant-form-text">THÊM PHIM</span>
-                </Form.Item>
-
-                <Form.Item label="Tên phim" name={['tenPhim']} rules={[{required: true}]}>
+                <Form.Item label="Name Film" name={['tenPhim']} rules={[{required: true, type: 'string', min: 6}]}>
                     <Input style={{width: 300}} onChange={formik.handleChange} name='tenPhim'/>
                 </Form.Item>
-                <Form.Item label="Mô tả" name={['moTa']} rules={[{required: true}]}>
+                <Form.Item label="Describe" name={['moTa']} rules={[{required: true, type: 'string', min: 12}]}>
                     <Input style={{width: 300}} onChange={formik.handleChange} name='moTa'/>
                 </Form.Item>
                 <Form.Item label="Trailer" name={['trailer']} rules={[{required: true}]}>
                     <Input style={{width: 300}} onChange={formik.handleChange} name='trailer'/>
                 </Form.Item>
 
-                <Form.Item label="Ngày khởi chiếu" name="date-picker" rules={[{required: true}]}>
+                <Form.Item label="Release date" name="date-picker" {...config} rules={[{required: true, type: 'date'}]}>
                     <DatePicker onChange={handleChangeDataPicker} format='DD/MM/YYYY' name='ngayKhoiChieu'/>
                 </Form.Item>
 
-                <Form.Item label="Đang chiếu">
+                <Form.Item label="New In">
                     <Switch onChange={(checked) => {
                         handleChangeSwitch('dangChieu', checked)
                     }} name='dangChieu'/>
                 </Form.Item>
-                <Form.Item label="Sắp chiếu">
+                <Form.Item label="Coming Soon">
                     <Switch onChange={(checked) => {
                         handleChangeSwitch('sapChieu', checked)
                     }} name='sapChieu'/>
@@ -154,7 +160,7 @@ function AddFilms() {
                         handleChangeSwitch('hot', checked)
                     }} name='hot'/>
                 </Form.Item>
-                <Form.Item label="Đánh giá" name={['danhGia']}>
+                <Form.Item label="Rate" name={['danhGia']}>
                     <Rate tooltips={desc} value={star} onChange={(value) => {
                         setStar(value);
                         formik.setFieldValue('danhGia', value)
@@ -163,8 +169,9 @@ function AddFilms() {
                     {star ? <span className="ant-rate-text">{desc[star - 1]}</span> : ''}
                 </Form.Item>
 
-                <Form.Item label="Hình ảnh" required tooltip="Không được để trống hình">
-                    <input onChange={handleChangeFile} accept='image/png, image/jpq, image/jpeg, image/gif' type='file'
+                <Form.Item label="Image" required tooltip="Image is require">
+                    <input className='mt-[3px]'
+                           onChange={handleChangeFile} accept='image/png, image/jpq, image/jpeg, image/gif' type='file'
                            name='hinhAnh'/>
                     <img style={{width: 200}} className='mt-2' src={imgSrc} alt="..."/>
                 </Form.Item>
@@ -177,7 +184,7 @@ function AddFilms() {
                     }}
                 >
                     <Button type="primary" htmlType="submit">
-                        Thêm
+                        Add
                     </Button>
                 </Form.Item>
 

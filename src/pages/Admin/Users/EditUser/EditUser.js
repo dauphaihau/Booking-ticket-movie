@@ -2,7 +2,6 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {
     Form,
     Input,
-    Radio,
     Select,
     InputNumber,
     Button,
@@ -17,8 +16,7 @@ function EditUser(props) {
 
     const {infoUser, typeUser} = useSelector(state => state.UserReducer)
     const dispatch = useDispatch();
-
-    console.log('info-user', infoUser)
+    const phoneRegex = /([+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/;
 
     useEffect(async () => {
         dispatch(getInfoUserAction(props.match.params.tentaikhoan))
@@ -47,11 +45,11 @@ function EditUser(props) {
             maNhom: new_obj.maNhom,
         },
         validationSchema: Yup.object({
-            taiKhoan: Yup.string().required('Tài khoản không được bỏ trống'),
-            matKhau: Yup.string().required('Mật khẩu không được để trống').min(6, 'Mật khẩu ít nhất phải 6 ký tự').max(32, 'Mật khẩu không được quá 32 ký tự'),
-            email: Yup.string().required('Email không được để trống').email('Email không hợp lệ'),
-            hoTen: Yup.string().required('Họ tên không được để trống').matches(/^[A-Z a-z]+$/, 'Tên không được chứa số, ký tự đặc biệt !'),
-            soDt: Yup.string().required('Số điện thoại không được để trống').matches(/^[0-9]*$/, 'Số điện thoại không được chứa chữ').min(9, 'Số điện thoại ít nhất phải 9 số').max(12, 'Số điện thoại không được quá 12 số'),
+            taiKhoan: Yup.string().required('Username is required').required('Username is required').min(6, 'Username must be at least 6 characters.').max(20, 'Username have max 20 characters'),
+            email: Yup.string().required('Email is required').email('Email should be valid and contain @'),
+            matKhau: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters.').max(32, 'Password have max 32 characters'),
+            hoTen: Yup.string().required('Name is required').matches(/^[A-Z a-z]+$/, 'Names cannot contain numbers !'),
+            soDt: Yup.string().required('Phone Number is required').matches(phoneRegex, 'number phone must be a number').min(6, 'Phone Number must be at least 6 characters.').max(32, 'Phone Number have max 32 characters'),
         }),
         onSubmit: (newData) => {
             console.log('newData', newData)
@@ -73,46 +71,39 @@ function EditUser(props) {
                 onValuesChange={onFormLayoutChange}
                 size={componentSize}
             >
-                <Form.Item label="Form Size" name="size">
-                    <Radio.Group>
-                        <Radio.Button value="small">Small</Radio.Button>
-                        <Radio.Button value="default">Default</Radio.Button>
-                        <Radio.Button value="large">Large</Radio.Button>
-                    </Radio.Group>
+                <Form.Item label='Form'>
+                    <span className="ant-form-text font-bold">EDIT USER</span>
                 </Form.Item>
 
-                <Form.Item label='Chức năng'>
-                    <span className="ant-form-text font-bold">CHỈNH SỬA NGƯỜI DÙNG</span>
-                </Form.Item>
-
-                <Form.Item label="Tài khoản">
+                <Form.Item label="Username">
                     <Input onChange={formik.handleChange}
                            name='taiKhoan'
                            style={{width: 300}} value={formik.values.taiKhoan} disabled/>
                 </Form.Item>
 
-                <Form.Item label="Mật khẩu" required validateStatus='error'
+                <Form.Item label="Password" required
                            help={formik.touched.matKhau && formik.errors.matKhau ? `${formik.errors.matKhau}` : null}
                 >
                     <Input style={{width: 300}} name='matKhau' onChange={formik.handleChange}
                            value={formik.values.matKhau}/>
                 </Form.Item>
 
-                <Form.Item label="Họ tên" required validateStatus='error'
+                <Form.Item label="Name" required
                            help={formik.touched.hoTen && formik.errors.hoTen ? `${formik.errors.hoTen}` : null}
                 >
                     <Input style={{width: 300}} name='hoTen' onChange={formik.handleChange}
                            value={formik.values.hoTen}/>
                 </Form.Item>
 
-                <Form.Item label="Email" required validateStatus='error'
+                <Form.Item label="Email" required
                            help={formik.touched.email && formik.errors.email ? `${formik.errors.email}` : null}
                 >
                     <Input style={{width: 300}} name='email' onChange={formik.handleChange}
                            value={formik.values.email}/>
                 </Form.Item>
 
-                <Form.Item label="Số điện thoại" required validateStatus='error'
+                <Form.Item label="Phone Number" required
+                           rules={[{ type: 'number' }]}
                            help={formik.touched.soDt && formik.errors.soDt ? `${formik.errors.soDt}` : null}
                 >
                     <InputNumber style={{width: 300}} name='soDt' onChange={(e) => {
@@ -120,16 +111,20 @@ function EditUser(props) {
                     }} value={formik.values.soDt}/>
                 </Form.Item>
 
-                <Form.Item label="Loại người dùng">
+                <Form.Item label="Type User">
                     <Select style={{width: 300}} value={formik.values.maLoaiNguoiDung} name='maLoaiNguoiDung'
-                            placeholder="Select a category">
+                            placeholder="Select a category"
+                            onChange={(e) => {
+                                formik.setFieldValue('maLoaiNguoiDung', e)
+                            }}
+                    >
                         {typeUser.map((type, index) => {
                             return <Option key={index} value={type.maLoaiNguoiDung}>{type.tenLoai}</Option>
                         })}
                     </Select>
                 </Form.Item>
 
-                <Form.Item label="Mã Nhóm" tooltip="GP01 nhé">
+                <Form.Item label="Id Group" tooltip="GP01">
                     <Input style={{width: 300}} name='maNhom' onChange={formik.handleChange}
                            value={formik.values.maNhom}/>
                 </Form.Item>
@@ -142,7 +137,7 @@ function EditUser(props) {
                     }}
                 >
                     <Button type="primary" htmlType="submit">
-                        Cập nhật
+                        Update
                     </Button>
                 </Form.Item>
             </Form>

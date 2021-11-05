@@ -22,14 +22,13 @@ const initialState = {
     listUser: [],
     infoUser: {},
     typeUser: [],
-    visible: false
+    visible: false,
 }
 
 export const UserReducer = (state = initialState, action) => {
     switch (action.type) {
         case SET_DATA_LOGIN: {
             const {dataLogin} = action;
-            console.log('data-login', dataLogin)
             localStorage.setItem(USER_LOGIN, JSON.stringify(dataLogin))
             localStorage.setItem(ACCESS_TOKEN, dataLogin.accessToken)
 
@@ -56,7 +55,6 @@ export const UserReducer = (state = initialState, action) => {
         case CLOSE_MODAL: {
             return {...state, visible: false}
         }
-
         default:
             return state
     }

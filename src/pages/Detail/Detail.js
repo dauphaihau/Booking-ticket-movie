@@ -26,7 +26,6 @@ function Detail(props) {
 
     let objDetailFilm = _.keyBy(detailFilm.heThongRapChieu, 'maHeThongRap');
 
-
     return (
         <div style={{
             backgroundImage: `url(${detailFilm.hinhAnh})`,
@@ -70,7 +69,7 @@ function Detail(props) {
                                 </div>
 
                                 <div style={{marginBottom: 18}}>
-                                    <Rate style={{fontSize: 16}} allowHalf value={detailFilm.danhGia / 2}/>
+                                    <Rate style={{fontSize: 16}} allowHalf disabled value={detailFilm.danhGia / 2}/>
                                 </div>
                                 <Button icon={<PlayArrowIcon className='text-black'/>} className='hover:bg-gray-100' shadow color="white" auto>
                                     <a href={detailFilm.trailer} style={{color: 'black'}}>WATCH TRAILER</a>

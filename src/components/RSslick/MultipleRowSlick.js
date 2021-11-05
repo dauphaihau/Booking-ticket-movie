@@ -152,13 +152,13 @@ function MultipleRowSlick({arrFilms}) {
         {/*Mobile*/}
         <div className='md:hidden overflow-x-hidden overflow-y-hidden'>
             <div className='mb-8'>
-                <h1>NEW IN</h1>
+                <h1 className='text-[1rem] font-bold'>NEW IN</h1>
                 <Slider {...settingsMobile}>
                     {renderListFilms()}
                 </Slider>
             </div>
 
-            <h1>COMING SOON</h1>
+            <h1 className='text-[1rem] font-bold'>COMING SOON</h1>
             <Slider {...settingsMobile}>
                 {renderListFilmsComing()}
             </Slider>

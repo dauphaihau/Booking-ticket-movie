@@ -45,7 +45,6 @@ export default function Header() {
                     className='text-black hover:bg-black hover:text-white px-3 py-2 rounded-md text-sm font-medium'
                     onClick={() => {
                         history.push('/login')
-                        // dispatch({type: OPEN_MODAL})
                     }}
                 >Sign in
                 </button>

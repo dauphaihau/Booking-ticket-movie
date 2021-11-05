@@ -1,17 +1,24 @@
 import React, {Fragment, useEffect} from 'react';
-import {UserOutlined, HomeOutlined, TeamOutlined} from '@ant-design/icons'
-import screen from '../../assets/img/screen.jpg'
-import {getListTicketRoomAction} from "../../store/actions/TicketManagementAction";
 import {useDispatch, useSelector} from "react-redux";
-import './Checkout.css'
-import {AUTO_SWITCH_TAB, BOOKING_CHAIR, CLEAR_BOOKING, SWITCH_TAB} from "../../store/types/Type";
 import _ from "lodash";
+
+// UI
+import {UserOutlined, HomeOutlined, TeamOutlined} from '@ant-design/icons'
 import {Layout, Tabs, Tooltip} from 'antd';
-import { history} from "../../util/settings";
 import {Button} from "@nextui-org/react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
+
+// assets , utils
+import './Checkout.css'
+import screen from '../../assets/img/screen.jpg'
 import dataCheckout from '../../assets/data/dataCheckout.json'
+import {AUTO_SWITCH_TAB, BOOKING_CHAIR, CLEAR_BOOKING, SWITCH_TAB} from "../../store/types/Type";
+import {history} from "../../util/settings";
+
+// Comps
+import {getListTicketRoomAction} from "../../store/actions/TicketManagementAction";
 import PaymentBookingMobile from "./LayoutMobile/PaymentBookingMobile";
+
 
 const {TabPane} = Tabs;
 
@@ -38,8 +45,8 @@ function Booking(props) {
         <div className=' grid grid-cols-3 bg-white items-center'>
             <div>
                 <ArrowBackIosNewIcon
-                    className='bg-[#f7f7f7] p-[12px] cursor-pointer transition-colors duration-300 text-[#808089]
-                    hover:text-blue-400 h-[42px] w-12 mr-2 rounded-xl'
+                    className='bg-[#f7f7f7] p-[12px] cursor-pointer transition-colors duration-500 ease-in text-[#808089]
+                    hover:text-black h-[42px] w-12 mr-2 rounded-xl'
                     onClick={() => {
                         history.push('/');
                         dispatch({type: CLEAR_BOOKING})
@@ -55,8 +62,10 @@ function Booking(props) {
         <div>
             <div className='flex flex-row'>
                 {dataCheckout.map((item, i) => {
-                    return <div key={i} className="bg-[#f7f7f7] rounded-xl
-            focus:bg-[#df3663] focus:text-white cursor-pointer
+                    return <div key={i} className="
+                    bg-[#f7f7f7] rounded-xl
+            focus:bg-[#df3663] focus:text-white
+            cursor-pointer
             h-[4.5rem] w-16 mt-6
            flex flex-col items-center
             text-black mr-2 mb-2 md:w-auto">
@@ -166,10 +175,7 @@ function Booking(props) {
                 </div>
             </div>
 
-            <div className='
-            {/*pb-20 */}
-            w-[96%]
-            flex flex-row'>
+            <div className=' w-[96%] flex flex-row'>
                 <div className='w-1/2 flex flex-col items-center'>
                     <p className='font-light text-[#bdbdbd] mb-0'>Price: </p>
                     <p className='text-xl font-bold'>
@@ -207,18 +213,18 @@ export default function Checkout_mobile(props) {
     return <div className='pt-6 mx-4'>
         <Tabs
             renderTabBar={renderTabBar}
-            activeKey={tabActive} defaultActiveKey="2"
+            activeKey={tabActive} defaultActiveKey="1"
             onChange={(key) => {
                 dispatch({
                     type: SWITCH_TAB,
                     numTab: key
                 })
             }}>
-            <TabPane key="2">
+            <TabPane key="1">
                 <Booking {...props}/>
             </TabPane>
 
-            <TabPane key="3">
+            <TabPane key="2">
                 {/*<ResultBookingMobile {...props}/>*/}
                 <PaymentBookingMobile {...props}/>
             </TabPane>

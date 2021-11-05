@@ -1,6 +1,6 @@
 import './App.css';
 import {history} from "./util/settings";
-import {Route, Router, Switch} from "react-router-dom";
+import {Router, Switch} from "react-router-dom";
 import {HomeTemplate} from "./templates/HomeTemplate/HomeTemplate";
 import Home from "./pages/Home/Home";
 import Contact from "./pages/Contact/Contact";
@@ -11,7 +11,6 @@ import Detail from "./pages/Detail/Detail";
 import CheckoutTemplate from "./templates/CheckoutTemplate/CheckoutTemplate";
 import Checkout from "./pages/Checkout/Checkout";
 import {UserTemplate} from "./templates/UserTemplate/UserTemplate";
-import Loading from "./components/Loading/Loading";
 import Profile from "./pages/Profile/Profile";
 import {AdminTemplate} from "./templates/AdminTemplate/AdminTemplate";
 import Films from "./pages/Admin/Films/Films";
@@ -27,17 +26,16 @@ import HistoryBooking from "./pages/Profile/HistoryBooking";
 import Detail_mobile from "./pages/Detail/Detail_mobile";
 import Checkout_mobile from "./pages/Checkout/Checkout_mobile";
 import LoginModal from "./components/Modal/LoginModal";
-import CheckoutTemplateMobile from "./templates/CheckoutTemplate/CheckoutTemplateMobile";
-import BookingMobile from "./pages/Checkout/LayoutMobile/BookingMobile";
-import ResultBookingMobile from "./pages/Checkout/LayoutMobile/ResultBookingMobile";
-import ResultBooking from "./pages/Checkout/Layout/ResultBooking";
 import React from "react";
+import {Toaster} from "react-hot-toast";
+import LoadingGif from "./components/Loading/Loading";
 
 function App() {
     return (
         <Router history={history}>
             <LoginModal/>
-            <Loading/>
+            <Toaster position={"top-center"} reverseOrder={true}/>
+            <LoadingGif/>
             <Switch>
                 <UserTemplate exact path='/login' Component={Login}/>
                 <UserTemplate exact path='/register' Component={Register}/>
@@ -55,10 +53,10 @@ function App() {
                 <AdminTemplate exact path='/admin/films' Component={Films}/>
                 <AdminTemplate exact path='/admin/films/addfilms' Component={AddFilms}/>
                 <AdminTemplate exact path='/admin/films/edit/:id' Component={EditFilms}/>
-                <AdminTemplate exact path='/admin/films/showtime/:id/:tenphim' Component={Showtime}/>
+                <AdminTemplate exact path='/admin/films/showtime/:tenphim' Component={Showtime}/>
                 <AdminTemplate exact path='/admin/users' Component={Users}/>
                 <AdminTemplate exact path='/admin/users/adduser' Component={AddUser}/>
-                <AdminTemplate exact path='/admin/users/edit/:id/:tentaikhoan' Component={EditUser}/>
+                <AdminTemplate exact path='/admin/users/edit/:tentaikhoan' Component={EditUser}/>
 
                 <HomeTemplate path="/" Component={Home}/>
             </Switch>

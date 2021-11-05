@@ -1,18 +1,24 @@
 import React, {Fragment, useEffect} from 'react';
-import {UserOutlined, HomeOutlined, TeamOutlined} from '@ant-design/icons'
-import screen from '../../assets/img/screen.jpg'
-import {getListTicketRoomAction} from "../../store/actions/TicketManagementAction";
-import {useDispatch, useSelector} from "react-redux";
-import './Checkout.css'
-import {BOOKING_CHAIR, SWITCH_TAB} from "../../store/types/Type";
-import _ from "lodash";
-import {Tabs} from 'antd';
-import {ACCESS_TOKEN, history, USER_LOGIN} from "../../util/settings";
-import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
 import {NavLink} from "react-router-dom";
+import _ from "lodash";
+import {useDispatch, useSelector} from "react-redux";
+
+// UI
+import {UserOutlined, HomeOutlined, TeamOutlined} from '@ant-design/icons'
+import {Tabs} from 'antd';
+import ArrowBackIosNewIcon from '@mui/icons-material/ArrowBackIosNew';
+import {Menu, Transition} from "@headlessui/react";
+
+// assets , utils
+import './Checkout.css'
+import screen from '../../assets/img/screen.jpg'
+import {BOOKING_CHAIR, SWITCH_TAB} from "../../store/types/Type";
+import {ACCESS_TOKEN, history, USER_LOGIN} from "../../util/settings";
+
+// Comps
 import ResultBooking from "./Layout/ResultBooking";
 import CheckoutCard from "./Layout/CheckoutCard";
-import {Menu, Transition} from "@headlessui/react";
+import {getListTicketRoomAction} from "../../store/actions/TicketManagementAction";
 
 export function classNames(...classes) {
     return classes.filter(Boolean).join(' ')
@@ -94,13 +100,8 @@ function Booking(props) {
                                 </Fragment>
                             })}
                         </div>
-                        <div className="mt-4 lg:mt-12 mx-6
-                        {/*xl:ml-12*/}
-                        ">
-                            <table className="
-                            {/*divide-y divide-gray-200 */}
-
-                            lg:w-full">
+                        <div className="mt-4 lg:mt-12 mx-6">
+                            <table className=" md:w-[93%] lg:w-full">
                                 <thead className='bg-gray-50 p-5'>
                                 <tr>
                                     <th>Available</th>
@@ -111,9 +112,7 @@ function Booking(props) {
                                     <th>Booked by others</th>
                                 </tr>
                                 </thead>
-                                <tbody className="bg-white
-                                {/*divide-y divide-gray-200*/}
-                                ">
+                                <tbody className="bg-white">
                                 <tr className='text-center'>
                                     <td>
                                         <button className='lg:w-[35px] lg:h-[35px] chairMini'/>
@@ -143,7 +142,7 @@ function Booking(props) {
                         </div>
                     </div>
                 </div>
-                <div className='lg:col-span-4 mx-6 lg:mx-0 mt-6 flex justify-end'>
+                <div className='lg:col-span-4 mx-6 lg:mx-0 md:mt-16 lg:mt-6 flex justify-center lg:justify-end'>
                     {/*Card*/}
                     <CheckoutCard props={props} infoMovie={thongTinPhim} listBookingSeats={listBookingChair}/>
                 </div>
@@ -234,7 +233,6 @@ export default function Checkout(props) {
             </Fragment> : ''}
     </Fragment>
 
-    // return <div className='px-4 xl:px-20 pt-8 overflow-x-hidden'>
     return <>
         <div className='hidden md:block lg:container lg:mx-auto my-0 lg:px-4 xl:px-0 px-7 mb-32'>
             <Tabs
@@ -243,14 +241,10 @@ export default function Checkout(props) {
                 defaultActiveKey="2"
             >
                 <TabPane tab={
-                    <div className='
-                {/*text-center flex justify-center items-center*/}
-                '>
-                        <NavLink
-                            to='/home'
-                            className='mr-20 transition-colors duration-300 text-black hover:text-blue-400'
-                        ><ArrowBackIosNewIcon className='h-8 w-8 mr-2'/>HOME</NavLink>
-                    </div>
+                    <NavLink
+                        to='/home'
+                        className='mr-20 transition-colors duration-300 text-black'
+                    ><ArrowBackIosNewIcon className='h-8 w-8 mt-[-4px] mr-2'/>HOME</NavLink>
                 } key="1">
                 </TabPane>
 
@@ -258,7 +252,7 @@ export default function Checkout(props) {
                     <Booking {...props}/>
                 </TabPane>
 
-                <TabPane tab="02 COMPLETE" key="3">
+                <TabPane tab="02 RESULT" key="3">
                     <ResultBooking {...props}/>
                 </TabPane>
             </Tabs>

@@ -8,6 +8,7 @@ import * as Yup from "yup";
 function Register() {
 
     const {reset} = useInput('');
+    const [message, setMessage] = React.useState('')
     const formik = useFormik({
         initialValues: {
             taiKhoan: "",
@@ -25,21 +26,23 @@ function Register() {
             soDt: Yup.string().required('Phone Number is required').matches(/^[0-9]*$/, 'number phone must be a number').min(6, 'Phone Number must be at least 6 characters.').max(32, 'Phone Number have max 32 characters'),
         }),
         onSubmit: (values) => {
-            console.log('values', values)
-
             http.post('/api/QuanLyNguoiDung/DangKy', values).then((response) => {
                 console.log('response: ' + response);
-                alert('Đăng ký thành công')
                 history.push('/login')
             }).catch(error => {
                 console.log({error});
+                if (error.response.status === 400) {
+                  setMessage('Username already exists')
+                }
             })
         }
     })
 
-    const handleColor = () => {
-        return formik.touched.email && formik.errors.email ? 'error' : ''
-    }
+    const handleColorEmail = () => formik.touched.email && formik.errors.email ? 'error' : '';
+    const handleColorName = () => formik.touched.hoTen && formik.errors.hoTen ? 'error' : '';
+    const handleColorPhone = () => formik.touched.soDt && formik.errors.soDt ? 'error' : '';
+    const handleColorPassword = () => formik.touched.matKhau && formik.errors.matKhau ? 'error' : '';
+    const handleColorUsername = () => formik.touched.taiKhoan && formik.errors.taiKhoan ? 'error' : '';
 
     return (
         <form onSubmit={formik.handleSubmit} className="lg:w-1/2 xl:max-w-lg">
@@ -52,16 +55,27 @@ function Register() {
                         <Input
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
-                            helperText={formik.touched.taiKhoan && formik.errors.taiKhoan ? `${formik.errors.taiKhoan}` : null}
+                            helperText={formik.touched.taiKhoan && formik.errors.taiKhoan ?  `${formik.errors.taiKhoan}` : null  }
                             clearable name='taiKhoan'
+                            helperColor={handleColorUsername()}
+                            status={handleColorUsername()}
+                            color={handleColorUsername()}
                             label="Username" size='large' width='100%'
                         />
                     </div>
+                    <p className='jsx-2076578745 helper-text
+                    text-[#f21361] mt-[-13px] mb-4
+                    text-[0.7rem] ml-[10px]
+                    '>{message}</p>
+
                     <div className='mb-8'>
                         <Input.Password
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.matKhau && formik.errors.matKhau ? `${formik.errors.matKhau}` : null}
+                            helperColor={handleColorPassword()}
+                            status={handleColorPassword()}
+                            color={handleColorPassword()}
                             name='matKhau'
                             label="Password" size='large' type="password"
                             width='100%'
@@ -72,9 +86,9 @@ function Register() {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.email && formik.errors.email ? `${formik.errors.email}` : null}
-                            helperColor={handleColor()}
-                            status={handleColor()}
-                            color={handleColor()}
+                            helperColor={handleColorEmail()}
+                            status={handleColorEmail()}
+                            color={handleColorEmail()}
                             onClearClick={reset}
                             clearable name='email'
                             type='email'
@@ -87,6 +101,9 @@ function Register() {
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.hoTen && formik.errors.hoTen ? `${formik.errors.hoTen}` : null}
                             clearable name='hoTen'
+                            helperColor={handleColorName()}
+                            status={handleColorName()}
+                            color={handleColorName()}
                             label="Name" size='large' width='100%'
                         />
                     </div>
@@ -95,6 +112,9 @@ function Register() {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.soDt && formik.errors.soDt ? `${formik.errors.soDt}` : null}
+                            helperColor={handleColorPhone()}
+                            status={handleColorPhone()}
+                            color={handleColorPhone()}
                             clearable name='soDt'
                             label="Phone Number" size='large' width='100%'
                         />

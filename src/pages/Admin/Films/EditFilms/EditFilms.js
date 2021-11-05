@@ -14,7 +14,7 @@ import {getInfoFilmsAction, updateFilmsAction} from "../../../../store/actions/F
 import {useDispatch, useSelector} from "react-redux";
 import * as Yup from "yup";
 
-const desc = ['quá dở', 'dở', 'bình thường', 'tốt', 'tuyệt vời'];
+const desc = ['So bad', 'Bad', 'Normal', 'Good', 'Perfect'];
 
 function EditFilms(props) {
 
@@ -109,13 +109,6 @@ function EditFilms(props) {
                 onValuesChange={onFormLayoutChange}
                 size={componentSize}
             >
-                <Form.Item label="Form Size" name="size">
-                    <Radio.Group>
-                        <Radio.Button value="small">Small</Radio.Button>
-                        <Radio.Button value="default">Default</Radio.Button>
-                        <Radio.Button value="large">Large</Radio.Button>
-                    </Radio.Group>
-                </Form.Item>
 
                 <Form.Item label='Chức năng'>
                     <span className="ant-form-text font-bold">CHỈNH SỬA PHIM</span>
@@ -127,20 +120,20 @@ function EditFilms(props) {
                     <Input onChange={formik.handleChange} name='tenPhim' value={formik.values.tenPhim}/>
                 </Form.Item>
                 <Form.Item label="Mô tả"
-                           required validateStatus='error'
+                           required
                            help={formik.touched.moTa && formik.errors.moTa ? `${formik.errors.moTa}` : null}
                 >
                     <Input onChange={formik.handleChange} name='moTa' value={formik.values.moTa}/>
                 </Form.Item>
                 <Form.Item label="Trailer"
-                           required validateStatus='error'
+                           required
                            help={formik.touched.trailer && formik.errors.trailer ? `${formik.errors.trailer}` : null}
                 >
                     <Input onChange={formik.handleChange} name='trailer' value={formik.values.trailer}/>
                 </Form.Item>
 
                 <Form.Item label="Ngày khởi chiếu"
-                           required validateStatus='error'
+                           required
                            help={formik.touched.ngayKhoiChieu && formik.errors.ngayKhoiChieu ? `${formik.errors.ngayKhoiChieu}` : null}
                 >
                     <DatePicker onChange={handleChangeDataPicker} format='DD/MM/YYYY' name='ngayKhoiChieu'

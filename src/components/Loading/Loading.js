@@ -1,8 +1,8 @@
 import React, {Fragment} from 'react';
 import {useSelector} from "react-redux";
-import loadingGif from '../../assets/img/dynamic point.gif'
+import {Loading} from '@nextui-org/react';
 
-function Loading() {
+function LoadingGif() {
 
     const {isLoading} = useSelector(state => state.LoadingReducer)
 
@@ -21,11 +21,11 @@ function Loading() {
                     alignItems: 'center',
                     zIndex: 11
                 }}>
-                    <img src={loadingGif} height={50} alt={loadingGif}/>
+                    <Loading color='#000000' size="xlarge"/>
                 </div>
                 : ''
         }
     </Fragment>
 }
 
-export default Loading;
+export default LoadingGif;

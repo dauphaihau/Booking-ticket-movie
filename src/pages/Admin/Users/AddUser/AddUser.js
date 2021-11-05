@@ -2,7 +2,6 @@ import React, {Fragment, useEffect, useState} from 'react';
 import {
     Form,
     Input,
-    Radio,
     Select,
     Button,
     InputNumber,
@@ -14,15 +13,16 @@ import {
 } from "../../../../store/actions/UserAction";
 import {history, http} from "../../../../util/settings";
 import {Option} from "antd/es/mentions";
+import {toast} from "react-hot-toast";
 
 const validateMessages = {
-    required: '${label} không được bỏ trống',
+    required: '${label} is require',
     types: {
-        email: '${label} không hợp lệ!',
-        number: '${label} không hợp lệ!',
+        email: '${label} is invalid!',
+        number: '${label} is invalid!',
     },
     number: {
-        range: '${label} phải từ 9 - 12 số ',
+        range: '${label} must be from 9 - 12 numbers',
     },
 }
 
@@ -42,16 +42,14 @@ function AddUser() {
     };
 
     const onFinish = (newUser) => {
-        console.log('Success:', newUser);
         http.post('/api/QuanLyNguoiDung/ThemNguoiDung', newUser).then((response) => {
-            console.log('response: ' + response);
-            alert('Thêm người dùng thành công')
+            toast.success('Thêm người dùng thành công')
             dispatch(getListUserAction())
             history.push('/admin/users')
         }).catch(error => {
             console.log({error});
             if (error.response?.status === 500) {
-                alert(error.response.data.content)
+                toast.error(error.response?.data.content)
             }
         })
     };
@@ -68,27 +66,20 @@ function AddUser() {
                 size={componentSize}
                 onValuesChange={onFormLayoutChange}
             >
-                <Form.Item label="Form Size" name="size">
-                    <Radio.Group>
-                        <Radio.Button value="small">Small</Radio.Button>
-                        <Radio.Button value="default">Default</Radio.Button>
-                        <Radio.Button value="large">Large</Radio.Button>
-                    </Radio.Group>
+
+                <Form.Item label='Form'>
+                    <span className="ant-form-text font-bold">ADD USER</span>
                 </Form.Item>
 
-                <Form.Item label='Chức năng'>
-                    <span className="ant-form-text font-bold">THÊM NGƯỜI DÙNG</span>
-                </Form.Item>
-
-                <Form.Item label="Tài khoản" name={['taiKhoan']} rules={[{required: true}]}>
+                <Form.Item label="Username" name={['taiKhoan']} rules={[{required: true}]}>
                     <Input style={{width: 300}}/>
                 </Form.Item>
 
-                <Form.Item label="Mật khẩu" name={['matKhau']} rules={[{required: true}]}>
+                <Form.Item label="Password" name={['matKhau']} rules={[{required: true}]}>
                     <Input.Password style={{width: 300}}/>
                 </Form.Item>
 
-                <Form.Item label="Họ tên" name={['hoTen']} rules={[{required: true}]}>
+                <Form.Item label="Name" name={['hoTen']} rules={[{required: true}]}>
                     <Input name='hoTen' style={{width: 300}}/>
                 </Form.Item>
 
@@ -96,20 +87,20 @@ function AddUser() {
                     <Input style={{width: 300}}/>
                 </Form.Item>
 
-                <Form.Item label="Số điện thoại" name={['soDt']}
-                           rules={[{required: true,type: 'number', min: 100000000, max: 909090909090}]}>
+                <Form.Item label="Phone Number" name={['soDt']}
+                           rules={[{required: true, type: 'number', min: 100000000, max: 909090909090}]}>
                     <InputNumber style={{width: 300}}/>
                 </Form.Item>
 
-                <Form.Item label="Loại người dùng" name={['maLoaiNguoiDung']} rules={[{ required: true }]}>
-                    <Select style={{width: 300}} placeholder="Select a category">
+                <Form.Item label="Type User" name={['maLoaiNguoiDung']} rules={[{ required: true }]}>
+                    <Select style={{width: 300}} placeholder="Select a category" >
                         {typeUser.map((type, index) => {
                             return <Option key={index} value={type.maLoaiNguoiDung}>{type.tenLoai}</Option>
                         })}
                     </Select>
                 </Form.Item>
 
-                <Form.Item label="Mã Nhóm" name='maNhom' rules={[{required: true}]} tooltip="GP01 nhé">
+                <Form.Item label="Id Group" name='maNhom' rules={[{required: true}]} tooltip="GP01">
                     <Input style={{width: 300}}/>
                 </Form.Item>
 
@@ -120,7 +111,7 @@ function AddUser() {
                     }}
                 >
                     <Button type="primary" htmlType="submit">
-                        Thêm
+                        Add
                     </Button>
                 </Form.Item>
             </Form>

@@ -82,14 +82,16 @@ function HomeCarousel() {
                                 {/*Ipad - Desktop*/}
                                 <div
                                     className='hidden md:block text-white absolute z-20 after:contents top-[14%] left-[5%]'>
-                                    <h1 className='mb-0 md:text-[3.5rem] lg:text-[4.5rem] text-white'>Son of God</h1>
+                                    <h1 className='mb-0 md:text-[2.5rem] lg:text-[4.5rem] text-white'>Son of God</h1>
                                     <div className='flex font-bold mb-4 items-center'>
-                                        <Rate disabled defaultValue={4} className='mr-4 text-[#df3663]'/>
+                                        <Rate disabled defaultValue={4} className='mr-4
+                                        {/*text-[#df3663]*/}
+                                        '/>
                                         <p className='mr-8 mb-0 md:pt-[6px]'>2021</p>
                                         <p className='mr-8 mb-0 md:pt-[6px]'>Drama</p>
-                                        <p className='mr-8 mb-0 md:pt-[6px]'>John</p>
+                                        <p className='mr-8 mb-0 md:pt-[6px]'>Christopher Spencer</p>
                                     </div>
-                                    <p className='mt-4 mb-4 md:w-4/5 lg:w-1/3'>A depiction of the last twelve hours in
+                                    <p className='mt-4 mb-4 md:w-4/5 lg:w-[35.33%]'>A depiction of the last twelve hours in
                                         the life of
                                         Jesus of Nazareth, on the day of his crucifixion in Jerusalem. The story opens
                                         in the Garden of Olives where Jesus has gone to pray after the Last Supper.
@@ -97,20 +99,24 @@ function HomeCarousel() {
                                         'miracles' and has publicly announced that he is 'the Son of God'--is arrested
                                         and taken back within the city walls of Jerusalem.</p>
                                     <div className='flex'>
-                                        <p className='mr-4 font-bold'>Starring</p>
-                                        <p className='text-[#df3663] font-bold'>Jesus Christ , saint Mary</p>
+                                        <p className='mr-4
+                                        font-bold
+                                        '>Starring</p>
+                                        <p className='
+                                        {/*text-[#df3663]*/}
+                                        {/*text-[#2a72eb]*/}
+                                         '>Jesus Christ , saint Mary</p>
                                     </div>
                                     <Button
                                         icon={<PlayArrowIcon className='text-white'/>}
-                                        shadow color="error" auto>
+                                        shadow color="primary" auto>
                                         WATCH TRAILER
                                     </Button>
                                 </div>
 
                                 {/*Mobile*/}
-                                <div className='md:hidden text-white absolute z-20 after:contents top-[47%] left-[5%]'>
-                                    <h1 className='mb-0 text-[2rem] text-white'>Son of God</h1>
-                                    {/*<Rate disabled defaultValue={4} className='mr-4 text-[#df3663] text-[1rem]'/>*/}
+                                <div className='md:hidden text-white absolute z-20 after:contents top-[62%] left-[5%]'>
+                                    <h1 className='mb-0 text-[1.3rem] text-white'>Son of God</h1>
                                     <div className='flex'>
                                         <p className='mr-4 font-bold'>Starring</p>
                                         <p className='text-[#df3663] font-bold'>Jesus Christ , Saint Mary</p>

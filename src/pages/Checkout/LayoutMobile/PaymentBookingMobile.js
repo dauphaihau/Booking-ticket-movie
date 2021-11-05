@@ -1,21 +1,26 @@
 import React from 'react';
-import {Button, Radio} from "@nextui-org/react";
-import {DataBooking} from "../../../_core/models/dataBooking";
-import {bookingMobileAction} from "../../../store/actions/TicketManagementAction";
 import {useDispatch, useSelector} from "react-redux";
+
+// UI
+import {Button, Radio} from "@nextui-org/react";
 import ArrowBackIosNewIcon from "@mui/icons-material/ArrowBackIosNew";
-import {SWITCH_TAB} from "../../../store/types/Type";
 import LocationOnOutlinedIcon from '@mui/icons-material/LocationOnOutlined';
+
+// assets, utils
+import {DataBooking} from "../../../_core/models/dataBooking";
+import {SWITCH_TAB} from "../../../store/types/Type";
+
+// Comps
+import {bookingMobileAction} from "../../../store/actions/TicketManagementAction";
+
 
 function PaymentBookingMobile(props) {
 
     const dispatch = useDispatch();
     const {detailTicketRoom, listBookingChair,} = useSelector(state => state.TicketManagementReducer)
     const {thongTinPhim} = detailTicketRoom;
-    console.log('thong-tin-phim', thongTinPhim)
 
     return <>
-
         <div className='grid grid-cols-3 bg-white items-center mb-4'>
             <div>
                 <ArrowBackIosNewIcon
@@ -24,7 +29,7 @@ function PaymentBookingMobile(props) {
                     onClick={() => {
                         dispatch({
                             type: SWITCH_TAB,
-                            tabActive: 2
+                            tabActive: 1
                         })
                     }}
                 />

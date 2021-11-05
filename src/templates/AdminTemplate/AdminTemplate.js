@@ -1,16 +1,16 @@
 import {NavLink, Route} from "react-router-dom";
-import React, {useEffect} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import React, {useEffect, Fragment} from "react";
+import {history, USER_LOGIN} from "../../util/settings";
+import {OPEN_MODAL} from "../../store/types/Type";
+
+// UI
 import {Layout, Menu} from 'antd';
-import {Fragment} from "react";
 import {
     UserOutlined,
     VideoCameraOutlined,
     PoweroffOutlined,
 } from '@ant-design/icons';
-import {history, USER_LOGIN} from "../../util/settings";
-import {useDispatch, useSelector} from "react-redux";
-import {OPEN_MODAL} from "../../store/types/Type";
-
 const {Sider, Content} = Layout;
 const {SubMenu} = Menu;
 
@@ -61,21 +61,21 @@ export const AdminTemplate = (props) => {
                         defaultOpenKeys={['sub1']}
                         style={{height: '100%', borderRight: 0}}
                     >
-                        <SubMenu key="sub1" icon={<VideoCameraOutlined/>} title="Quản lý phim">
+                        <SubMenu key="sub1" icon={<VideoCameraOutlined/>} title="Film Management">
                             <Menu.Item key="1">
-                                <NavLink to='/admin/films'>Danh sách phim</NavLink>
+                                <NavLink to='/admin/films'>Films</NavLink>
                             </Menu.Item>
                             <Menu.Item key="2">
-                                <NavLink to='/admin/films/addfilms'>Thêm phim</NavLink>
+                                <NavLink to='/admin/films/addfilms'>Add Film</NavLink>
                             </Menu.Item>
                         </SubMenu>
 
-                        <SubMenu key="sub2" icon={<UserOutlined/>} title="Quản lý người dùng">
+                        <SubMenu key="sub2" icon={<UserOutlined/>} title="User Management">
                             <Menu.Item key="3">
-                                <NavLink to='/admin/users'>Danh sách người dùng</NavLink>
+                                <NavLink to='/admin/users'>Users</NavLink>
                             </Menu.Item>
                             <Menu.Item key="4">
-                                <NavLink to='/admin/users/adduser'>Thêm người dùng</NavLink>
+                                <NavLink to='/admin/users/adduser'>Add User</NavLink>
                             </Menu.Item>
                         </SubMenu>
 
@@ -84,7 +84,7 @@ export const AdminTemplate = (props) => {
                                        localStorage.clear();
                                        window.location.href = '/login'
                                    }}>
-                            Đăng xuất
+                            Log out
                         </Menu.Item>
                     </Menu>
                 </Sider>
