@@ -22,8 +22,8 @@ function Register() {
             taiKhoan: Yup.string().required('Username is required').required('Username is required').min(6, 'Username must be at least 6 characters.').max(20, 'Username have max 20 characters'),
             email: Yup.string().required('Email is required').email('Email should be valid and contain @'),
             matKhau: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters.').max(32, 'Password have max 32 characters'),
-            hoTen: Yup.string().required('Name is required').matches(/^[A-Z a-z]+$/, 'Names cannot contain numbers !'),
-            soDt: Yup.string().required('Phone Number is required').matches(/^[0-9]*$/, 'number phone must be a number').min(6, 'Phone Number must be at least 6 characters.').max(32, 'Phone Number have max 32 characters'),
+            hoTen: Yup.string().required('Name is required').matches(/^[A-Z a-z]+$/, 'Names cannot contain numbers !').min(3, 'Password must be at least 3 characters.').max(32, 'Password have max 32 characters'),
+            soDt: Yup.string().required('Phone Number is required').matches(/^[0-9]*$/, 'number phone must be a number').min(6, 'Number must be at least 9 characters.').max(12, 'Number have max 12 characters'),
         }),
         onSubmit: (values) => {
             http.post('/api/QuanLyNguoiDung/DangKy', values).then((response) => {
@@ -46,12 +46,12 @@ function Register() {
 
     return (
         <form onSubmit={formik.handleSubmit} className="lg:w-1/2 xl:max-w-lg">
-            <div className="px-12 py-12 md:pt-12 sm:px-24 md:px-48 lg:px-12 lg:mt-16 xl:px-24 xl:max-w-2xl">
+            <div className="px-12 pt-12 md:pt-12 sm:px-24 md:px-48 lg:px-12 lg:mt-16 xl:px-24 xl:max-w-2xl">
                 <h2 className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl xl:text-bold">
-                    Đăng Ký
+                    Register
                 </h2>
                 <div className="mt-12">
-                    <div className='mb-8'>
+                    <div className='mb-10'>
                         <Input
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
@@ -60,7 +60,7 @@ function Register() {
                             helperColor={handleColorUsername()}
                             status={handleColorUsername()}
                             color={handleColorUsername()}
-                            label="Username" size='large' width='100%'
+                            placeholder="Username" size='large' width='100%'
                         />
                     </div>
                     <p className='jsx-2076578745 helper-text
@@ -77,7 +77,8 @@ function Register() {
                             status={handleColorPassword()}
                             color={handleColorPassword()}
                             name='matKhau'
-                            label="Password" size='large' type="password"
+                            placeholder="Password"
+                            size='large' type="password"
                             width='100%'
                         />
                     </div>
@@ -92,7 +93,8 @@ function Register() {
                             onClearClick={reset}
                             clearable name='email'
                             type='email'
-                            label="Email" size='large' width='100%'
+                            placeholder="Email"
+                            size='large' width='100%'
                         />
                     </div>
                     <div className='mb-8'>
@@ -104,7 +106,8 @@ function Register() {
                             helperColor={handleColorName()}
                             status={handleColorName()}
                             color={handleColorName()}
-                            label="Name" size='large' width='100%'
+                            placeholder="Name"
+                            size='large' width='100%'
                         />
                     </div>
                     <div className='mb-16'>
@@ -116,7 +119,8 @@ function Register() {
                             status={handleColorPhone()}
                             color={handleColorPhone()}
                             clearable name='soDt'
-                            label="Phone Number" size='large' width='100%'
+                            placeholder="Phone Number"
+                            size='large' width='100%'
                         />
                     </div>
                     <div>

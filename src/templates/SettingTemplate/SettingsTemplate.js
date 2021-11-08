@@ -11,7 +11,7 @@ import {useSelector} from "react-redux";
 
 const {Sider, Content} = Layout;
 
-export const SettingTemplate = (props) => {
+const SettingTemplate = (props) => {
 
     const {userLogin} = useSelector(state => state.UserReducer)
 
@@ -37,7 +37,7 @@ export const SettingTemplate = (props) => {
                                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                 alt=""
                             />
-                                <h4 className="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200 hover:underline">{userLogin.hoTen}</h4>
+                            <h4 className="mx-2 mt-2 font-medium text-gray-800 dark:text-gray-200 hover:underline">{userLogin.hoTen}</h4>
                         </div>
                     </div>
                     <Menu
@@ -81,3 +81,5 @@ export const SettingTemplate = (props) => {
         </Fragment>
     }}/>
 }
+
+export default SettingTemplate

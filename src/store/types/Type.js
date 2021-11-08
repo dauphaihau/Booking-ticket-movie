@@ -20,6 +20,8 @@ export const CLEAR_BOOKING = 'CLEAR_BOOKING'
 
 // Others
 export const GET_CAROUSEL = 'GET_CAROUSEL'
+export const ERROR_FORM_SERVER = 'ERROR_FORM_SERVER'
+
 
 export const SWITCH_TAB = 'SWITCH_TAB'
 export const AUTO_SWITCH_TAB = 'AUTO_SWITCH_TAB'

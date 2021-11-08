@@ -16,13 +16,13 @@ import {Option} from "antd/es/mentions";
 import {toast} from "react-hot-toast";
 
 const validateMessages = {
-    required: '${label} is require',
+    required: `$\{label} is require`,
     types: {
-        email: '${label} is invalid!',
-        number: '${label} is invalid!',
+        email: `$\{label} is invalid!`,
+        number: `$\{label} is invalid!`,
     },
     number: {
-        range: '${label} must be from 9 - 12 numbers',
+        range: `$\{label} must be from 9 - 12 numbers`,
     },
 }
 
@@ -33,7 +33,7 @@ function AddUser() {
 
     useEffect(() => {
         dispatch(getAllTypeUserAction())
-    }, [])
+    }, [dispatch])
 
     const [componentSize, setComponentSize] = useState('default');
 
@@ -43,7 +43,7 @@ function AddUser() {
 
     const onFinish = (newUser) => {
         http.post('/api/QuanLyNguoiDung/ThemNguoiDung', newUser).then((response) => {
-            toast.success('Thêm người dùng thành công')
+            toast.success('add user successfully')
             dispatch(getListUserAction())
             history.push('/admin/users')
         }).catch(error => {

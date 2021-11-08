@@ -7,15 +7,14 @@ import {getListFilmsAction} from "../../../store/actions/FilmsAction";
 import {useDispatch} from "react-redux";
 import {toast} from "react-hot-toast";
 
-
 const validateMessages = {
-    required: '${label} is require',
+    required: `$\{label} is require`,
     types: {
-        email: '${label} is invalid!',
-        number: '${label} is invalid!',
+        email: `\${label} is invalid!`,
+        number: `\${label} is invalid!`,
     },
-    min: "'${label}' cannot be less than ${min}",
-    max: "'${label}' cannot be greater than ${max}",
+    min: `'$\{label}' cannot be less than $\{min}`,
+    max: `'$\{label}' cannot be greater than $\{max}`,
 };
 
 function Showtime(props) {
@@ -61,6 +60,7 @@ function Showtime(props) {
 
     const [componentSize, setComponentSize] = useState('default');
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(async () => {
         try {
             const result = await http.get(`/api/QuanLyRap/LayThongTinHeThongRap`)
@@ -98,7 +98,7 @@ function Showtime(props) {
     }
 
     const optionCinemas = () => {
-        return state.arrCinema?.map((cinema, index) => {
+        return state.arrCinema?.map((cinema) => {
             return {label: cinema.tenHeThongRap, value: cinema.maHeThongRap}
         })
     }
@@ -107,12 +107,8 @@ function Showtime(props) {
         formik.setFieldValue('ngayChieuGioChieu', moment(value).format('DD/MM/YYYY hh:mm:ss'))
     }
 
-
-    console.log('film', film)
-
-
     return <>
-        <div className='container flex flex-row mt-20'>
+        <div className='container mx-auto flex flex-row mt-20'>
             <Form
                 name="basic"
                 labelCol={{span: 8,}}
@@ -139,7 +135,7 @@ function Showtime(props) {
                 <Form.Item label="Cinema mini" name={['cumRap']} rules={[{required: true}]}>
                     <Select
                         style={{width: 200}}
-                        options={state.arrMiniCinema.map((cinema, i) => ({
+                        options={state.arrMiniCinema.map((cinema) => ({
                             label: cinema.tenCumRap,
                             value: cinema.maCumRap
                         }))}
@@ -169,7 +165,7 @@ function Showtime(props) {
                 </Form.Item>
             </Form>
             <figure className='hidden md:block ml-4'>
-                <img src={film.hinhAnh} alt='...' width={250} height={250} className='rounded-xl'/>
+                <img src={film.hinhAnh} alt='...' className='rounded-xl w-[25rem] h-[25rem]'/>
             </figure>
         </div>
     </>

@@ -18,7 +18,7 @@ const CheckoutTemplate = (props) => {
         if (!localStorage.getItem(USER_LOGIN)) {
             dispatch({type: OPEN_MODAL})
         }
-    }, [])
+    }, [dispatch])
 
     useEffect(() => {
         window.onload = () => {

@@ -14,7 +14,7 @@ import {
 const {Sider, Content} = Layout;
 const {SubMenu} = Menu;
 
-export const AdminTemplate = (props) => {
+const AdminTemplate = (props) => {
 
     const {Component, ...restProps} = props;
     const {userLogin} = useSelector(state => state.UserReducer)
@@ -25,7 +25,7 @@ export const AdminTemplate = (props) => {
         if (!localStorage.getItem(USER_LOGIN)) {
             dispatch({type: OPEN_MODAL})
         }
-    }, [])
+    }, [dispatch])
 
     return <Route {...restProps} render={(propsRoute) => {
 
@@ -105,3 +105,5 @@ export const AdminTemplate = (props) => {
         </Fragment>
     }}/>
 }
+
+export default AdminTemplate

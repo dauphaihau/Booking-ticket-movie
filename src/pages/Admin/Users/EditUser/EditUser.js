@@ -16,12 +16,12 @@ function EditUser(props) {
 
     const {infoUser, typeUser} = useSelector(state => state.UserReducer)
     const dispatch = useDispatch();
-    const phoneRegex = /([+84|84|0]+(3|5|7|8|9|1[2|6|8|9]))+([0-9]{8})\b/;
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(async () => {
         dispatch(getInfoUserAction(props.match.params.tentaikhoan))
         dispatch(getAllTypeUserAction())
-    }, [])
+    }, [dispatch, props.match.params.tentaikhoan])
 
     // change key
     const OLD_KEY = 'soDT';
@@ -48,11 +48,10 @@ function EditUser(props) {
             taiKhoan: Yup.string().required('Username is required').required('Username is required').min(6, 'Username must be at least 6 characters.').max(20, 'Username have max 20 characters'),
             email: Yup.string().required('Email is required').email('Email should be valid and contain @'),
             matKhau: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters.').max(32, 'Password have max 32 characters'),
-            hoTen: Yup.string().required('Name is required').matches(/^[A-Z a-z]+$/, 'Names cannot contain numbers !'),
-            soDt: Yup.string().required('Phone Number is required').matches(phoneRegex, 'number phone must be a number').min(6, 'Phone Number must be at least 6 characters.').max(32, 'Phone Number have max 32 characters'),
+            hoTen: Yup.string().required('Name is required').matches(/^[A-Z a-z]+$/, 'Names cannot contain numbers or special characters !'),
+            soDt: Yup.string().required('Phone Number is required').matches(/^[0-9]*$/, 'number phone must be a number').min(6, 'Phone Number must be at least 6 characters.').max(32, 'Phone Number have max 32 characters').nullable(),
         }),
         onSubmit: (newData) => {
-            console.log('newData', newData)
             dispatch(updateInfoUserAction(newData, props.match.params.tentaikhoan))
         }
     })
@@ -103,7 +102,7 @@ function EditUser(props) {
                 </Form.Item>
 
                 <Form.Item label="Phone Number" required
-                           rules={[{ type: 'number' }]}
+                           // rules={[{ type: 'number' }]}
                            help={formik.touched.soDt && formik.errors.soDt ? `${formik.errors.soDt}` : null}
                 >
                     <InputNumber style={{width: 300}} name='soDt' onChange={(e) => {

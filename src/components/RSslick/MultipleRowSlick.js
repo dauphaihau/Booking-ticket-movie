@@ -31,9 +31,7 @@ function SampleNextArrow(props) {
 
 
 function MultipleRowSlick({arrFilms}) {
-
     const dispatch = useDispatch();
-    console.log('arrFilms', arrFilms)
 
     const renderListFilms = () => {
         return arrFilms.map((film, index) => {
@@ -57,8 +55,6 @@ function MultipleRowSlick({arrFilms}) {
         speed: 1500,
         slidesToShow: 3,
         slidesToScroll: 3,
-
-        // className: "center variable-width",
         rows: 1,
         slidesPerRow: 2,
         nextArrow: <SampleNextArrow/>,
@@ -71,6 +67,8 @@ function MultipleRowSlick({arrFilms}) {
                     slidesToScroll: 3,
                     infinite: true,
                     dots: true,
+                    prevArrow: true,
+                    nextArrow: true,
                 }
             },
             {
@@ -89,31 +87,20 @@ function MultipleRowSlick({arrFilms}) {
     const settingsMobile = {
         infinite: true,
         speed: 1500,
-        // slidesToShow: 1,
-        // slidesToScroll: 1,
-
         className: "center",
-        // centerMode: true,
-        // centerPadding: "60px",
-        // className: "center variable-width",
         rows: 1,
         slidesPerRow: 3,
         responsive: [
             {
                 breakpoint: 414,
                 settings: {
-                    // centerMode: true,
-                    // centerPadding: "60px",
                     rows: 1,
-                    // rows: 2,
                 }
             },
             {
                 breakpoint: 375,
                 settings: {
-                    // centerMode: true,
                     rows: 1,
-                    // rows: 2,
                 }
             }
 

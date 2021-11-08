@@ -16,14 +16,14 @@ function Users() {
 
     useEffect(() => {
         dispatch(getListUserAction())
-    }, [])
+    }, [dispatch])
 
     const columns = [
         {
             title: 'Username',
             dataIndex: 'taiKhoan',
             defaultSortOrder :'descend',
-            width: '15%',
+            width: '12%',
             sorter: (a, b) => a.taiKhoan - b.taiKhoan,
             // sortDirections: ['descend', 'ascend'],
         },
@@ -31,8 +31,8 @@ function Users() {
             title: 'Password',
             dataIndex: 'matKhau',
             defaultSortOrder: 'descend',
-            width: '10%',
-            responsive: ['md'],
+            width: '13%',
+            // responsive: ['md'],
         },
         {
             title: 'Name',
@@ -47,14 +47,14 @@ function Users() {
                 return -1
             },
             sortDirections: ['descend', 'ascend'],
-            responsive: ['lg'],
+            // responsive: ['lg'],
         },
         {
-            title: 'Type user',
+            title: 'Type User',
             dataIndex: 'maLoaiNguoiDung',
             sortDirections: ['descend', 'ascend'],
             width: '15%',
-            responsive: ['md'],
+            // responsive: ['md'],
             render: (item, user) => user.maLoaiNguoiDung === 'QuanTri' ?
                 <Tag color="warning">{user.maLoaiNguoiDung}</Tag> : <Tag color="processing">{user.maLoaiNguoiDung}</Tag>
         },
@@ -63,20 +63,23 @@ function Users() {
             dataIndex: 'email',
             sortDirections: ['descend', 'ascend'],
             width: '20%',
-            responsive: ['lg'],
+            // responsive: ['lg'],
         },
         {
             title: 'Phone Number',
             dataIndex: 'soDt',
             sortDirections: ['descend', 'ascend'],
             width: '15%',
-            responsive: ['xxl'],
+            // responsive: ['xxl'],
         },
         {
             title: 'Actions',
             dataIndex: 'hanhDong',
-            render: (item, user, index) => {
+            fixed: 'right',
+            render: (item, user) => {
                 return <Fragment>
+                    <div className='flex'>
+
                     <NavLink to={`/admin/users/edit/${user.taiKhoan}`}>
                         <Button type="primary" icon={<EditOutlined/>}/>
                     </NavLink>
@@ -88,10 +91,11 @@ function Users() {
                                 }
                             }}
                     />
+                    </div>
                 </Fragment>
             },
             sortDirections: ['descend', 'ascend'],
-            width: '20%',
+            width: '11%',
         },
     ];
 
@@ -111,12 +115,15 @@ function Users() {
         })
     };
 
+
     return (
         <div>
             <Search placeholder="input search text" size='large' className='mb-5'
                     allowClear onSearch={onSearch}
             />
-            <Table columns={columns} dataSource={listUser} onChange={onChange}/>
+            <Table columns={columns} dataSource={listUser} onChange={onChange}
+           scroll={{x: 1200}}
+            />
         </div>
     );
 }

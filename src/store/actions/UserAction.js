@@ -1,8 +1,8 @@
 import {GROUP_ID, history, http} from "../../util/settings";
 import {
-    CLOSE_MODAL,
+    CLOSE_MODAL, ERROR_FORM_SERVER,
     SET_ALL_TYPE_USER,
-    SET_DATA_LOGIN,
+    SET_DATA_LOGIN, SET_DATA_USER,
     SET_INFO_USER,
     SET_LIST_USER
 } from "../types/Type";
@@ -25,8 +25,8 @@ export const LoginAction = (dataLogin) => {
 
         } catch (error) {
             console.log({error})
-            if (error.response.status === 404) {
-                toast.error('Incorrect account or password')
+            if (error.response?.status === 404) {
+                dispatch({type: ERROR_FORM_SERVER, messageServer: 'Incorrect account or password'})
             }
         }
     }
@@ -46,8 +46,8 @@ export const LoginModalAction = (dataLogin) => {
 
         } catch (error) {
             console.log({error})
-            if (error.response.status === 404) {
-                toast.error('Incorrect account or password')
+            if (error.response?.status === 404) {
+                dispatch({type: ERROR_FORM_SERVER, messageServer: 'Incorrect account or password'})
             }
         }
     }
@@ -58,16 +58,16 @@ export const getDataUserAction = () => {
     return async dispatch => {
         try {
             dispatch(displayLoadingAction)
-            const {data, content} = await http.post('/api/QuanLyNguoiDung/ThongTinTaiKhoan')
-            console.log('data', data, content)
+            const {data} = await http.post('/api/QuanLyNguoiDung/ThongTinTaiKhoan')
+            console.log('data', data)
 
-            // if (result.data.statusCode === 200) {
-            //     dispatch({
-            //         type: SET_DATA_USER,
-            //         dataUser: result.data.content
-            //     })
-            //     dispatch(hideLoadingAction)
-            // }
+            if (data?.statusCode === 200) {
+                dispatch({
+                    type: SET_DATA_USER,
+                    dataUser: data.content
+                })
+                dispatch(hideLoadingAction)
+            }
 
         } catch (error) {
             dispatch(hideLoadingAction)
@@ -137,7 +137,6 @@ export const getInfoUserAction = (account) => {
         } catch (error) {
             console.log({error})
             toast.error('You are not authorized to edit this user')
-            history.push('/admin/users')
             dispatch(hideLoadingAction)
         }
     }
@@ -151,7 +150,6 @@ export const getAllTypeUserAction = () => {
                 type: SET_ALL_TYPE_USER,
                 typeUser: result.data.content
             })
-
         } catch (error) {
             console.log({error})
         }
@@ -166,30 +164,8 @@ export const updateInfoUserAction = (newData, id) => {
                 await dispatch(getInfoUserAction(id))
                 toast.success('Successfully changed information')
             }
-
         } catch (error) {
             console.log({error})
-        }
-    }
-}
-
-export const getInfoProfileAction = () => {
-    console.log('ahihi')
-    return async (dispatch) => {
-        try {
-            // dispatch(displayLoadingAction)
-            const {content, status} = await http.post(`/api/QuanLyNguoiDung/ThongTinTaiKhoan`)
-            if (status === 200) {
-                // dispatch(hideLoadingAction)
-                dispatch({
-                    type: SET_INFO_USER,
-                    infoUser: content
-                })
-            }
-
-        } catch (error) {
-            console.log({error})
-            // dispatch(hideLoadingAction)
         }
     }
 }

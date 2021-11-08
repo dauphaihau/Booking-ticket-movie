@@ -12,13 +12,13 @@ function ResultBooking() {
 
     useEffect(() => {
         dispatch(getDataUserAction())
-    }, [])
+    }, [dispatch])
 
     const renderTicketItem = () => {
-        return dataUser.thongTinDatVe.map((ticket, index) => {
+        return dataUser.thongTinDatVe.map((ticket, i) => {
             const chairs = _.head(ticket.danhSachGhe)
 
-            return <div className="p-2 lg:w-1/3 md:w-1/2 w-full">
+            return <div className="p-2 lg:w-1/3 md:w-1/2 w-full" key={i}>
                 <div className="h-full flex items-center border-gray-200 border p-4 rounded-lg">
                     <div className="flex-grow">
                         <h2 className="text-gray-900 title-font font-medium">{ticket.tenPhim}</h2>

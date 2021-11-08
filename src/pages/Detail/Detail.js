@@ -22,7 +22,7 @@ function Detail(props) {
 
     useEffect(() => {
         dispatch(getDetailFilmsAction(props.match.params.id))
-    }, [])
+    }, [dispatch, props.match.params.id])
 
     let objDetailFilm = _.keyBy(detailFilm.heThongRapChieu, 'maHeThongRap');
 
@@ -48,23 +48,21 @@ function Detail(props) {
                             </figure>
                             <div className='col-span-2 text-white xl:-ml-24'>
                                 <p className='text-4xl mb-4'>{detailFilm.tenPhim}</p>
-                                {/*<p className='pr-[24rem]'>{detailFilm.moTa}</p>*/}
-
-                                {detailFilm.moTa?.length > 260 ?
-                                    <p className='lg:pr-[24rem] h-[87px]'>{detailFilm.moTa.slice(0, 260)}...</p> :
+                                {detailFilm.moTa?.length > 320 ?
+                                    <p className='lg:pr-[24rem] h-[87px]'>{detailFilm.moTa.slice(0, 320)}...</p> :
                                     <p className='lg:pr-[24rem] h-[87px]'>{detailFilm.moTa}</p>}
-                                <div className='flex'>
+                                <div className='flex mt-[1.8rem]'>
                                     <div>
-                                        <p className='text-sm font-bold'>RELEASED</p>
-                                        <p className='text-sm font-bold'>STARRING</p>
-                                        <p className='text-sm font-bold'>DIRECTOR</p>
-                                        <p className='text-sm font-bold'>RUNNING TIME</p>
+                                        <p className='text-sm my-2 font-bold'>RELEASED</p>
+                                        <p className='text-sm mb-2 font-bold'>STARRING</p>
+                                        <p className='text-sm mb-2 font-bold'>DIRECTOR</p>
+                                        <p className='text-sm mb-2 font-bold'>RUNNING TIME</p>
                                     </div>
                                     <div className='ml-8'>
-                                        <p className='text-sm'>{moment(detailFilm.ngayKhoiChieu).format('LL')}</p>
-                                        <p className='text-sm'>Fred Berger, Brian Kavanaugh</p>
-                                        <p className='text-sm'>John Doe</p>
-                                        <p className='text-sm'>120 min</p>
+                                        <p className='text-sm my-2'>{moment(detailFilm.ngayKhoiChieu).format('LL')}</p>
+                                        <p className='text-sm mb-2'>Fred Berger, Brian Kavanaugh</p>
+                                        <p className='text-sm mb-2'>John Doe</p>
+                                        <p className='text-sm mb-2'>120 min</p>
                                     </div>
                                 </div>
 

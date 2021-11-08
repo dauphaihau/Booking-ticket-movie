@@ -19,7 +19,7 @@ function News() {
                     return <div key={index} className="lg:p-4 lg:w-1/3  mb-12 md:mb-8 ">
                         <div className="rounded-lg h-64 overflow-hidden">
                             <img
-                                alt="https://m.media-amazon.com/images/M/MV5BMTM4NTA3NDI1Nl5BMl5BanBnXkFtZTcwMzk0MDU5NA@@._V1_.jpg"
+                                alt={data.img}
                                 className="object-cover object-center h-full w-full"
                                 src={data.img}
                             />

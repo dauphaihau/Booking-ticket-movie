@@ -1,14 +1,16 @@
 import React from 'react';
 import {useFormik} from "formik";
 import {NavLink} from "react-router-dom";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {LoginAction} from "../../store/actions/UserAction";
 import * as Yup from "yup";
 import {Button, Input} from "@nextui-org/react";
+import {ERROR_FORM_SERVER} from "../../store/types/Type";
 
 function Login() {
 
     const dispatch = useDispatch();
+    const {messageServer} = useSelector(state => state.UserReducer)
 
     const formik = useFormik({
         initialValues: {
@@ -63,28 +65,33 @@ function Login() {
                 <h2 className="text-center text-4xl text-indigo-900 font-display font-semibold lg:text-left xl:text-5xl xl:text-bold">Sign
                     in</h2>
                 <div className="mt-12">
-                    <div className='mt-6'>
+                    <div className='my-6'>
                         <Input
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.taiKhoan && formik.errors.taiKhoan ? `${formik.errors.taiKhoan}` : null}
                             clearable name='taiKhoan'
-                            labelPlaceholder="Username"
+                            placeholder="Username"
                             size='large' width='100%'
                         />
                     </div>
-                    <div className='mt-12 mb-8'>
+                        {messageServer !== '' ? <p className='jsx-2076578745 helper-text
+                    text-[#f21361] mt-[16px] mb-4
+                    text-[0.7rem] ml-[10px]
+                    '>{messageServer}</p> : ''
+                        }
+                    <div className='mb-12'>
                         <Input.Password
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             helperText={formik.touched.matKhau && formik.errors.matKhau ? `${formik.errors.matKhau}` : null}
                             name='matKhau'
-                            labelPlaceholder="Password"
+                            placeholder="Password"
                             size='large' type="password"
                             width='100%'
                         />
                     </div>
-                    <div className="mt-16">
+                    <div >
                         <Button style={{width: '100%'}} shadow color="primary" auto
                                 type='submit' size='large'
                         >
@@ -93,7 +100,11 @@ function Login() {
                     </div>
                     <div className="mt-12 text-sm font-display font-semibold text-gray-700 text-center">
                         Don’t have an account?{" "}
-                        <NavLink to='/register' className="cursor-pointer text-blue-600 hover:text-blue-800">
+                        <NavLink to='/register'
+                                 onClick={() => {
+                                     dispatch({type: ERROR_FORM_SERVER, messageServer: ''})
+                                 }}
+                                 className="cursor-pointer text-blue-600 hover:text-blue-800">
                             Sign up
                         </NavLink>
                     </div>

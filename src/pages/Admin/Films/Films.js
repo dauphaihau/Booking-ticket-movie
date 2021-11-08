@@ -16,7 +16,7 @@ function Films() {
 
     useEffect(() => {
         dispatch(getListFilmsAction())
-    }, [])
+    }, [dispatch])
 
     const columns = [
         {
@@ -26,7 +26,7 @@ function Films() {
             defaultSortOrder :'descend',
             sorter: (a, b) => a.maPhim - b.maPhim,
             sortDirections: ['descend', 'ascend'],
-            responsive: ['md'],
+            // responsive: ['md'],
         },
         {
             title: 'Image',
@@ -39,11 +39,11 @@ function Films() {
                         e.target.onerror = null;
                         e.target.src = `https://picsum.photos/id/${index}/200/200`
                     }}
-                         width={50} height={50}
+                         className='w-20 h-20'
                          src={film.hinhAnh} alt={film.tenPhim}/>
                 </Fragment>
             }
-            , responsive: ['lg'],
+            // , responsive: ['lg'],
         },
         {
             title: 'Name Film',
@@ -69,7 +69,7 @@ function Films() {
             },
             sortDirections: ['descend', 'ascend'],
             width: '35%',
-            responsive: ['xxl'],
+            // responsive: ['xxl'],
         },
         {
             title: 'Actions',
@@ -99,7 +99,8 @@ function Films() {
                 </Fragment>
             },
             sortDirections: ['descend', 'ascend'],
-            width: '15%'
+            width: '14%',
+            fixed:'right'
         },
     ];
 
@@ -121,7 +122,9 @@ function Films() {
 
     return <>
         <Search onSearch={onSearch} placeholder="input search text" size='large' className='mb-5' allowClear/>
-        <Table columns={columns} dataSource={arrFilmDefault} onChange={onChange} rowKey={"maPhim"}/>
+        <Table columns={columns} dataSource={arrFilmDefault} onChange={onChange} rowKey={"maPhim"}
+               scroll={{x: 1200}}
+        />
     </>
 }
 

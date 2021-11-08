@@ -1,7 +1,7 @@
 import {Redirect, Route} from "react-router-dom";
 import {Fragment} from "react";
 
-export const UserTemplate = (props) => {
+const UserTemplate = (props) => {
 
     if (localStorage.getItem('accessToken')) return <Redirect to="/"/>
 
@@ -176,3 +176,5 @@ export const UserTemplate = (props) => {
         </Fragment>
     }}/>
 }
+
+export default UserTemplate

@@ -49,7 +49,7 @@ export const bookingMobileAction = (dataBooking = new DataBooking()) => {
             await dispatch(getListTicketRoomAction(dataBooking.maLichChieu))
             await dispatch({type: CLEAR_BOOKING}) // renew the seat you ordered
             toast.success( 'You have successfully booked')
-            dispatch({type: SWITCH_TAB, tabActive: '2'})
+            dispatch({type: SWITCH_TAB, tabActive: '3'})
 
         } catch (error) {
             console.log({error})

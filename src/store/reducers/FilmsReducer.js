@@ -46,6 +46,7 @@ export const FilmsReducer = (state = initialState, action) => {
 
         case SET_FILM_COMING_SOON: {
             state.sapChieu = !state.sapChieu;
+            // eslint-disable-next-line no-self-compare
             state.arrFilms = state.arrFilmDefault.filter(film => film.sapChieu === film.sapChieu)
             return {...state}
         }

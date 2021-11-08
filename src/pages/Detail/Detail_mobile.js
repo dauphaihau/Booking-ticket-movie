@@ -16,9 +16,8 @@ function Detail_mobile(props) {
     const {detailFilm} = useSelector(state => state.FilmsReducer)
 
     useEffect(() => {
-        let {id} = props.match.params;
-        dispatch(getDetailFilmsAction(id))
-    }, [])
+        dispatch(getDetailFilmsAction(props.match.params.id))
+    }, [dispatch, props.match.params.id])
 
     return (
         <div style={{
@@ -42,20 +41,20 @@ function Detail_mobile(props) {
 
                             <div className='flex'>
                                 <div>
-                                    <p className='text-sm font-bold'>RELEASED</p>
-                                    <p className='text-sm font-bold'>STARRING</p>
-                                    <p className='text-sm font-bold'>DIRECTOR</p>
-                                    <p className='text-sm font-bold'>RUNNING TIME</p>
+                                    <p className='text-sm font-bold mb-2'>RELEASED</p>
+                                    <p className='text-sm font-bold mb-2'>STARRING</p>
+                                    <p className='text-sm font-bold mb-2'>DIRECTOR</p>
+                                    <p className='text-sm font-bold mb-2'>RUNNING TIME</p>
                                 </div>
                                 <div className='ml-8'>
-                                    <p className='text-sm'>{moment(detailFilm.ngayKhoiChieu).format('LL')}</p>
-                                    <p className='text-sm'>Fred Berger, Brian Kavanaugh</p>
-                                    <p className='text-sm'>John Doe</p>
-                                    <p className='text-sm'>120 min</p>
+                                    <p className='text-sm mb-2'>{moment(detailFilm.ngayKhoiChieu).format('LL')}</p>
+                                    <p className='text-sm mb-2'>Fred Berger, Brian Kavanaugh</p>
+                                    <p className='text-sm mb-2'>John Doe</p>
+                                    <p className='text-sm mb-2'>120 min</p>
                                 </div>
                             </div>
-                            <p>{detailFilm.moTa}</p>
-                            <div style={{marginBottom: 18}}>
+                            <p className='mb-3'>{detailFilm.moTa}</p>
+                            <div style={{marginBottom: 20}}>
                                 <Rate style={{fontSize: 16}} allowHalf value={detailFilm.danhGia / 2}/>
                             </div>
                             <Button className='hover:bg-gray-100' shadow color="white" auto>

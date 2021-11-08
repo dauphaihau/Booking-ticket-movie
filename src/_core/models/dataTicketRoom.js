@@ -1,4 +1,5 @@
 export class dataTicketRoom {
+    // eslint-disable-next-line no-use-before-define
     thongTinPhim = new ThongTinPhim();
     danhSachGhe = []
 }

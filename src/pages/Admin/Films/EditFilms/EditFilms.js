@@ -3,7 +3,6 @@ import moment from "moment";
 import {
     Form,
     Input,
-    Radio,
     DatePicker,
     Button,
     Switch, Rate,
@@ -14,7 +13,7 @@ import {getInfoFilmsAction, updateFilmsAction} from "../../../../store/actions/F
 import {useDispatch, useSelector} from "react-redux";
 import * as Yup from "yup";
 
-const desc = ['So bad', 'Bad', 'Normal', 'Good', 'Perfect'];
+const desc = ['terrible', 'bad', 'normal', 'good', 'wonderful'];
 
 function EditFilms(props) {
 
@@ -22,10 +21,9 @@ function EditFilms(props) {
     const {infoFilm} = useSelector(state => state.FilmsReducer)
     const dispatch = useDispatch();
 
-    console.log('info-film', infoFilm)
     useEffect(() => {
         dispatch(getInfoFilmsAction(props.match.params.id))
-    }, [])
+    }, [dispatch, props.match.params.id])
 
     const [componentSize, setComponentSize] = useState('default');
 
@@ -47,13 +45,12 @@ function EditFilms(props) {
             hinhAnh: null
         },
         validationSchema: Yup.object({
-            tenPhim: Yup.string().required('Tên phim không được bỏ trống'),
-            moTa: Yup.string().required('Mô tả không được để trống'),
-            trailer: Yup.string().required('trailer không được để trống'),
-            ngayKhoiChieu: Yup.string().required('Ngày khởi chiếu không được để trống'),
+            tenPhim: Yup.string().required('Name film is require').min(6, 'Name film must be at least 6 characters.').max(32, 'Name film have max 32 characters'),
+            moTa: Yup.string().required('Describe is require'),
+            trailer: Yup.string().required('Trailer is require'),
+            ngayKhoiChieu: Yup.string().required('Release date is require'),
         }),
         onSubmit: (values) => {
-            console.log(values)
             values.maNhom = GROUP_ID
             let formData = new FormData();
 
@@ -110,16 +107,16 @@ function EditFilms(props) {
                 size={componentSize}
             >
 
-                <Form.Item label='Chức năng'>
-                    <span className="ant-form-text font-bold">CHỈNH SỬA PHIM</span>
+                <Form.Item label='Form'>
+                    <span className="ant-form-text font-bold">EDIT FILM</span>
                 </Form.Item>
 
-                <Form.Item label="Tên phim" required validateStatus='validating'
+                <Form.Item label="Name Film" required validateStatus='validating'
                            help={formik.touched.tenPhim && formik.errors.tenPhim ? `${formik.errors.tenPhim}` : null}
                 >
                     <Input onChange={formik.handleChange} name='tenPhim' value={formik.values.tenPhim}/>
                 </Form.Item>
-                <Form.Item label="Mô tả"
+                <Form.Item label="Describe"
                            required
                            help={formik.touched.moTa && formik.errors.moTa ? `${formik.errors.moTa}` : null}
                 >
@@ -132,7 +129,7 @@ function EditFilms(props) {
                     <Input onChange={formik.handleChange} name='trailer' value={formik.values.trailer}/>
                 </Form.Item>
 
-                <Form.Item label="Ngày khởi chiếu"
+                <Form.Item label="Release Date"
                            required
                            help={formik.touched.ngayKhoiChieu && formik.errors.ngayKhoiChieu ? `${formik.errors.ngayKhoiChieu}` : null}
                 >
@@ -141,7 +138,7 @@ function EditFilms(props) {
                     />
                 </Form.Item>
 
-                <Form.Item label="Đang chiếu">
+                <Form.Item label="New In">
                     <Switch
                         onChange={(checked) => {
                             handleChangeSwitch('dangChieu', checked)
@@ -150,7 +147,7 @@ function EditFilms(props) {
                         checked={formik.values.dangChieu}
                     />
                 </Form.Item>
-                <Form.Item label="Sắp chiếu">
+                <Form.Item label="Coming Soon">
                     <Switch
                         onChange={(checked) => {
                             handleChangeSwitch('sapChieu', checked)
@@ -169,7 +166,7 @@ function EditFilms(props) {
                     />
                 </Form.Item>
 
-                <Form.Item label="Đánh giá" name={['danhGia']}>
+                <Form.Item label="Rate" name={['danhGia']}>
                     <Rate tooltips={desc} value={star} onChange={(value) => {
                         setStar(value);
                         formik.setFieldValue('danhGia', value)
@@ -179,7 +176,7 @@ function EditFilms(props) {
                 </Form.Item>
 
 
-                <Form.Item label="Hình ảnh"
+                <Form.Item label="Image"
                            required validateStatus='error'
                            help={formik.touched.hinhAnh && formik.errors.hinhAnh ? `${formik.errors.hinhAnh}` : null}
                 >
@@ -200,7 +197,7 @@ function EditFilms(props) {
                     }}
                 >
                     <Button type="primary" htmlType="submit">
-                        Chỉnh sửa
+                        Edit
                     </Button>
                 </Form.Item>
             </Form>

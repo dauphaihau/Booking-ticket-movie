@@ -82,6 +82,7 @@ export default function Header() {
                     className="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                     <Menu.Item>
                         {({active}) => (
+                            // eslint-disable-next-line jsx-a11y/anchor-is-valid
                             <a
                                 href="#"
                                 className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
@@ -95,6 +96,7 @@ export default function Header() {
                     </Menu.Item>
                     <Menu.Item>
                         {({active}) => (
+                            // eslint-disable-next-line jsx-a11y/anchor-is-valid
                             <a
                                 href="#"
                                 className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
@@ -136,10 +138,8 @@ export default function Header() {
                                 </Disclosure.Button>
                             </div>
                             <div className="flex-1 flex items-center justify-center sm:items-stretch sm:justify-start">
-                                <div className="flex-shrink-0 flex items-center">
-                                    <svg onClick={() => {
-                                      history.push('/')
-                                    }}
+                                <div className="flex-shrink-0 flex items-center hidden md:block">
+                                    <svg
                                         className="cursor-pointer w-10 text-blue-500" xmlns="http://www.w3.org/2000/svg"
                                          xmlnsXlink="http://www.w3.org/1999/xlink" version="1.1" id="Layer_1" x="0px"
                                          y="0px"

@@ -18,7 +18,8 @@ import {history} from "../../util/settings";
 // Comps
 import {getListTicketRoomAction} from "../../store/actions/TicketManagementAction";
 import PaymentBookingMobile from "./LayoutMobile/PaymentBookingMobile";
-
+import ResultBookingMobile from "./LayoutMobile/ResultBookingMobile";
+import {toast} from "react-hot-toast";
 
 const {TabPane} = Tabs;
 
@@ -36,7 +37,7 @@ function Booking(props) {
 
     useEffect(() => {
         dispatch(getListTicketRoomAction(props.match.params.id))
-    }, [])
+    }, [dispatch, props.match.params.id])
 
     const {danhSachGhe, thongTinPhim} = detailTicketRoom;
 
@@ -67,7 +68,7 @@ function Booking(props) {
             focus:bg-[#df3663] focus:text-white
             cursor-pointer
             h-[4.5rem] w-16 mt-6
-           flex flex-col items-center
+            flex flex-col items-center
             text-black mr-2 mb-2 md:w-auto">
                         <p className='mb-0 mt-[10px] text-gray-300 text-sm focus:text-white'>{item.date.substr(0, 3)}</p>
                         <p className='text-xl'>{item.date.substr(9, 2)}</p>
@@ -180,7 +181,7 @@ function Booking(props) {
                     <p className='font-light text-[#bdbdbd] mb-0'>Price: </p>
                     <p className='text-xl font-bold'>
                         {listBookingChair.reduce((sumBill, chair) => {
-                            return sumBill += chair.giaVe
+                            return sumBill + chair.giaVe
                         }, 0).toLocaleString()}đ
                     </p>
                 </div>
@@ -190,7 +191,7 @@ function Booking(props) {
                             loaderType="default"
                             onClick={() => {
                                 if (_.isEmpty(listBookingChair)) {
-                                    alert('dat ghe di ong noi')
+                                    toast.error('you haven\'t booked yet')
                                 } else {
                                     dispatch({type: AUTO_SWITCH_TAB})
                                 }
@@ -213,7 +214,8 @@ export default function Checkout_mobile(props) {
     return <div className='pt-6 mx-4'>
         <Tabs
             renderTabBar={renderTabBar}
-            activeKey={tabActive} defaultActiveKey="1"
+            activeKey={tabActive}
+            defaultActiveKey="1"
             onChange={(key) => {
                 dispatch({
                     type: SWITCH_TAB,
@@ -225,8 +227,10 @@ export default function Checkout_mobile(props) {
             </TabPane>
 
             <TabPane key="2">
-                {/*<ResultBookingMobile {...props}/>*/}
                 <PaymentBookingMobile {...props}/>
+            </TabPane>
+            <TabPane key="3">
+                <ResultBookingMobile {...props}/>
             </TabPane>
         </Tabs>
     </div>

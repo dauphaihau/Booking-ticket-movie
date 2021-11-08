@@ -2,7 +2,6 @@ import React from 'react';
 import './Film.css'
 import moment from "moment";
 import {NavLink} from "react-router-dom";
-import {Rate} from "antd";
 
 export const genreMovie = [
     'Action',
@@ -32,13 +31,9 @@ function Film({film}) {
             </div>
         </div>
 
-        <div className='md:hidden'>
-            <p className='font-bold hidden ip8:block text-black'>{film.tenPhim.slice(0, 16)}</p>
-
-            <div className='ip8:hidden mb-[13px]'>
-                <Rate className='text-[10px]' disabled value={film.danhGia / 2}/>
-            </div>
-            <div className='-mt-4'>
+        <div className='md:hidden mb-4'>
+            <p className='font-bold  ip8:block text-black'>{film.tenPhim.length > 11 ? <span>{film.tenPhim.slice(0, 11)}...</span> : <span>{film.tenPhim}</span>}</p>
+            <div>
                 <p>{genreMovie[Math.floor(Math.random() * genreMovie.length)]}</p>
             </div>
         </div>

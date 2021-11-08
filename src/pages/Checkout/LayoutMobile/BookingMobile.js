@@ -133,7 +133,7 @@ export default function BookingMobile(props) {
                             <span className='text-xl mr-4'>BOOKING</span>
                             <span className='text-xl font-bold'>
                                 {listBookingChair.reduce((sumBill, chair) => {
-                                    return sumBill += chair.giaVe
+                                    return sumBill + chair.giaVe
                                 }, 0).toLocaleString()}đ
                             </span>
                         </div>

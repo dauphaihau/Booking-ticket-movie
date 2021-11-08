@@ -12,7 +12,7 @@ import {Menu, Transition} from "@headlessui/react";
 // assets , utils
 import './Checkout.css'
 import screen from '../../assets/img/screen.jpg'
-import {BOOKING_CHAIR, SWITCH_TAB} from "../../store/types/Type";
+import {BOOKING_CHAIR, CLEAR_BOOKING} from "../../store/types/Type";
 import {ACCESS_TOKEN, history, USER_LOGIN} from "../../util/settings";
 
 // Comps
@@ -38,7 +38,7 @@ function Booking(props) {
 
     useEffect(() => {
         dispatch(getListTicketRoomAction(props.match.params.id))
-    }, [])
+    }, [dispatch, props.match.params.id])
 
     const {danhSachGhe, thongTinPhim} = detailTicketRoom;
 
@@ -55,7 +55,7 @@ function Booking(props) {
                                 let classBookingChair = '';
                                 let classBookedChairByUser = '';
                                 let classBookingChairByOtherUser = '';
-                                let classChair = '';
+                                let classChair;
                                 if (window.innerWidth <= 768) {
                                     classChair = 'chairMini'
                                 } else {
@@ -153,16 +153,7 @@ function Booking(props) {
 
 export default function Checkout(props) {
 
-    const dispatch = useDispatch();
     const {userLogin} = useSelector(state => state.UserReducer)
-
-    useEffect(() => {
-        dispatch({
-            type: SWITCH_TAB,
-            numTab: '2'
-        })
-    }, [])
-
     const operations = <Fragment>
         {!_.isEmpty(userLogin) ?
             <Fragment>
@@ -197,6 +188,7 @@ export default function Checkout(props) {
                                         className="z-10 origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5 focus:outline-none">
                                         <Menu.Item>
                                             {({active}) => (
+                                                // eslint-disable-next-line jsx-a11y/anchor-is-valid
                                                 <a
                                                     href="#"
                                                     className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
@@ -210,6 +202,7 @@ export default function Checkout(props) {
                                         </Menu.Item>
                                         <Menu.Item>
                                             {({active}) => (
+                                                // eslint-disable-next-line jsx-a11y/anchor-is-valid
                                                 <a
                                                     href="#"
                                                     className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
@@ -245,7 +238,7 @@ export default function Checkout(props) {
                         to='/home'
                         className='mr-20 transition-colors duration-300 text-black'
                     ><ArrowBackIosNewIcon className='h-8 w-8 mt-[-4px] mr-2'/>HOME</NavLink>
-                } key="1">
+                } KEY="1">
                 </TabPane>
 
                 <TabPane tab="01 CHOOSE SEATS & PURCHASE" key="2">

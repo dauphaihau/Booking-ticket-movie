@@ -5,23 +5,18 @@ import {Password} from "@mui/icons-material";
 import {useDispatch, useSelector} from "react-redux";
 import {CLOSE_MODAL} from "../../store/types/Type";
 import {useFormik} from "formik";
-import * as Yup from "yup";
 import {LoginModalAction} from "../../store/actions/UserAction";
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 
 function LoginModal() {
     const dispatch = useDispatch();
-    const {visible} = useSelector(state => state.UserReducer)
+    const {visible, messageServer} = useSelector(state => state.UserReducer)
 
     const formik = useFormik({
         initialValues: {
             taiKhoan: '',
             matKhau: '',
         },
-        validationSchema: Yup.object({
-            // taiKhoan: Yup.string().required('Username is required'),
-            // matKhau: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters.').max(32, 'Password have max 32 characters'),
-        }),
         onSubmit: values => {
             console.log('values', values)
             dispatch(LoginModalAction(values))
@@ -56,6 +51,11 @@ function LoginModal() {
                         size='large' width='100%'
                         contentLeft={<AccountCircleIcon/>}
                     />
+                    {messageServer !== '' ? <p className='jsx-2076578745 helper-text
+                    text-[#f21361] mt-[-11px] mb-4
+                    text-[0.7rem] ml-[10px]
+                    '>{messageServer}</p> : ''
+                    }
                     <Input
                         className='mb-3'
                         onChange={formik.handleChange}

@@ -14,19 +14,19 @@ import {useDispatch} from "react-redux";
 import {toast} from "react-hot-toast";
 
 const validateMessages = {
-    required: '${label} is require',
+    required: `$\{label} is require`,
     types: {
-        email: '${label} is invalid!',
-        number: '${label} is invalid!',
+        email: `$\{label} is invalid!`,
+        number: `$\{label} is invalid!`,
     },
     number: {
-        range: '${label} must be from 9 - 12 numbers',
+        range: `$\{label} must be from 9 - 12 numbers`,
     },
-    min: "'${name}' must be at least ${min} characters",
+    min: `'$\{name}' must be at least $\{min} characters`,
     date: {
-        format: "'${name}' is invalid for format date",
-        parse: "'${name}' could not be parsed as date",
-        invalid: "'${name}' is invalid date",
+        format: `'$\{name}' is invalid for format date`,
+        parse: `'$\{name}' could not be parsed as date`,
+        invalid: `'$\{name}' is invalid date`,
     },
 }
 const config = {
@@ -77,6 +77,7 @@ function AddFilms() {
             }
 
             http.post('/api/QuanLyPhim/ThemPhimUploadHinh', fromData).then((response) => {
+                console.log('response', response)
                 toast.success('add movie successfully')
                 dispatch(getListFilmsAction())
                 history.push('/admin/films')
@@ -141,7 +142,7 @@ function AddFilms() {
                     <Input style={{width: 300}} onChange={formik.handleChange} name='trailer'/>
                 </Form.Item>
 
-                <Form.Item label="Release date" name="date-picker" {...config} rules={[{required: true, type: 'date'}]}>
+                <Form.Item label="Release Date" name="date-picker" {...config} rules={[{required: true, type: 'date'}]}>
                     <DatePicker onChange={handleChangeDataPicker} format='DD/MM/YYYY' name='ngayKhoiChieu'/>
                 </Form.Item>
 

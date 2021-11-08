@@ -1,5 +1,5 @@
 import {
-    CLOSE_MODAL,
+    CLOSE_MODAL, ERROR_FORM_SERVER,
     OPEN_MODAL,
     SET_ALL_TYPE_USER,
     SET_DATA_LOGIN,
@@ -23,6 +23,7 @@ const initialState = {
     infoUser: {},
     typeUser: [],
     visible: false,
+    messageServer : ''
 }
 
 export const UserReducer = (state = initialState, action) => {
@@ -31,21 +32,17 @@ export const UserReducer = (state = initialState, action) => {
             const {dataLogin} = action;
             localStorage.setItem(USER_LOGIN, JSON.stringify(dataLogin))
             localStorage.setItem(ACCESS_TOKEN, dataLogin.accessToken)
-
             return {...state, userLogin: dataLogin}
         }
         case SET_DATA_USER: {
             return {...state, dataUser: action.dataUser}
         }
-
         case SET_LIST_USER: {
             return {...state, listUser: action.listUser}
         }
-
         case SET_INFO_USER: {
             return {...state, infoUser: action.infoUser}
         }
-
         case SET_ALL_TYPE_USER: {
             return {...state, typeUser: action.typeUser}
         }
@@ -54,6 +51,9 @@ export const UserReducer = (state = initialState, action) => {
         }
         case CLOSE_MODAL: {
             return {...state, visible: false}
+        }
+        case ERROR_FORM_SERVER: {
+            return {...state, messageServer: action.messageServer}
         }
         default:
             return state

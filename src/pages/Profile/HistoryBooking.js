@@ -11,7 +11,7 @@ export default function HistoryBooking() {
 
     useEffect(() => {
         dispatch(getDataUserAction())
-    }, [])
+    }, [dispatch])
 
     const renderTicketItem = () => {
         return dataUser.thongTinDatVe.map((ticket, index) => {

@@ -14,7 +14,7 @@ function ResultBookingMobile() {
 
     useEffect(() => {
         dispatch(getDataUserAction())
-    }, [])
+    }, [dispatch])
 
     const renderTicketItem = () => {
         return dataUser.thongTinDatVe.map((ticket, index) => {
@@ -25,12 +25,11 @@ function ResultBookingMobile() {
                     <div className="flex-grow">
                         <h2 className="text-gray-900 title-font font-medium">{ticket.tenPhim}</h2>
                         <p className="text-gray-500">
-                            Giờ chiếu: {moment(ticket.ngayDat).format('hh:mm A')} - Ngày
-                            Chiếu: {moment(ticket.ngayDat).format('DD-MM-YYYY'
+                            Time: {moment(ticket.ngayDat).format('hh:mm A')} - Date: {moment(ticket.ngayDat).format('DD-MM-YYYY'
                         )}</p>
-                        <p className="text-gray-500">Địa điểm: {chairs.tenHeThongRap}</p>
-                        <p className="text-gray-500">Tên rạp: {chairs.tenCumRap}</p>
-                        <p>Tất cả ghế bạn đã đặt:</p>
+                        <p className="text-gray-500">Location: {chairs.tenHeThongRap}</p>
+                        <p className="text-gray-500">Name Cinema: {chairs.tenCumRap}</p>
+                        <p className="text-gray-500">All your seats booked: </p>
                         <div className='grid grid-cols-7'>
                             {ticket.danhSachGhe.map((chair, index) => {
                                 return <div className="chair bookingChair p-2" key={index}>  {chair.tenGhe}  </div>
@@ -62,9 +61,7 @@ function ResultBookingMobile() {
         </div>
 
         <section className="text-gray-600 body-font">
-            <div className="container
-            {/*px-5*/}
-             py-16 lg:py-16 mx-auto">
+            <div className="container py-16 lg:py-16 mx-auto">
                 <div className="flex flex-wrap -m-2">
                     {renderTicketItem()}
                 </div>

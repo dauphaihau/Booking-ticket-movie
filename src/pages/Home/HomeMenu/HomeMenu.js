@@ -1,4 +1,4 @@
-import React, {Fragment, useState} from 'react';
+import React, {Fragment, useEffect, useState} from 'react';
 import moment from "moment";
 
 // UI
@@ -19,6 +19,10 @@ function HomeMenu({arrCinema}) {
     const [state, setState] = useState({
         tabPosition: 'left',
     })
+
+    useEffect(() => {
+      setState({tabPosition: 'top'})
+    },[])
 
     window.onload = () => {
         let widthScreen = window.innerWidth;
@@ -84,11 +88,11 @@ function HomeMenu({arrCinema}) {
                                                 />
                                                 <div className="ml-3 w-[54%] md:w-full">
                                                     <h1 className="text-lg lg:text-2xl font-sans mb-0 md:mb-4">{film.tenPhim}</h1>
-                                                    <p className='hidden md:block text-xs flex items-center cursor-pointer transition-colors duration-300 hover:text-blue-400"
+                                                    <p className='mb-4 hidden md:block text-xs flex items-center cursor-pointer transition-colors duration-300 hover:text-blue-400 mb-2"
                                                     ' onClick={() => {
                                                         history.push(`detail/${film.maPhim}`)
                                                     }}>FULL SYNOPSIS<ArrowForwardIosIcon
-                                                        className='ml-2 h-[12px] w-[12px]'/>
+                                                        className='ml-2 mt-[-1px] h-[12px] w-[12px]'/>
                                                     </p>
 
                                                     {/*Mobile*/}

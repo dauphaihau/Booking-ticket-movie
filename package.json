@@ -34,6 +34,7 @@
     "react-scroll": "^1.8.4",
     "react-slick": "^0.28.1",
     "redux": "^4.1.1",
+    "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
     "slick-carousel": "^1.8.1",
     "tailwindcss-cli": "^0.1.2",

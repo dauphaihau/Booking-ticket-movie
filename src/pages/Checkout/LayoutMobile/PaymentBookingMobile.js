@@ -46,9 +46,9 @@ function PaymentBookingMobile(props) {
                          src={thongTinPhim.hinhAnh} alt={''}/>
                 </figure>
                 <div className='col-span-2 ml-4 ip8:ml-0'>
-                    <h3 className="text-xl ">{thongTinPhim.tenPhim}</h3>
-                    <p className=' text-[#c1c1c1]'>Action, Adventure, Thriller</p>
-                    <p><LocationOnOutlinedIcon className='mr-[5px]'/>{thongTinPhim.diaChi.slice(0, 90)}</p>
+                    <h3 className="text-xl mb-1">{thongTinPhim.tenPhim}</h3>
+                    <p className=' text-[#c1c1c1] mb-1'>Action, Adventure, Thriller</p>
+                    <p><LocationOnOutlinedIcon className='mr-[5px] h-4 w-4'/>{thongTinPhim.diaChi.slice(0, 90)}</p>
                 </div>
             </div>
 
@@ -68,12 +68,11 @@ function PaymentBookingMobile(props) {
             <h2 className='font-bold text-[1rem] mb-0 mt-4'>Payment Method</h2>
             <div className='grid grid-cols-4'>
                 <ul>
-                    <li><img height={65} width={65} src='/images/logos/visa.png' alt="amazo"/></li>
-                    <li><img style={{height: 65, width: 65}} src='/images/logos/paypal-logo-removebg-preview.png'
-                             alt="amazo"/></li>
-                    <li><img style={{height: 65, width: 65}} src='/images/logos/skrill-logo.png' alt="amazo"/></li>
-                    <li><img style={{height: 65, width: 65}} src='/images/logos/apple-pay-logo.png' alt="amazo"/></li>
-                    <li><img style={{height: 65, width: 65}} src='/images/logos/amazonn.png' alt="amazo"/></li>
+                    <li><img height={65} width={65} src={'/images/logos/visa.png'} alt="visa"/></li>
+                    <li><img style={{height: 65, width: 65}} src={'/images/logos/paypal-logo-removebg-preview.png'} alt="paypal"/></li>
+                    <li><img style={{height: 65, width: 65}} src={'/images/logos/skrill-logo.png'} alt="skrill"/></li>
+                    <li><img style={{height: 65, width: 65}} src={'/images/logos/apple-pay-logo.png'} alt="apple"/></li>
+                    <li><img style={{height: 65, width: 65}} src={'/images/logos/amazonn.png'} alt="amazon"/></li>
                 </ul>
                 <ul className='col-span-2'>
                     <li className='mt-[21px] mb-[43px]'>Credit Card</li>
@@ -91,7 +90,6 @@ function PaymentBookingMobile(props) {
                 </Radio.Group>
             </div>
 
-
             <Button
                 className='w-full h-[50px]'
                 color="error" auto
@@ -104,7 +102,7 @@ function PaymentBookingMobile(props) {
                 }}
             >Pay - <span className='ml-2'>
             {listBookingChair.reduce((sumBill, chair) => {
-                return sumBill += chair.giaVe
+                return sumBill + chair.giaVe
             }, 0).toLocaleString()}đ
             </span>
             </Button>
