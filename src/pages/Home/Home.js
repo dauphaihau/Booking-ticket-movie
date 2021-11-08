@@ -18,6 +18,8 @@ function Home() {
         dispatch(CinemaSystemActions())
     }, [dispatch])
 
+    console.log('window-inner-width-', window.innerWidth)
+
     return <div>
         <div className='overflow-x-hidden' id='home'>
             <HomeCarousel/>
