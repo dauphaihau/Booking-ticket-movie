@@ -12,7 +12,7 @@ import {Menu, Transition} from "@headlessui/react";
 // assets , utils
 import './Checkout.css'
 import screen from '../../assets/img/screen.jpg'
-import {BOOKING_CHAIR, CLEAR_BOOKING} from "../../store/types/Type";
+import {BOOKING_CHAIR} from "../../store/types/Type";
 import {ACCESS_TOKEN, history, USER_LOGIN} from "../../util/settings";
 
 // Comps

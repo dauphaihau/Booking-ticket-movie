@@ -76,7 +76,7 @@ function AddFilms() {
                 }
             }
 
-            http.post('/api/QuanLyPhim/ThemPhimUploadHinh', fromData).then((response) => {
+            http.post('/api/QuanLyPhim/ThemPhimUploadHinh', fromData).then(response => {
                 console.log('response', response)
                 toast.success('add movie successfully')
                 dispatch(getListFilmsAction())

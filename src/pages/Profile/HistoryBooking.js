@@ -13,6 +13,7 @@ export default function HistoryBooking() {
         dispatch(getDataUserAction())
     }, [dispatch])
 
+
     const renderTicketItem = () => {
         return dataUser.thongTinDatVe.map((ticket, index) => {
             const chairs = _.head(ticket.danhSachGhe)
@@ -48,3 +49,4 @@ export default function HistoryBooking() {
         </section>
     </div>
 }
+
