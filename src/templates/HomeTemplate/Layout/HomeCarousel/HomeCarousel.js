@@ -47,7 +47,6 @@ const settingsThumbs = {
 
 };
 
-
 function HomeCarousel() {
 
     // eslint-disable-next-line no-unused-vars
@@ -94,16 +93,12 @@ function HomeCarousel() {
                                             <p className='mr-8 mb-0 md:pt-[6px]'>Christopher Spencer</p>
                                         </div>
                                         <p className='mt-4 mb-4 md:w-4/5 lg:w-[35.33%]'>A depiction of the last twelve
-                                            hours
-                                            in
-                                            the life of
-                                            Jesus of Nazareth, on the day of his crucifixion in Jerusalem. The story
-                                            opens
-                                            in the Garden of Olives where Jesus has gone to pray after the Last Supper.
-                                            Betrayed by Judas Iscariot, the controversial Jesus--who has performed
-                                            'miracles' and has publicly announced that he is 'the Son of God'--is
-                                            arrested
-                                            and taken back within the city walls of Jerusalem.</p>
+                                            hours in the life of Jesus of Nazareth, on the day of his crucifixion in
+                                            Jerusalem. The story opens in the Garden of Olives where Jesus has gone to
+                                            pray after the Last Supper. Betrayed by Judas Iscariot, the controversial
+                                            Jesus--who has performed 'miracles' and has publicly announced that he is
+                                            'the Son of God'--is arrested and taken back within the city walls of
+                                            Jerusalem.</p>
                                         <div className='flex mb-4'>
                                             <p className='mr-4 font-bold'>Starring</p>
                                             <p>Jesus Christ , saint Mary</p>

@@ -33,11 +33,12 @@ function Detail(props) {
             backgroundPosition: 'center',
             minHeight: '100vh'
         }}>
-            <CustomCard style={{paddingTop: 150, minHeight: '100vh'}}
-                        effectColor="#fff" // required
-                        color="#000000" // default color is white
-                        blur={50} // default blur value is 10px
-                        borderRadius={1}
+            <CustomCard
+                style={{paddingTop: 150, minHeight: '100vh'}}
+                effectColor="#fff" // required
+                color="#000000" // default color is white
+                blur={50} // default blur value is 10px
+                borderRadius={1}
             >
                 <div className='lg:mx-auto lg:px-8 md:px-0 lg:container lg:max-w-screen-xl'>
                     <div className='py-5 rounded-lg'>
@@ -69,7 +70,8 @@ function Detail(props) {
                                 <div style={{marginBottom: 18}}>
                                     <Rate style={{fontSize: 16}} allowHalf disabled value={detailFilm.danhGia / 2}/>
                                 </div>
-                                <Button icon={<PlayArrowIcon className='text-black'/>} className='hover:bg-gray-100' shadow color="white" auto>
+                                <Button icon={<PlayArrowIcon className='text-black'/>} className='hover:bg-gray-100'
+                                        shadow color="white" auto>
                                     <a href={detailFilm.trailer} style={{color: 'black'}}>WATCH TRAILER</a>
                                 </Button>
                             </div>
@@ -116,15 +118,14 @@ function Detail(props) {
                                                              src={cumRap.hinhAnh}
                                                              alt={cumRap.tenCumRap}/>
                                                         <div className='ml-5'>
-                                                            <p className='text-xl font-bold
-                                                            '>{cumRap.tenCumRap}</p>
+                                                            <p className='text-xl font-bold'>{cumRap.tenCumRap}</p>
                                                             <p style={{marginBottom: 21}}>{cumRap.diaChi}</p>
                                                             <div className='flex flex-row'>
-                                                                {cumRap.lichChieuPhim.slice(0,5).map((showtime, index) => {
-                                                                    return <Button className='mr-4' size='mini'
-                                                                                   shadow
+                                                                {cumRap.lichChieuPhim.slice(0, 5).map((showtime, index) => {
+                                                                    return <Button className='mr-4' size='mini' shadow
+                                                                                   auto
                                                                                    key={index}
-                                                                                   color="primary" auto
+                                                                                   color="primary"
                                                                                    onClick={() => {
                                                                                        history.push(`/checkout/${showtime.maLichChieu}`);
                                                                                    }}

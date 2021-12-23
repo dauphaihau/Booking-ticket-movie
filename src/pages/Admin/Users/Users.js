@@ -22,7 +22,7 @@ function Users() {
         {
             title: 'Username',
             dataIndex: 'taiKhoan',
-            defaultSortOrder :'descend',
+            defaultSortOrder: 'descend',
             width: '12%',
             sorter: (a, b) => a.taiKhoan - b.taiKhoan,
             // sortDirections: ['descend', 'ascend'],
@@ -80,17 +80,17 @@ function Users() {
                 return <Fragment>
                     <div className='flex'>
 
-                    <NavLink to={`/admin/users/edit/${user.taiKhoan}`}>
-                        <Button type="primary" icon={<EditOutlined/>}/>
-                    </NavLink>
-                    <Button type="primary" danger icon={<CloseOutlined/>}
-                            className='mx-4'
-                            onClick={() => {
-                                if (window.confirm('Are you sure you want to delete account ' + user.taiKhoan)) {
-                                    dispatch(deleteUserAction(user.taiKhoan))
-                                }
-                            }}
-                    />
+                        <NavLink to={`/admin/users/edit/${user.taiKhoan}`}>
+                            <Button type="primary" icon={<EditOutlined/>}/>
+                        </NavLink>
+                        <Button type="primary" danger icon={<CloseOutlined/>}
+                                className='mx-4'
+                                onClick={() => {
+                                    if (window.confirm('Are you sure you want to delete account ' + user.taiKhoan)) {
+                                        dispatch(deleteUserAction(user.taiKhoan))
+                                    }
+                                }}
+                        />
                     </div>
                 </Fragment>
             },
@@ -118,11 +118,18 @@ function Users() {
 
     return (
         <div>
-            <Search placeholder="input search text" size='large' className='mb-5'
-                    allowClear onSearch={onSearch}
+            <Search
+                placeholder="input search text"
+                size='large'
+                className='mb-5'
+                allowClear
+                onSearch={onSearch}
             />
-            <Table columns={columns} dataSource={listUser} onChange={onChange}
-           scroll={{x: 1200}}
+            <Table
+                columns={columns}
+                dataSource={listUser}
+                onChange={onChange}
+                scroll={{x: 1200}}
             />
         </div>
     );

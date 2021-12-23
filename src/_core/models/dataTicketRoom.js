@@ -4,7 +4,6 @@ export class dataTicketRoom {
     danhSachGhe = []
 }
 
-
 export class ThongTinPhim {
     diaChi = "";
     gioChieu = "";
@@ -15,7 +14,6 @@ export class ThongTinPhim {
     tenPhim = "";
     tenRap = "";
 }
-
 
 export class Ghe {
     daDat = true;

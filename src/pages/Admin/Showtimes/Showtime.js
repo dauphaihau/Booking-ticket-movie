@@ -63,7 +63,7 @@ function Showtime(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     useEffect(async () => {
         try {
-            const result = await http.get(`/api/QuanLyRap/LayThongTinHeThongRap`)
+            const result = await http.get(`/api/QuanLyRap/LayThongTinHeThongRap`);
             setState({
                 ...state,
                 arrCinema: result.data.content
@@ -93,7 +93,7 @@ function Showtime(props) {
         formik.setFieldValue('maRap', values)
     }
 
-    const onChangeNumber = value => {
+    const onChangeNumber = (value) => {
         formik.setFieldValue('giaVe', value)
     }
 
@@ -112,7 +112,7 @@ function Showtime(props) {
             <Form
                 name="basic"
                 labelCol={{span: 8,}}
-                wrapperCol={{span: 16,}}
+                wrapperCol={{span: 16}}
                 initialValues={{remember: true, size: componentSize}}
                 onFinish={formik.handleSubmit}
                 layout="horizontal"
@@ -128,8 +128,12 @@ function Showtime(props) {
                 </Form.Item>
 
                 <Form.Item label="Cinema system" name={['heThongRap']} rules={[{required: true}]}>
-                    <Select options={optionCinemas()} style={{width: 200}} onChange={handleChangeCinema}
-                            placeholder="Select cinema system"/>
+                    <Select
+                        options={optionCinemas()}
+                        style={{width: 200}}
+                        onChange={handleChangeCinema}
+                        placeholder="Select cinema system"
+                    />
                 </Form.Item>
 
                 <Form.Item label="Cinema mini" name={['cumRap']} rules={[{required: true}]}>
@@ -139,17 +143,23 @@ function Showtime(props) {
                             label: cinema.tenCumRap,
                             value: cinema.maCumRap
                         }))}
-                        onChange={handleChangeMiniCinema} placeholder="Select cinema mini"/>
+                        onChange={handleChangeMiniCinema}
+                        placeholder="Select cinema mini"
+                    />
                 </Form.Item>
 
                 <Form.Item label="Release date" name="date-picker" rules={[{required: true}]}>
                     <DatePicker
-                        showTime onOk={onOk} format='DD/MM/YYYY hh:mm:ss' placeholder='Select release date'
+                        showTime onOk={onOk}
+                        format='DD/MM/YYYY hh:mm:ss'
+                        placeholder='Select release date'
                     />
                 </Form.Item>
 
-                <Form.Item label="Price ticket" name={['giaVe']}
-                           rules={[{required: true, type: 'number', min: 75000, max: 200000}]}>
+                <Form.Item
+                    label="Price ticket"
+                    name={['giaVe']}
+                    rules={[{required: true, type: 'number', min: 75000, max: 200000}]}>
                     <InputNumber onChange={onChangeNumber}/>
                 </Form.Item>
 
@@ -159,9 +169,7 @@ function Showtime(props) {
                         sm: {span: 16, offset: 8},
                     }}
                 >
-                    <Button type="primary" htmlType="submit">
-                        Create
-                    </Button>
+                    <Button type="primary" htmlType="submit">Create</Button>
                 </Form.Item>
             </Form>
             <figure className='hidden md:block ml-4'>

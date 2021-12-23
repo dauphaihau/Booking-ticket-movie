@@ -21,9 +21,7 @@ function Login() {
             taiKhoan: Yup.string().required('Username is required'),
             matKhau: Yup.string().required('Password is required').min(6, 'Password must be at least 6 characters.').max(32, 'Password have max 32 characters'),
         }),
-        onSubmit: values => {
-            dispatch(LoginAction(values))
-        }
+        onSubmit: (values) => dispatch(LoginAction(values))
     })
 
 
@@ -75,11 +73,12 @@ function Login() {
                             size='large' width='100%'
                         />
                     </div>
-                        {messageServer !== '' ? <p className='jsx-2076578745 helper-text
-                    text-[#f21361] mt-[16px] mb-4
-                    text-[0.7rem] ml-[10px]
-                    '>{messageServer}</p> : ''
-                        }
+                    {messageServer !== '' ?
+                        <p className='jsx-2076578745 helper-text
+                                      text-[#f21361] mt-[16px] mb-4
+                                      text-[0.7rem] ml-[10px]
+                                     '
+                        >{messageServer}</p> : ''}
                     <div className='mb-12'>
                         <Input.Password
                             onChange={formik.handleChange}
@@ -91,7 +90,7 @@ function Login() {
                             width='100%'
                         />
                     </div>
-                    <div >
+                    <div>
                         <Button style={{width: '100%'}} shadow color="primary" auto
                                 type='submit' size='large'
                         >

@@ -1,5 +1,7 @@
-# Booking Ticket Movie
+# Movieee
 Create a website to help users book tickets more easily
+
+![Screenshot](./assets/Movieee-light.png)
 
 ## Home page
 - Link: http://movieee.surge.sh

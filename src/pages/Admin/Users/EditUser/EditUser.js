@@ -102,20 +102,20 @@ function EditUser(props) {
                 </Form.Item>
 
                 <Form.Item label="Phone Number" required
-                           // rules={[{ type: 'number' }]}
                            help={formik.touched.soDt && formik.errors.soDt ? `${formik.errors.soDt}` : null}
                 >
-                    <InputNumber style={{width: 300}} name='soDt' onChange={(e) => {
-                        formik.setFieldValue('soDt', e)
-                    }} value={formik.values.soDt}/>
+                    <InputNumber style={{width: 300}} name='soDt'
+                                 onChange={(e) => formik.setFieldValue('soDt', e)}
+                                 value={formik.values.soDt}/>
                 </Form.Item>
 
                 <Form.Item label="Type User">
-                    <Select style={{width: 300}} value={formik.values.maLoaiNguoiDung} name='maLoaiNguoiDung'
-                            placeholder="Select a category"
-                            onChange={(e) => {
-                                formik.setFieldValue('maLoaiNguoiDung', e)
-                            }}
+                    <Select
+                        style={{width: 300}}
+                        value={formik.values.maLoaiNguoiDung}
+                        name='maLoaiNguoiDung'
+                        placeholder="Select a category"
+                        onChange={(e) => formik.setFieldValue('maLoaiNguoiDung', e)}
                     >
                         {typeUser.map((type, index) => {
                             return <Option key={index} value={type.maLoaiNguoiDung}>{type.tenLoai}</Option>

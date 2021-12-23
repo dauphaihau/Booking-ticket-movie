@@ -32,7 +32,7 @@ function Film({film}) {
         </div>
 
         <div className='md:hidden mb-4'>
-            <p className='font-bold  ip8:block text-black'>{film.tenPhim.length > 11 ? <span>{film.tenPhim.slice(0, 11)}...</span> : <span>{film.tenPhim}</span>}</p>
+            <p className='font-bold mb-0 ip8:block text-black'>{film.tenPhim.length > 11 ? <span>{film.tenPhim.slice(0, 11)}...</span> : <span>{film.tenPhim}</span>}</p>
             <div>
                 <p>{genreMovie[Math.floor(Math.random() * genreMovie.length)]}</p>
             </div>

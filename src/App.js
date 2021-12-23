@@ -40,6 +40,7 @@ function App() {
             <Switch>
                 <UserTemplate exact path='/login' Component={Login}/>
                 <UserTemplate exact path='/register' Component={Register}/>
+
                 <SettingTemplate exact path='/setting/profile/:tentaikhoan' Component={Profile}/>
                 <SettingTemplate exact path='/setting/history/:tentaikhoan' Component={HistoryBooking}/>
 

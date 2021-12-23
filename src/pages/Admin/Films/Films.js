@@ -23,7 +23,7 @@ function Films() {
             title: 'Id',
             dataIndex: 'maPhim',
             width: '8%',
-            defaultSortOrder :'descend',
+            defaultSortOrder: 'descend',
             sorter: (a, b) => a.maPhim - b.maPhim,
             sortDirections: ['descend', 'ascend'],
             // responsive: ['md'],
@@ -100,7 +100,7 @@ function Films() {
             },
             sortDirections: ['descend', 'ascend'],
             width: '14%',
-            fixed:'right'
+            fixed: 'right'
         },
     ];
 
@@ -121,9 +121,20 @@ function Films() {
     };
 
     return <>
-        <Search onSearch={onSearch} placeholder="input search text" size='large' className='mb-5' allowClear/>
-        <Table columns={columns} dataSource={arrFilmDefault} onChange={onChange} rowKey={"maPhim"}
-               scroll={{x: 1200}}
+        <Search
+            onSearch={onSearch}
+            placeholder="input search text"
+            size='large'
+            className='mb-5'
+            allowClear
+        />
+
+        <Table
+            onChange={onChange}
+            columns={columns}
+            dataSource={arrFilmDefault}
+            rowKey={"maPhim"}
+            scroll={{x: 1200}}
         />
     </>
 }
