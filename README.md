@@ -4,7 +4,7 @@ Create a website to help users book tickets more easily
 ![Screenshot](./assets/Movieee-light.png)
 
 ## Home page
-- Link: http://movieee.surge.sh
+- Link: <a href="http://movieee.surge.sh">visit the home page</a>
 - Login, Register pages
 - Show film, news and showtime list ( New in, Comming soon )
 - Detail film pages
@@ -13,7 +13,9 @@ Create a website to help users book tickets more easily
 - Profile page
 
 ## Admin pages
-- Link: http://movieee.surge.sh/admin
+
+
+- Link: <a href="http://movieee.surge.sh/admin">visit the admin page</a>
 - Films, user management
 - Add, edit, delete film and user
 - Search film, user
