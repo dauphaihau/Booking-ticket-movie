@@ -11,6 +11,7 @@ import {
     VideoCameraOutlined,
     PoweroffOutlined,
 } from '@ant-design/icons';
+
 const {Sider, Content} = Layout;
 const {SubMenu} = Menu;
 
@@ -102,6 +103,7 @@ const AdminTemplate = (props) => {
                     </Content>
                 </Layout>
             </Layout>
+
         </Fragment>
     }}/>
 }

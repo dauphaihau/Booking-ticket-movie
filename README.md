@@ -3,6 +3,9 @@ Create a website to help users book tickets more easily
 
 ![Screenshot](./assets/Movieee-light.png)
 
+## Video
+- Link : <a href="https://youtu.be/QCvwcV5Ab8A">on youtube</a>
+ 
 ## Home page
 - Link: <a href="http://movieee.surge.sh">visit the home page</a>
 - Login, Register pages
@@ -13,8 +16,6 @@ Create a website to help users book tickets more easily
 - Profile page
 
 ## Admin pages
-
-
 - Link: <a href="http://movieee.surge.sh/admin">visit the admin page</a>
 - Films, user management
 - Add, edit, delete film and user

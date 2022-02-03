@@ -26,7 +26,6 @@ function Films() {
             defaultSortOrder: 'descend',
             sorter: (a, b) => a.maPhim - b.maPhim,
             sortDirections: ['descend', 'ascend'],
-            // responsive: ['md'],
         },
         {
             title: 'Image',
@@ -43,7 +42,6 @@ function Films() {
                          src={film.hinhAnh} alt={film.tenPhim}/>
                 </Fragment>
             }
-            // , responsive: ['lg'],
         },
         {
             title: 'Name Film',
@@ -125,7 +123,8 @@ function Films() {
             onSearch={onSearch}
             placeholder="input search text"
             size='large'
-            className='mb-5'
+            width={'50%'}
+            className='mb-5 w-1/3'
             allowClear
         />
 

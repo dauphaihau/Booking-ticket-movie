@@ -1,4 +1,3 @@
-import './App.css';
 import {history} from "./util/settings";
 import {Router, Switch} from "react-router-dom";
 import HomeTemplate from "./templates/HomeTemplate/HomeTemplate";
